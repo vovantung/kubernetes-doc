@@ -1,0 +1,8 @@
+tunnel: 4a06d22d-240f-4e63-b772-58502933d65f
+credentials-file: ~/.cloudflared/4a06d22d-240f-4e63-b772-58502933d65f.json
+
+ingress:
+  - hostname: jenkins.txuapp.com
+    service: http://localhost:31179
+  - service: http_status:404
+

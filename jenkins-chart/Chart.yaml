@@ -1,0 +1,7 @@
+apiVersion: v2
+name: jenkins-pv
+description: Helm chart for Jenkins with PV + PVC
+type: application
+version: 0.1.0
+appVersion: "2.387.3"  # Jenkins LTS version
+

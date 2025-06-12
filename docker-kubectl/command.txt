@@ -1,0 +1,2 @@
+docker build -t vothinhuydt/jenkins-agent-kubectl:txu .
+docker push vothinhuydt/jenkins-agent-kubectl:txu

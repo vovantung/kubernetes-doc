@@ -1,6 +1,6 @@
 image:
   repository: vothinhuydt/jenkins
-  tag: lst0
+  tag: txu
   pullPolicy: IfNotPresent
 
 service:
@@ -12,7 +12,6 @@ persistence:
   storageClassName: ""      
   accessMode: ReadWriteOnce
   size: 10Gi
-  existingClaim: jenkins-pvc
 
 nodeSelector: {}
 tolerations: []

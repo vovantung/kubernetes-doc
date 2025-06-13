@@ -26,14 +26,14 @@ spec:
           volumeMounts:
             - name: jenkins-home
               mountPath: /var/jenkins_home
-            - name: aws-credentials
-              mountPath: /var/jenkins_home/.aws
-              readOnly: true
+            # - name: aws-credentials
+            #   mountPath: /var/jenkins_home/.aws
+            #   readOnly: true
       volumes:
         - name: jenkins-home
           persistentVolumeClaim:
             claimName: jenkins-pvc
-        - name: aws-credentials
-          secret:
-            secretName: aws-credentials
+        # - name: aws-credentials
+        #   secret:
+        #     secretName: aws-credentials
 

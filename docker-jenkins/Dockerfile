@@ -24,6 +24,8 @@ COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Dùng entrypoint mới
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+# ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
+ENTRYPOINT ["/usr/local/bin/jenkins.sh"]
 
 USER jenkins

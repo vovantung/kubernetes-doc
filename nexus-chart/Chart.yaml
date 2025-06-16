@@ -1,0 +1,7 @@
+apiVersion: v2
+name: nexus
+description: Helm chart for Nexus
+type: application
+version: 0.1.0
+appVersion: "2.387.3"  # Nexus LTS version
+

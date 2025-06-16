@@ -1,0 +1,15 @@
+# nexus-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nexus
+  namespace: nexus
+spec:
+  type: ClusterIP  # hoặc NodePort / LoadBalancer tùy môi trường
+  ports:
+    - port: 8081
+      targetPort: 8081
+      # nodePort: 30081 # nếu là NodePort
+  selector:
+    app: nexus
+

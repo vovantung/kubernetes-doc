@@ -1,0 +1,26 @@
+image:
+  repository: vothinhuydt/jenkins
+  tag: txu
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+persistence:
+  enabled: true
+  storageClassName: ""      
+  accessMode: ReadWriteOnce
+  size: 10Gi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+
+controller:
+  ingress:
+    enabled: true
+    hosts:
+      - jenkins.txuapp.com
+

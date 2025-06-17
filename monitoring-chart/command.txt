@@ -1,0 +1,13 @@
+helm install monitoring prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  --version 57.2.0 \
+  --create-namespace \
+  -f monitoring-values.yaml
+
+
+helm uninstall monitoring -n monitoring
+
+helm upgrade monitoring prometheus-community/kube-prometheus-stack \
+  --namespace monitoring \
+  -f monitoring-values.yaml
+

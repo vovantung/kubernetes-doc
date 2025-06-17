@@ -23,6 +23,7 @@ prometheus:
     paths:
       - /
     pathType: ImplementationSpecific
+  
 
 alertmanager:
   ingress:

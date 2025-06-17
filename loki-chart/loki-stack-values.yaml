@@ -1,0 +1,9 @@
+loki:
+  persistence:
+    enabled: true
+    size: 10Gi
+  service:
+    port: 3100
+
+grafana:
+  enabled: false

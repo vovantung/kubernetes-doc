@@ -12,15 +12,6 @@ grafana:
       - /
     pathType: ImplementationSpecific
 
-  additionalDataSources:
-    - name: Loki
-      type: loki
-      access: proxy
-      url: http://loki.monitoring.svc.cluster.local:3100
-      jsonData:
-        maxLines: 1000
-
-
 prometheus:
   ingress:
     enabled: true

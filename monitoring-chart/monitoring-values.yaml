@@ -35,10 +35,10 @@ prometheus:
       - prometheus.txuapp.com
 
 grafana:
-  adminUser: admin
-  adminPassword: Phan@123
   enabled: true
   defaultDashboardsEnabled: true
+  adminUser: admin
+  adminPassword: Phan@123
   persistence:
     storageClassName: local-path
     enabled: true
@@ -75,7 +75,7 @@ alertmanager:
       limits:
         cpu: 500m
         memory: 1Gi
-    storageSpec:
+    storage:
       volumeClaimTemplate:
         spec:
           storageClassName: local-path

@@ -13,8 +13,8 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - nexus.txuapp.com
-      secretName: nexus-tls
+        - jenkins.txuapp.com
+      secretName: jenkins-tls
 
   rules:
     - host: {{ .Values.controller.ingress.hosts | first }}

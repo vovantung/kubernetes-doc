@@ -76,7 +76,7 @@ alertmanager:
       limits:
         cpu: 500m
         memory: 1Gi
-    storage:
+    storageSpec:
       volumeClaimTemplate:
         spec:
           storageClassName: local-path

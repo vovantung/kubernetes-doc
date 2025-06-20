@@ -15,6 +15,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
+          storageClassName: local-path
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
@@ -40,6 +41,7 @@ grafana:
   defaultDashboardsEnabled: true
   adminPassword: prom-operator
   persistence:
+    storageClassName: local-path
     enabled: true
     size: 10Gi
     accessModes:
@@ -77,6 +79,7 @@ alertmanager:
     storage:
       volumeClaimTemplate:
         spec:
+          storageClassName: local-path
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:

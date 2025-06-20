@@ -39,7 +39,6 @@ grafana:
   adminPassword: Phan@123
   enabled: true
   defaultDashboardsEnabled: true
-  adminPassword: prom-operator
   persistence:
     storageClassName: local-path
     enabled: true

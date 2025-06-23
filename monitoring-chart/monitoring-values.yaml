@@ -7,6 +7,10 @@ prometheus:
     serviceMonitorSelector:
       matchLabels:
         release: monitoring
+    serviceMonitorNamespaceSelector:
+      matchNames:
+        - monitoring
+        - backend
     retention: 15d
     resources:
       requests:

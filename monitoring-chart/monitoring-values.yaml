@@ -4,9 +4,7 @@ global:
 
 prometheus:
   prometheusSpec:
-    serviceMonitorSelector:
-      matchLabels:
-        release: monitoring
+    serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector:
       matchNames:
         - monitoring

@@ -4,6 +4,9 @@ global:
 
 prometheus:
   prometheusSpec:
+    serviceMonitorSelector:
+      matchLabels:
+        release: monitoring
     retention: 15d
     resources:
       requests:

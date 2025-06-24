@@ -1,9 +1,11 @@
 mode: standalone
+
 rootUser: loki
 rootPassword: supersecret
 
 persistence:
   enabled: true
+  storageClass: local-path
   size: 10Gi
 
 resources:

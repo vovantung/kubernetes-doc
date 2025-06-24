@@ -1,26 +1,43 @@
-# loki-values.yaml
 loki:
   auth_enabled: false
 
   commonConfig:
     replication_factor: 1
-    ring:
-      kvstore:
-        store: inmemory
 
-  storage_config:
+  storage:
+    type: filesystem
     filesystem:
       directory: /var/loki
 
-  schema_config:
+  schemaConfig:
     configs:
-      - from: 2024-01-01
-        store: boltdb-shipper
-        object_store: filesystem
-        schema: v12
-        index:
-          prefix: index_
-          period: 24h
+    - from: 2024-01-01
+      store: boltdb-shipper
+      object_store: filesystem
+      schema: v12
+      index:
+        prefix: index_
+        period: 24h
 
   limits_config:
     retention_period: 168h  # 7 ngày
+
+  server:
+    http_listen_port: 3100
+
+  ingester:
+    lifecycler:
+      ring:
+        kvstore:
+          store: inmemory
+        replication_factor: 1
+    chunk_idle_period: 5m
+    max_chunk_age: 1h
+    chunk_target_size: 1048576
+
+  querier:
+    engine:
+      timeout: 3m
+
+  frontend:
+    log_queries_longer_than: 5s

@@ -1,0 +1,12 @@
+mode: standalone
+rootUser: loki
+rootPassword: supersecret
+
+persistence:
+  enabled: true
+  size: 10Gi
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 500m

@@ -15,3 +15,11 @@ promtail:
               namespace: backend
               app: hrm
               __path__: /mnt/data/backend/*.log
+  extraVolumes:
+    - name: backend-logs
+      hostPath:
+        path: /mnt/data/backend
+        type: DirectoryOrCreate
+  extraVolumeMounts:
+    - name: backend-logs
+      mountPath: /mnt/data/backend

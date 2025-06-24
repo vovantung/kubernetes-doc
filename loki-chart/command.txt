@@ -1,0 +1,4 @@
+
+helm install loki grafana/loki-stack -n monitoring -f vaules.yaml
+helm upgrade --install loki grafana/loki-stack -n monitoring -f values.yaml
+helm uninstall loki -n monitoring

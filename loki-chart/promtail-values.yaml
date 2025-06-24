@@ -1,27 +1,31 @@
 promtail:
-  enabled: true
-  extraVolumes:
-    - name: backend-logs
-      hostPath:
-        path: /mnt/data/backend
-        type: DirectoryOrCreate
-  extraVolumeMounts:
-    - name: backend-logs
-      mountPath: /mnt/data/backend
-      readOnly: true
-
   config:
     clients:
-      - url: http://loki:3100/loki/api/v1/push
+    - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
     positions:
-      filename: /tmp/positions.yaml
+      filename: /run/promtail/positions.yaml
     scrape_configs:
-      - job_name: hrm-backend-logs
-        static_configs:
-          - targets:
-              - localhost
-            labels:
-              job: hrm-backend
-              namespace: backend
-              app: hrm
-              __path__: /mnt/data/backend/*.log
+    - job_name: hrm-backend-logs
+      static_configs:
+      - labels:
+          __path__: /mnt/data/backend/*.log
+          app: hrm
+          job: hrm-backend
+          namespace: backend
+        targets:
+        - localhost
+  enabled: true
+  extraVolumeMounts:
+  - mountPath: /mnt/data/backend
+    name: backend-logs
+    readOnly: true
+  - mountPath: /run/promtail
+    name: positions
+    readOnly: false
+  extraVolumes:
+  - hostPath:
+      path: /mnt/data/backend
+      type: DirectoryOrCreate
+    name: backend-logs
+  - name: positions
+    emptyDir: {}

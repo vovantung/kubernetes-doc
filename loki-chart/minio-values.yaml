@@ -1,5 +1,3 @@
-# minio-values.yaml
-
 replicaCount: 1
 
 resources:
@@ -48,6 +46,10 @@ consoleIngress:
   hosts:
     - minio-console.txuapp.com
 
-# root user/password auto generated (you can override for prod)
+# root user/password
 rootUser: "minioadmin"
 rootPassword: "minioadmin"
+
+# Disable post-job (prevent error)
+postJob:
+  enabled: false

@@ -1,19 +1,24 @@
-mode: standalone
+# minio-values.yaml
 
-replicas: 1
+replicaCount: 1
 
 resources:
   requests:
-    memory: 512Mi
     cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1Gi
 
 persistence:
   enabled: true
   size: 10Gi
   storageClass: local-path
 
-rootUser: loki
-rootPassword: supersecret
+service:
+  type: ClusterIP
+  port: 9000
+  consolePort: 9001
 
 ingress:
   enabled: true
@@ -28,3 +33,21 @@ ingress:
       secretName: minio-tls
   hosts:
     - minio.txuapp.com
+
+consoleIngress:
+  enabled: true
+  ingressClassName: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-http01
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  tls:
+    - hosts:
+        - minio-console.txuapp.com
+      secretName: minio-console-tls
+  hosts:
+    - minio-console.txuapp.com
+
+# root user/password auto generated (you can override for prod)
+rootUser: "minioadmin"
+rootPassword: "minioadmin"

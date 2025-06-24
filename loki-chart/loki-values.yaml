@@ -1,21 +1,25 @@
 loki:
   auth_enabled: false
 
-  persistence:
-    enabled: false
-
   storage:
-    type: filesystem
+    type: s3
 
-schemaConfig:
-  configs:
-    - from: "2022-01-01"
-      store: boltdb-shipper
-      object_store: filesystem
-      schema: v12
-      index:
-        prefix: loki_index_
-        period: 24h
-
-gateway:
-  enabled: true
+  config:
+    common:
+      storage:
+        s3:
+          endpoint: minio.minio.svc.cluster.local.:9000
+          bucketnames: loki-data
+          access_key_id: loki
+          secret_access_key: supersecret
+          insecure: true
+          s3forcepathstyle: true
+    schema_config:
+      configs:
+        - from: "2024-06-01"
+          store: boltdb-shipper
+          object_store: s3
+          schema: v12
+          index:
+            prefix: loki_index_
+            period: 24h

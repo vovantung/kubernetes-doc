@@ -1,17 +1,18 @@
-replicaCount: 1
+mode: distributed
+replicas: 4  # <= nhỏ vừa, không nên 16 trên lab nhỏ
+
+persistence:
+  enabled: true
+  size: 10Gi
+  storageClass: local-path
 
 resources:
   requests:
     cpu: 500m
     memory: 512Mi
   limits:
-    cpu: 1000m
+    cpu: 1
     memory: 1Gi
-
-persistence:
-  enabled: true
-  size: 10Gi
-  storageClass: local-path
 
 service:
   type: ClusterIP
@@ -46,10 +47,4 @@ consoleIngress:
   hosts:
     - minio-console.txuapp.com
 
-# root user/password
-rootUser: "minioadmin"
-rootPassword: "minioadmin"
-
-# Disable post-job (prevent error)
-postJob:
-  enabled: false
+rootUser: "minioad

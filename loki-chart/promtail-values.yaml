@@ -1,0 +1,31 @@
+daemonset:
+  enabled: true
+
+config:
+  clients:
+    - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+
+  positions:
+    filename: /tmp/positions.yaml
+
+  scrape_configs:
+    - job_name: hrm-backend-logs
+      static_configs:
+        - targets:
+            - localhost
+          labels:
+            job: hrm-backend
+            namespace: backend
+            app: hrm
+            __path__: /mnt/data/backend/*.log
+
+extraVolumes:
+  - name: backend-logs
+    hostPath:
+      path: /mnt/data/backend
+      type: DirectoryOrCreate
+
+extraVolumeMounts:
+  - name: backend-logs
+    mountPath: /mnt/data/backend
+    readOnly: true

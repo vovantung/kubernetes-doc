@@ -1,17 +1,11 @@
 loki:
   auth_enabled: false
+
+  persistence:
+    enabled: false
+
   storage:
     type: filesystem
-  persistence:
-    enabled: true
-    storageClassName: local-path
-    size: 10Gi
-
-  read:
-    replicas: 1
-
-  write:
-    replicas: 1
 
 schemaConfig:
   configs:

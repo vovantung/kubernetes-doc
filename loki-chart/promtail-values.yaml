@@ -19,7 +19,7 @@ config:
             - localhost
           labels:
             job: containerlogs
-            __path__: /var/log/pods/*/*/*.log
+            __path__: /mnt/data/backend/*.log
 
     - job_name: hrm-backend
       static_configs:

@@ -14,13 +14,4 @@ promtail:
               job: hrm-backend
               namespace: backend
               app: hrm
-              filename: "backend.log"  # <-- label tĩnh (nếu ko muốn tĩnh thì dùng relabel)
               __path__: /mnt/data/backend/*.log
-        pipeline_stages:
-          - match:
-              selector: '{job="hrm-backend"}'
-              stages:
-                - regex:
-                    expression: '/mnt/data/backend/(?P<filename>.+)\.log'
-                - labels:
-                    filename: filename

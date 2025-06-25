@@ -31,8 +31,11 @@ spec:
             #   readOnly: true
       volumes:
         - name: jenkins-home
-          persistentVolumeClaim:
-            claimName: jenkins-pvc
+          hostPath:
+            path: /mnt/data/jenkins
+            type: DirectoryOrCreate
+          # persistentVolumeClaim:
+          #   claimName: jenkins-pvc
         # - name: aws-credentials
         #   secret:
         #     secretName: aws-credentials

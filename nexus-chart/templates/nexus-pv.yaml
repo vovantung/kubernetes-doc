@@ -19,5 +19,5 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - worker  # Tên node bạn muốn gán PV này
+                - worker1  # Tên node bạn muốn gán PV này
 

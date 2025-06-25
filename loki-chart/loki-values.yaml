@@ -3,15 +3,9 @@ deploymentMode: SimpleScalable
 loki:
   auth_enabled: false
 
-  storage:
-    bucketNames:
-      chunks: loki-chunks
-      ruler: loki-ruler
-      admin: loki-admin
-
   schemaConfig:
     configs:
-      - from: 2024-01-01
+      - from: "2024-01-01"
         store: boltdb-shipper
         object_store: s3
         schema: v12
@@ -19,25 +13,27 @@ loki:
           prefix: index_
           period: 24h
 
-  storage_config:
-    boltdb_shipper:
-      shared_store: s3
-      active_index_directory: /var/loki/index
-      cache_location: /var/loki/cache
-    aws:
-      bucketnames:
-        chunks: loki-chunks
-        ruler: loki-ruler
-        admin: loki-admin
-      s3: http://minioadmin:minioadmin@minio.minio.svc.cluster.local.:9000
-      s3forcepathstyle: true
+  storage:
+    bucketNames:
+      chunks: loki-chunks
+      ruler: loki-ruler
+      admin: loki-admin
+    type: s3
+    s3:
+      endpoint: minio.minio.svc.cluster.local.:9000
+      accessKeyId: JCKNMDS7fLrk8V6ggaKe
+      secretAccessKey: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
+      s3ForcePathStyle: true
       insecure: true
+
+  commonConfig:
+    replication_factor: 1
 
   compactor:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-  ruler:
+  rulerConfig:
     storage:
       type: s3
       s3:
@@ -48,39 +44,27 @@ loki:
         s3forcepathstyle: true
         insecure: true
 
-  commonConfig:
-    replication_factor: 1
+singleBinary:
+  replicas: 0
 
-# Vô hiệu hóa PVC vì đã dùng object storage
+backend:
+  replicas: 1
+
+read:
+  replicas: 1
+
+write:
+  replicas: 1
+
+gateway:
+  replicas: 1
+
+indexGateway:
+  replicas: 1
+
 persistence:
   enabled: false
 
-# Số lượng replicas cho từng thành phần
-backend:
-  replicas: 1
-write:
-  replicas: 1
-read:
-  replicas: 1
-gateway:
-  replicas: 1
-indexGateway:
-  replicas: 1
-resultsCache:
-  enabled: false
-chunksCache:
-  enabled: false
-
-# Tài nguyên cho pod Loki
-resources:
-  limits:
-    cpu: 500m
-    memory: 512Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
-
-# Tích hợp Prometheus
 serviceMonitor:
   enabled: true
 

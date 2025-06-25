@@ -33,18 +33,9 @@ loki:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-  rulerConfig:
-    storage:
-      type: s3
-      s3:
-        bucketnames: loki-ruler
-        endpoint: minio.minio.svc.cluster.local.:9000
-        access_key_id: JCKNMDS7fLrk8V6ggaKe
-        secret_access_key: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
-        s3forcepathstyle: true
-        insecure: true
+  # ⚠️ KHÔNG cấu hình rulerConfig ở đây — tránh trigger ruler mode
 
-# ✅ SimpleScalable targets
+# ✅ Scalable components (duy nhất)
 backend:
   replicas: 1
 read:
@@ -56,15 +47,8 @@ gateway:
 indexGateway:
   replicas: 1
 
-# ❌ Distributed mode: KHÔNG ĐƯỢC KHAI BÁO DƯỚI MỌI HÌNH THỨC
-# XÓA hoàn toàn các block sau (nếu bạn có):
-# distributor
-# ingester
-# querier
-# frontend
-# frontendWorker
-# ruler
-# singleBinary
+# ❌ KHÔNG cấu hình bất kỳ distributed components nào. KHÔNG ĐƯỢC ghi:
+# singleBinary, distributor, ingester, querier, frontend, ruler, frontendWorker
 
 # Optional
 persistence:

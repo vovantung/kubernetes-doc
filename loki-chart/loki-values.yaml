@@ -33,24 +33,22 @@ loki:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-  # ⚠️ KHÔNG cấu hình rulerConfig ở đây — tránh trigger ruler mode
-
-# ✅ Scalable components (duy nhất)
+# ⚠️ Chỉ cấu hình các component cho SimpleScalable
 backend:
   replicas: 1
+
 read:
   replicas: 1
+
 write:
   replicas: 1
+
 gateway:
   replicas: 1
+
 indexGateway:
   replicas: 1
 
-# ❌ KHÔNG cấu hình bất kỳ distributed components nào. KHÔNG ĐƯỢC ghi:
-# singleBinary, distributor, ingester, querier, frontend, ruler, frontendWorker
-
-# Optional
 persistence:
   enabled: false
 

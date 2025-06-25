@@ -44,7 +44,7 @@ loki:
         s3forcepathstyle: true
         insecure: true
 
-# ✅ SimpleScalable mode
+# ✅ SimpleScalable targets
 backend:
   replicas: 1
 read:
@@ -56,27 +56,20 @@ gateway:
 indexGateway:
   replicas: 1
 
-# ❌ Tắt hoàn toàn các thành phần của distributed mode
-distributor:
-  enabled: false
-ingester:
-  enabled: false
-querier:
-  enabled: false
-frontend:
-  enabled: false
-frontendWorker:
-  enabled: false
-ruler:
-  enabled: false
-singleBinary:
-  enabled: false
+# ❌ Distributed mode: KHÔNG ĐƯỢC KHAI BÁO DƯỚI MỌI HÌNH THỨC
+# XÓA hoàn toàn các block sau (nếu bạn có):
+# distributor
+# ingester
+# querier
+# frontend
+# frontendWorker
+# ruler
+# singleBinary
 
-# Optional: Tắt persistence
+# Optional
 persistence:
   enabled: false
 
-# Optional: Monitoring
 serviceMonitor:
   enabled: true
 prometheusRule:

@@ -1,9 +1,13 @@
-# Chế độ triển khai
+# Dùng chế độ mở rộng linh hoạt, không phân tán
 deploymentMode: SimpleScalable
 
-# Loki chính
+# Sử dụng object storage S3 (MinIO)
+minio:
+  enabled: true
+
 loki:
   auth_enabled: false
+
   schemaConfig:
     configs:
       - from: "2024-01-01"
@@ -34,27 +38,30 @@ loki:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-# Bật MinIO nội bộ chart để tạo prefix, bucket nếu cần
-minio:
-  enabled: true
-
-# Bật các thành phần scalable
+# Chỉ bật các service của SimpleScalable
 backend:
   replicas: 1
-
 read:
   replicas: 1
-
 write:
   replicas: 1
-
 gateway:
   replicas: 1
-
 indexGateway:
   replicas: 1
 
-# Không dùng persistence (MinIO thay thế)
+# Vô hiệu hóa mọi cấu hình còn lại không cần thiết
+singleBinary: null
+distributor: null
+ingester: null
+querier: null
+frontend: null
+ruler: null
+tableManager: null
+resultsCache: null
+chunksCache: null
+
+# Không bật persistent volume
 persistence:
   enabled: false
 

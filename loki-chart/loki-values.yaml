@@ -1,11 +1,7 @@
 deploymentMode: SimpleScalable
 
-minio:
-  enabled: false  # vì bạn đã có MinIO riêng
-
 loki:
   auth_enabled: false
-
   schemaConfig:
     configs:
       - from: "2024-01-01"
@@ -15,7 +11,6 @@ loki:
         index:
           prefix: index_
           period: 24h
-
   storage:
     type: s3
     bucketNames:
@@ -28,10 +23,8 @@ loki:
       secretAccessKey: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
       s3ForcePathStyle: true
       insecure: true
-
   commonConfig:
     replication_factor: 1
-
   compactor:
     working_directory: /var/loki/compactor
     shared_store: s3
@@ -51,11 +44,33 @@ gateway:
 indexGateway:
   replicas: 1
 
+# Zero out singleBinary and distributed replicas
+singleBinary:
+  replicas: 0
+ingester:
+  replicas: 0
+querier:
+  replicas: 0
+queryFrontend:
+  replicas: 0
+queryScheduler:
+  replicas: 0
+distributor:
+  replicas: 0
+compactor:
+  replicas: 0
+bloomCompactor:
+  replicas: 0
+bloomGateway:
+  replicas: 0
+
+minio:
+  enabled: false
+
 persistence:
   enabled: false
 
 serviceMonitor:
   enabled: true
-
 prometheusRule:
   enabled: false

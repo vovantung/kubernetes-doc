@@ -1,7 +1,18 @@
-deploymentMode: Transitional
+deploymentMode: SingleBinary
 
 loki:
   auth_enabled: false
+
+  commonConfig:
+    replication_factor: 1
+    storage:
+      s3:
+        endpoint: minio.minio.svc.cluster.local.:9000
+        bucketnames: loki-logs
+        access_key_id: JCKNMDS7fLrk8V6ggaKe
+        secret_access_key: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
+        s3forcepathstyle: true
+        insecure: true
 
   schemaConfig:
     configs:
@@ -16,57 +27,27 @@ loki:
   storage:
     type: s3
     bucketNames:
-      chunks: loki-chunks
+      chunks: loki-logs
       ruler: loki-ruler
       admin: loki-admin
     s3:
-      endpoint: minio.minio.svc.cluster.local:9000
+      endpoint: minio.minio.svc.cluster.local.:9000
       accessKeyId: JCKNMDS7fLrk8V6ggaKe
       secretAccessKey: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
       s3ForcePathStyle: true
       insecure: true
 
-  commonConfig:
-    replication_factor: 1
-
   compactor:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-backend:
+singleBinary:
   replicas: 1
-
-read:
-  replicas: 1
-
-write:
-  replicas: 1
-
-gateway:
-  replicas: 1
-
-indexGateway:
-  replicas: 1
-
-# Giải quyết nil pointer
-ruler:
-  enabled: false
-
-tableManager:
-  retention_deletes_enabled: false
-  retention_period: ""
-
-resultsCache:
-  enabled: false
-
-chunksCache:
-  enabled: false
+  persistence:
+    enabled: false
 
 serviceMonitor:
   enabled: true
 
 prometheusRule:
-  enabled: false
-
-persistence:
   enabled: false

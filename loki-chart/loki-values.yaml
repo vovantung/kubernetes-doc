@@ -1,6 +1,13 @@
 loki:
   auth_enabled: false
 
+  storage:
+    bucketNames:
+      chunks: loki-logs
+      ruler: loki-logs
+      admin: loki-logs
+    type: s3
+
   storage_config:
     boltdb_shipper:
       active_index_directory: /data/loki/index
@@ -23,4 +30,7 @@ loki:
           period: 24h
 
   persistence:
-    enabled: false  # ❌ Không dùng PVC
+    enabled: false
+
+  commonConfig:
+    replication_factor: 1

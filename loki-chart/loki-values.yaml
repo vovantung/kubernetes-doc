@@ -33,46 +33,26 @@ loki:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-# ⚠️ Chỉ dùng các thành phần của SimpleScalable
 backend:
   replicas: 1
+
 read:
   replicas: 1
+
 write:
   replicas: 1
+
 gateway:
   replicas: 1
+
 indexGateway:
   replicas: 1
 
-# ⚠️ Đảm bảo KHÔNG cấu hình các component của SingleBinary hoặc Distributed:
-singleBinary:
-  replicas: 0
-distributor:
-  replicas: 0
-ingester:
-  replicas: 0
-querier:
-  replicas: 0
-queryFrontend:
-  replicas: 0
-queryScheduler:
-  replicas: 0
-compactor:
-  replicas: 0
-ruler:
-  replicas: 0
-bloomCompactor:
-  replicas: 0
-bloomGateway:
-  replicas: 0
-
-# Monitoring
-serviceMonitor:
-  enabled: true
-prometheusRule:
+persistence:
   enabled: false
 
-# Nếu không cần lưu persistent
-persistence:
+serviceMonitor:
+  enabled: true
+
+prometheusRule:
   enabled: false

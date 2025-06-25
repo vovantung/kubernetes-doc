@@ -1,25 +1,21 @@
 loki:
   auth_enabled: false
-
   commonConfig:
     replication_factor: 1
-
   storage:
     type: s3
     bucketNames:
       chunks: loki-chunks
       ruler: loki-ruler
       index: loki-index
-
   storage_config:
     s3:
-      endpoint: minio.minio.svc.cluster.local:9000
+      endpoint: minio.minio.svc.cluster.local.:9000
       bucketnames: loki-chunks,loki-ruler,loki-index
       access_key_id: JCKNMDS7fLrk8V6ggaKe
       secret_access_key: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
       s3forcepathstyle: true
       insecure: true
-
   schemaConfig:
     configs:
       - from: 2024-01-01
@@ -29,29 +25,23 @@ loki:
         index:
           prefix: index_
           period: 24h
-
   compactor:
     shared_store: s3
 
-  # ❌ Tắt các PVC mà Helm chart vẫn bật mặc định
-  persistence:
-    enabled: false
-
+# 🔧 TẮT hoàn toàn PVC cho từng StatefulSet
+persistence:
+  enabled: false
 backend:
   persistence:
     enabled: false
-
 read:
   persistence:
     enabled: false
-
 write:
   persistence:
     enabled: false
-
 chunksCache:
   enabled: false
-
 resultsCache:
   enabled: false
 
@@ -63,8 +53,8 @@ ingress:
   ingressClassName: nginx
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/cluster-issuer: letsencrypt-http01
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-http01
   hosts:
     - loki.txuapp.com
   tls:

@@ -1,9 +1,5 @@
-# Dùng chế độ mở rộng linh hoạt, không phân tán
+# cấu hình chuẩn cho SimpleScalable
 deploymentMode: SimpleScalable
-
-# Sử dụng object storage S3 (MinIO)
-minio:
-  enabled: true
 
 loki:
   auth_enabled: false
@@ -38,7 +34,6 @@ loki:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-# Chỉ bật các service của SimpleScalable
 backend:
   replicas: 1
 read:
@@ -50,18 +45,22 @@ gateway:
 indexGateway:
   replicas: 1
 
-# Vô hiệu hóa mọi cấu hình còn lại không cần thiết
+# 🔒 Thêm dòng này để loại bỏ lỗi nil pointer
+ruler:
+  enabled: false
+
+# Các service không cần bật
 singleBinary: null
 distributor: null
 ingester: null
 querier: null
 frontend: null
-ruler: null
+frontend_worker: null
+queryFrontend: null
 tableManager: null
 resultsCache: null
 chunksCache: null
 
-# Không bật persistent volume
 persistence:
   enabled: false
 

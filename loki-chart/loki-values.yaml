@@ -20,7 +20,7 @@ loki:
       ruler: loki-ruler
       admin: loki-admin
     s3:
-      endpoint: http://minio.minio.svc.cluster.local:9000
+      endpoint: minio.minio.svc.cluster.local:9000
       accessKeyId: JCKNMDS7fLrk8V6ggaKe
       secretAccessKey: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
       s3ForcePathStyle: true
@@ -33,7 +33,7 @@ loki:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-# SimpleScalable components
+# cấu hình số replica cho SimpleScalable
 backend:
   replicas: 1
 
@@ -49,30 +49,35 @@ gateway:
 indexGateway:
   replicas: 1
 
-# 👇 Chặn tất cả distributed component bị Helm chart auto-load mặc định
+# zero hóa các mode khác (tránh conflict)
 singleBinary:
-  enabled: false
+  replicas: 0
 distributor:
-  enabled: false
+  replicas: 0
 ingester:
-  enabled: false
+  replicas: 0
 querier:
-  enabled: false
+  replicas: 0
 queryFrontend:
-  enabled: false
+  replicas: 0
+queryScheduler:
+  replicas: 0
 compactor:
-  enabled: false
-ruler:
-  enabled: false
+  # nếu bạn muốn scale compactor:
+  replicas: 1
+bloomCompactor:
+  replicas: 0
 bloomGateway:
-  enabled: false
-bloomBuild:
-  enabled: false
+  replicas: 0
+
+minio:
+  enabled: false  # không dùng minio tích hợp
 
 persistence:
-  enabled: false
+  enabled: false  # bạn dùng S3 nên không cần PVC
 
 serviceMonitor:
   enabled: true
+
 prometheusRule:
   enabled: false

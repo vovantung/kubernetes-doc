@@ -1,31 +1,5 @@
 deploymentMode: SimpleScalable
 
-singleBinary:
-  enabled: false
-distributor:
-  enabled: false
-ingester:
-  enabled: false
-querier:
-  enabled: false
-frontend:
-  enabled: false
-frontendWorker:
-  enabled: false
-ruler:
-  enabled: false
-
-backend:
-  replicas: 1
-read:
-  replicas: 1
-write:
-  replicas: 1
-gateway:
-  replicas: 1
-indexGateway:
-  replicas: 1
-
 loki:
   auth_enabled: false
 
@@ -40,11 +14,11 @@ loki:
           period: 24h
 
   storage:
+    type: s3
     bucketNames:
       chunks: loki-chunks
       ruler: loki-ruler
       admin: loki-admin
-    type: s3
     s3:
       endpoint: minio.minio.svc.cluster.local.:9000
       accessKeyId: JCKNMDS7fLrk8V6ggaKe
@@ -70,9 +44,55 @@ loki:
         s3forcepathstyle: true
         insecure: true
 
+# SimpleScalable mode components
+backend:
+  replicas: 1
+
+read:
+  replicas: 1
+
+write:
+  replicas: 1
+
+gateway:
+  replicas: 1
+
+indexGateway:
+  replicas: 1
+
+# Ensure distributed mode components are disabled
+distributor:
+  enabled: false
+  replicas: 0
+
+ingester:
+  enabled: false
+  replicas: 0
+
+querier:
+  enabled: false
+  replicas: 0
+
+frontend:
+  enabled: false
+  replicas: 0
+
+frontendWorker:
+  enabled: false
+  replicas: 0
+
+ruler:
+  enabled: false
+  replicas: 0
+
+singleBinary:
+  enabled: false
+
+# Persistence (optional)
 persistence:
   enabled: false
 
+# Monitoring (optional)
 serviceMonitor:
   enabled: true
 

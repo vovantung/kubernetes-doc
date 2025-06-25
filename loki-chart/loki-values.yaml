@@ -21,9 +21,9 @@ loki:
     bucketNames:
       chunks: loki-chunks
       ruler: loki-ruler
-      admin: loki-logs
+      admin: loki-admin
     s3:
-      endpoint: minio.minio.svc.cluster.local.:9000
+      endpoint: minio.minio.svc.cluster.local:9000
       accessKeyId: JCKNMDS7fLrk8V6ggaKe
       secretAccessKey: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
       s3ForcePathStyle: true
@@ -35,11 +35,6 @@ loki:
 
 singleBinary:
   replicas: 1
-  persistence:
-    enabled: false
 
 serviceMonitor:
   enabled: true
-
-prometheusRule:
-  enabled: false

@@ -1,4 +1,3 @@
-# cấu hình chuẩn cho SimpleScalable
 deploymentMode: SimpleScalable
 
 loki:
@@ -36,35 +35,38 @@ loki:
 
 backend:
   replicas: 1
+
 read:
   replicas: 1
+
 write:
   replicas: 1
+
 gateway:
   replicas: 1
+
 indexGateway:
   replicas: 1
 
-# 🔒 Thêm dòng này để loại bỏ lỗi nil pointer
+# Giải quyết nil pointer
 ruler:
   enabled: false
 
-# Các service không cần bật
-singleBinary: null
-distributor: null
-ingester: null
-querier: null
-frontend: null
-frontend_worker: null
-queryFrontend: null
-tableManager: null
-resultsCache: null
-chunksCache: null
+tableManager:
+  retention_deletes_enabled: false
+  retention_period: ""
 
-persistence:
+resultsCache:
+  enabled: false
+
+chunksCache:
   enabled: false
 
 serviceMonitor:
   enabled: true
+
 prometheusRule:
+  enabled: false
+
+persistence:
   enabled: false

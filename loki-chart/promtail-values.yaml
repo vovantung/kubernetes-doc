@@ -1,17 +1,10 @@
 config:
   clients:
-    - url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+    - url: http://loki.monitoring.svc.cluster.local.:3100/loki/api/v1/push
   positions:
     filename: /run/promtail/positions.yaml
   scrape_configs:
-    - job_name: system
-      static_configs:
-        - targets:
-            - localhost
-          labels:
-            job: varlogs
-            __path__: /var/log/*log
-    - job_name: containers
+    - job_name: containerlogs
       pipeline_stages:
         - docker: {}
       static_configs:
@@ -19,9 +12,9 @@ config:
             - localhost
           labels:
             job: containerlogs
-            __path__: /mnt/data/backend/*.log
+            __path__: /var/log/pods/*/*/*.log
 
-    - job_name: hrm-backend
+    - job_name: hrm-backend-logs
       static_configs:
         - targets:
             - localhost

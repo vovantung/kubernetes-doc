@@ -47,8 +47,8 @@ consoleIngress:
   hosts:
     - minio-console.txuapp.com
 
-rootUser: "minioadmin"
-rootPassword: "minioadmin"
+rootUser: "admin"
+rootPassword: "Phan@123"
 
 postJob:
   enabled: false

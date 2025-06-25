@@ -1,6 +1,8 @@
+singleBinary:
+  replicas: 1
+
 loki:
   auth_enabled: false
-
   commonConfig:
     replication_factor: 1
 
@@ -45,19 +47,5 @@ loki:
 persistence:
   enabled: false
 
-singleBinary:
-  replicas: 1
-
-resources:
-  limits:
-    cpu: 500m
-    memory: 512Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
-
 serviceMonitor:
   enabled: true
-
-prometheusRule:
-  enabled: false

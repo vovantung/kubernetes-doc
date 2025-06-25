@@ -33,6 +33,7 @@ loki:
     working_directory: /var/loki/compactor
     shared_store: s3
 
+# SimpleScalable components
 backend:
   replicas: 1
 
@@ -48,11 +49,30 @@ gateway:
 indexGateway:
   replicas: 1
 
+# 👇 Chặn tất cả distributed component bị Helm chart auto-load mặc định
+singleBinary:
+  enabled: false
+distributor:
+  enabled: false
+ingester:
+  enabled: false
+querier:
+  enabled: false
+queryFrontend:
+  enabled: false
+compactor:
+  enabled: false
+ruler:
+  enabled: false
+bloomGateway:
+  enabled: false
+bloomBuild:
+  enabled: false
+
 persistence:
   enabled: false
 
 serviceMonitor:
   enabled: true
-
 prometheusRule:
   enabled: false

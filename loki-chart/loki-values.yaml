@@ -3,6 +3,12 @@ deploymentMode: SimpleScalable
 loki:
   auth_enabled: false
 
+  storage:
+    bucketNames:
+      chunks: loki-chunks
+      ruler: loki-ruler
+      admin: loki-admin
+
   schemaConfig:
     configs:
       - from: 2024-01-01
@@ -15,74 +21,66 @@ loki:
 
   storage_config:
     boltdb_shipper:
-      active_index_directory: /data/loki/index
-      cache_location: /data/loki/index_cache
       shared_store: s3
+      active_index_directory: /var/loki/index
+      cache_location: /var/loki/cache
     aws:
-      s3: http://minioadmin:minioadmin@minio.minio.svc.cluster.local.:9000/loki-logs
+      bucketnames:
+        chunks: loki-chunks
+        ruler: loki-ruler
+        admin: loki-admin
+      s3: http://minioadmin:minioadmin@minio.minio.svc.cluster.local.:9000
       s3forcepathstyle: true
       insecure: true
 
-  commonConfig:
-    replication_factor: 1
-
   compactor:
-    working_directory: /data/loki/compactor
+    working_directory: /var/loki/compactor
     shared_store: s3
 
   ruler:
     storage:
       type: s3
       s3:
-        bucketnames: loki-logs
+        bucketnames: loki-ruler
         endpoint: minio.minio.svc.cluster.local.:9000
         access_key_id: JCKNMDS7fLrk8V6ggaKe
         secret_access_key: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
         s3forcepathstyle: true
         insecure: true
 
-  # Bắt buộc với SimpleScalable
-  structuredConfig:
-    distributor:
-      ring:
-        kvstore:
-          store: memberlist
+  commonConfig:
+    replication_factor: 1
 
-    ingester:
-      lifecycler:
-        ring:
-          kvstore:
-            store: memberlist
-          replication_factor: 1
-      chunk_idle_period: 1h
-      max_chunk_age: 1h
-      wal:
-        enabled: true
-        dir: /var/loki/wal
-
-    memberlist:
-      join_members:
-        - "loki-memberlist"
-
-  # Thêm để tránh lỗi validation
-  limits_config:
-    enforce_metric_name: false
-
+# Vô hiệu hóa PVC vì đã dùng object storage
 persistence:
   enabled: false
 
-read:
-  replicas: 1
-
-write:
-  replicas: 1
-
+# Số lượng replicas cho từng thành phần
 backend:
   replicas: 1
-
+write:
+  replicas: 1
+read:
+  replicas: 1
 gateway:
   replicas: 1
+indexGateway:
+  replicas: 1
+resultsCache:
+  enabled: false
+chunksCache:
+  enabled: false
 
+# Tài nguyên cho pod Loki
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Tích hợp Prometheus
 serviceMonitor:
   enabled: true
 

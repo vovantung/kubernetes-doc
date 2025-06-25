@@ -5,14 +5,6 @@ loki:
 
   commonConfig:
     replication_factor: 1
-    storage:
-      s3:
-        endpoint: minio.minio.svc.cluster.local:9000
-        bucketnames: loki-logs
-        access_key_id: JCKNMDS7fLrk8V6ggaKe
-        secret_access_key: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
-        s3forcepathstyle: true
-        insecure: true
 
   schemaConfig:
     configs:
@@ -27,11 +19,11 @@ loki:
   storage:
     type: s3
     bucketNames:
-      chunks: loki-logs
+      chunks: loki-chunks
       ruler: loki-ruler
-      admin: loki-admin
+      admin: loki-logs
     s3:
-      endpoint: minio.minio.svc.cluster.local:9000
+      endpoint: minio.minio.svc.cluster.local.:9000
       accessKeyId: JCKNMDS7fLrk8V6ggaKe
       secretAccessKey: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
       s3ForcePathStyle: true

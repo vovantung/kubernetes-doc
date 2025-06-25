@@ -1,6 +1,5 @@
 deploymentMode: SimpleScalable
 
-# 🛑 PHẢI TẮT các thành phần Distributed (nếu không sẽ gây lỗi validate.yaml)
 singleBinary:
   enabled: false
 distributor:
@@ -16,7 +15,6 @@ frontendWorker:
 ruler:
   enabled: false
 
-# ✅ Các thành phần thuộc SimpleScalable (chỉ dùng các thành phần này)
 backend:
   replicas: 1
 read:

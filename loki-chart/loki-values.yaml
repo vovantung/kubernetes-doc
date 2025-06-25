@@ -1,21 +1,18 @@
 deploymentMode: SimpleScalable
 
-# ✅ Bắt buộc vô hiệu hóa cấu hình cũ
+# ❌ Vô hiệu hóa hoàn toàn các thành phần Distributed
 singleBinary:
-  replicas: 0
-
+  enabled: false
 distributor:
   replicas: 0
-
 ingester:
   replicas: 0
-
 querier:
   replicas: 0
-
 frontend:
   replicas: 0
-
+frontendWorker:
+  replicas: 0
 ruler:
   enabled: false
 
@@ -64,22 +61,19 @@ loki:
         s3forcepathstyle: true
         insecure: true
 
-# ✅ Các thành phần của SimpleScalable
+# ✅ SimpleScalable các thành phần chính
 backend:
   replicas: 1
-
 read:
   replicas: 1
-
 write:
   replicas: 1
-
 gateway:
   replicas: 1
-
 indexGateway:
   replicas: 1
 
+# ⚙️ Optional
 persistence:
   enabled: false
 

@@ -1,3 +1,4 @@
-helm install loki-distributed grafana/loki-distributed -n monitoring --create-namespace -f loki-values.yaml
-helm upgrade --install loki-distributed grafana/loki-distributed -n monitoring -f loki-values.yaml
-helm uninstall loki-distributed -n monitoring
+helm install loki grafana/loki -n monitoring --create-namespace -f loki-values.yaml
+helm upgrade --install loki grafana/loki --namespace monitoring --create-namespace -f loki-values.yaml
+helm uninstall loki -n monitoring
+

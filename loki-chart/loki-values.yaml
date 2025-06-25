@@ -1,8 +1,9 @@
+# Chế độ triển khai
 deploymentMode: SimpleScalable
 
+# Loki chính
 loki:
   auth_enabled: false
-
   schemaConfig:
     configs:
       - from: "2024-01-01"
@@ -33,7 +34,11 @@ loki:
     working_directory: /var/loki/compactor
     shared_store: s3
 
-# cấu hình số replica cho SimpleScalable
+# Bật MinIO nội bộ chart để tạo prefix, bucket nếu cần
+minio:
+  enabled: true
+
+# Bật các thành phần scalable
 backend:
   replicas: 1
 
@@ -49,35 +54,11 @@ gateway:
 indexGateway:
   replicas: 1
 
-# zero hóa các mode khác (tránh conflict)
-singleBinary:
-  replicas: 0
-distributor:
-  replicas: 0
-ingester:
-  replicas: 0
-querier:
-  replicas: 0
-queryFrontend:
-  replicas: 0
-queryScheduler:
-  replicas: 0
-compactor:
-  # nếu bạn muốn scale compactor:
-  replicas: 1
-bloomCompactor:
-  replicas: 0
-bloomGateway:
-  replicas: 0
-
-minio:
-  enabled: false  # không dùng minio tích hợp
-
+# Không dùng persistence (MinIO thay thế)
 persistence:
-  enabled: false  # bạn dùng S3 nên không cần PVC
+  enabled: false
 
 serviceMonitor:
   enabled: true
-
 prometheusRule:
   enabled: false

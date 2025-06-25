@@ -1,23 +1,18 @@
 loki:
   auth_enabled: false
 
-  storage:
-    type: s3
-    bucketNames:
-      chunks: loki-chunks
-      ruler: loki-ruler
-      index: loki-index
-
   storage_config:
-    s3:
-      endpoint: minio.minio.svc.cluster.local.:9000
-      bucketnames: loki-chunks,loki-ruler,loki-index
-      access_key_id: JCKNMDS7fLrk8V6ggaKe
-      secret_access_key: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
+    boltdb_shipper:
+      active_index_directory: /data/loki/index
+      cache_location: /data/loki/index_cache
+      shared_store: s3
+    aws:
+      s3: http://minioadmin:minioadmin@minio.minio.svc.cluster.local.:9000/loki-logs
       s3forcepathstyle: true
-      insecure: true
+    index_gateway:
+      mode: "ring"
 
-  schemaConfig:
+  schema_config:
     configs:
       - from: 2024-01-01
         store: boltdb-shipper
@@ -27,5 +22,5 @@ loki:
           prefix: index_
           period: 24h
 
-  compactor:
-    shared_store: s3
+  persistence:
+    enabled: false  # ❌ Không dùng PVC

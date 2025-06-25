@@ -44,9 +44,6 @@ loki:
         s3forcepathstyle: true
         insecure: true
 
-singleBinary:
-  replicas: 0
-
 backend:
   replicas: 1
 
@@ -61,6 +58,14 @@ gateway:
 
 indexGateway:
   replicas: 1
+
+# ⚠️ KHÔNG CẤU HÌNH các thành phần sau:
+# singleBinary:
+# distributor:
+# ingester:
+# querier:
+# frontend:
+# ruler:
 
 persistence:
   enabled: false

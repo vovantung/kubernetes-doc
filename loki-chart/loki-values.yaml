@@ -1,5 +1,25 @@
 deploymentMode: SimpleScalable
 
+# ✅ Bắt buộc vô hiệu hóa cấu hình cũ
+singleBinary:
+  replicas: 0
+
+distributor:
+  replicas: 0
+
+ingester:
+  replicas: 0
+
+querier:
+  replicas: 0
+
+frontend:
+  replicas: 0
+
+ruler:
+  enabled: false
+
+# ✅ Cấu hình đúng cho SimpleScalable + MinIO
 loki:
   auth_enabled: false
 
@@ -44,6 +64,7 @@ loki:
         s3forcepathstyle: true
         insecure: true
 
+# ✅ Các thành phần của SimpleScalable
 backend:
   replicas: 1
 
@@ -58,14 +79,6 @@ gateway:
 
 indexGateway:
   replicas: 1
-
-# ⚠️ KHÔNG CẤU HÌNH các thành phần sau:
-# singleBinary:
-# distributor:
-# ingester:
-# querier:
-# frontend:
-# ruler:
 
 persistence:
   enabled: false

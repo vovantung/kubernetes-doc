@@ -1,3 +1,4 @@
+# Loki dùng MinIO S3, không tạo PVC
 loki:
   auth_enabled: false
 
@@ -8,13 +9,13 @@ loki:
     type: s3
     bucketNames:
       chunks: loki-chunks
-      ruler: loki-ruler
       index: loki-index
+      ruler: loki-ruler
 
   storage_config:
     s3:
       endpoint: minio.minio.svc.cluster.local:9000
-      bucketnames: loki-chunks,loki-ruler,loki-index
+      bucketnames: loki-chunks,loki-index,loki-ruler
       access_key_id: JCKNMDS7fLrk8V6ggaKe
       secret_access_key: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
       s3forcepathstyle: true
@@ -33,7 +34,7 @@ loki:
   compactor:
     shared_store: s3
 
-  # Tắt tạo PVC (rất quan trọng)
+  # 👉 Tắt tạo PVC hoàn toàn
   persistence:
     enabled: false
 
@@ -44,9 +45,9 @@ ingress:
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-http01
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - loki.txuapp.com
   tls:
     - hosts:
         - loki.txuapp.com
       secretName: loki-tls
-  hosts:
-    - loki.txuapp.com

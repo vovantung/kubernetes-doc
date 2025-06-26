@@ -23,16 +23,20 @@ spec:
               mountPath: /var/jenkins_home
 
         - name: restore-from-minio
-          image: amazon/aws-cli
+          image: vothinhuydt/jenkins-backup:txu
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
           command:
             - sh
             - -c
             - |
               echo "[init] Restoring Jenkins data..." && \
-              aws --endpoint-url http://minio.minio.svc.cluster.local:9000 \
-                s3 cp s3://jenkins-data/jenkins-latest.tar.gz /tmp/jenkins.tar.gz && \
+              export MC_CONFIG_DIR=/tmp/.mc && \
+              mc alias set minio http://minio.minio.svc.cluster.local.:9000 $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && \
+              mc cp minio/jenkins-data/jenkins-latest.tar.gz /tmp/jenkins.tar.gz || echo "No backup found, continuing..." && \
               rm -rf /var/jenkins_home/* && \
-              tar xzf /tmp/jenkins.tar.gz -C /var/jenkins_home || echo "No backup found. Continuing."
+              tar xzf /tmp/jenkins.tar.gz -C /var/jenkins_home || echo "Extract failed or no archive, continuing..."
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:

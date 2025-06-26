@@ -85,7 +85,7 @@ spec:
                   key: MINIO_SECRET_ACCESS_KEY
 
         - name: backup-to-minio
-          image: minio/mc
+          image: vothinhuydt/jenkins:txu
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000

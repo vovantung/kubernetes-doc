@@ -85,7 +85,7 @@ spec:
                   key: MINIO_SECRET_ACCESS_KEY
 
         - name: backup-to-minio
-          image: amazon/aws-cli
+          image: bitnami/aws-cli:latest
           command:
             - sh
             - -c

@@ -1,8 +1,8 @@
-FROM debian:bookworm-slim
+FROM alpine:latest
 
-RUN apt-get update && \
-    apt-get install -y curl tar bash && \
-    curl -s https://dl.min.io/client/mc/release/linux-amd64/mc -o /usr/local/bin/mc && \
-    chmod +x /usr/local/bin/mc
+RUN apk add --no-cache curl tar bash && \
+    curl -O https://dl.min.io/client/mc/release/linux-amd64/mc && \
+    chmod +x mc && \
+    mv mc /usr/local/bin/
 
-ENTRYPOINT [ "bash" ]
+ENTRYPOINT [ "sh" ]

@@ -34,9 +34,14 @@ spec:
               echo "[init] Restoring Jenkins data..." && \
               export MC_CONFIG_DIR=/tmp/.mc && \
               mc alias set minio http://minio.minio.svc.cluster.local.:9000 $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && \
-              mc cp minio/jenkins-data/jenkins-latest.tar.gz /tmp/jenkins.tar.gz || echo "No backup found, continuing..." && \
-              rm -rf /var/jenkins_home/* && \
-              tar xzf /tmp/jenkins.tar.gz -C /var/jenkins_home || echo "Extract failed or no archive, continuing..."
+              if mc ls minio/jenkins-data/jenkins-latest.tar.gz > /dev/null 2>&1; then \
+                echo "[init] Backup found, restoring..." && \
+                mc cp minio/jenkins-data/jenkins-latest.tar.gz /tmp/jenkins.tar.gz && \
+                rm -rf /var/jenkins_home/* && \
+                tar xzf /tmp/jenkins.tar.gz -C /var/jenkins_home; \
+              else \
+                echo "[init] No backup file found, starting fresh."; \
+              fi
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:

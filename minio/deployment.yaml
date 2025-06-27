@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: console-minio-proxy
+  namespace: minio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio-proxy
+  template:
+    metadata:
+      labels:
+        app: minio-proxy
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:stable
+        ports:
+        - containerPort: 9001
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d
+          name: config
+      volumes:
+      - name: config
+        configMap:
+          name: minio-proxy-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minio-proxy-config
+  namespace: minio
+data:
+  default.conf: |
+    server {
+      listen 9001;
+      location / {
+        proxy_pass http://192.168.1.150:9001;
+      }
+    }

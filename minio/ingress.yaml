@@ -44,6 +44,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: console-minio-external
+                name: console-minio
                 port:
                   number: 9001

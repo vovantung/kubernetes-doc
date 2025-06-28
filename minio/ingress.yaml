@@ -4,13 +4,14 @@ metadata:
   name: minio-ingress
   namespace: minio
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-http01
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
   tls:
     - hosts:
         - minio.txuapp.com
-      secretName: minio-cert
+      secretName: minio-tls
   rules:
     - host: minio.txuapp.com
       http:

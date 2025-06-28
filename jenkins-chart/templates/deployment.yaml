@@ -105,7 +105,7 @@ spec:
             - |
               echo "[sidecar] Starting backup-to-minio"
               export MC_CONFIG_DIR=/tmp/.mc
-              mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+              mc alias set minio https://minio.txuapp.com. $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
               while true; do
                 echo "[sidecar] Performing hourly backup..." && \
                 tar czf /tmp/jenkins.tar.gz --ignore-failed-read -C /var/jenkins_home . && \

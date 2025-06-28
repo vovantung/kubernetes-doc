@@ -93,26 +93,11 @@ spec:
           #       secretKeyRef:
           #         name: minio-creds
           #         key: MINIO_SECRET_ACCESS_KEY
-
         - name: backup-to-minio
           image: vothinhuydt/jenkins-backup:txu
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
-          command:
-            - sh
-            - -c
-            - |
-              echo "[sidecar] Starting backup-to-minio"
-              export MC_CONFIG_DIR=/tmp/.mc
-              mc alias set minio https://minio.txuapp.com. $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
-              while true; do
-                echo "[sidecar] Performing hourly backup..." && \
-                tar czf /tmp/jenkins.tar.gz --ignore-failed-read -C /var/jenkins_home . && \
-                mc cp /tmp/jenkins.tar.gz minio/jenkins-data/jenkins-$(date +%Y%m%d%H%M%S).tar.gz && \
-                sleep 3600;
-              done 
-              echo "[sidecar] Finished!" 
           env:
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
@@ -127,9 +112,26 @@ spec:
           volumeMounts:
             - name: jenkins-home
               mountPath: /var/jenkins_home
+            - name: mc-config
+              mountPath: /mc-config
+          command:
+            - sh
+            - -c
+            - |
+              echo "[sidecar] Starting backup-to-minio"
+              export MC_CONFIG_DIR=/mc-config
+              mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+              while true; do
+                echo "[sidecar] Performing hourly backup..." && \
+                tar czf /tmp/jenkins.tar.gz --ignore-failed-read -C /var/jenkins_home . && \
+                mc cp /tmp/jenkins.tar.gz minio/jenkins-data/jenkins-$(date +%Y%m%d%H%M%S).tar.gz && \
+                sleep 3600;
+              done
 
       volumes:
         - name: jenkins-home
           hostPath:
             path: /mnt/data/jenkins
             type: DirectoryOrCreate
+        - name: mc-config
+          emptyDir: {}    

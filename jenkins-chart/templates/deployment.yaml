@@ -12,6 +12,10 @@ spec:
       labels:
         app: jenkins
     spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       dnsPolicy: ClusterFirst
       serviceAccountName: jenkins-sa  
       initContainers:
@@ -109,6 +113,8 @@ spec:
                 secretKeyRef:
                   name: minio-creds
                   key: MINIO_SECRET_ACCESS_KEY
+            - name: MC_CONFIG_DIR
+              value: /mc-config
           volumeMounts:
             - name: jenkins-home
               mountPath: /var/jenkins_home
@@ -120,7 +126,7 @@ spec:
             - |
               echo "[sidecar] Starting backup-to-minio"
               export MC_CONFIG_DIR=/mc-config
-              mc alias set minio https://minio.txuapp.com. $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+              mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
               while true; do
                 echo "[sidecar] Performing hourly backup..." && \
                 tar czf /tmp/jenkins.tar.gz --ignore-failed-read -C /var/jenkins_home . && \

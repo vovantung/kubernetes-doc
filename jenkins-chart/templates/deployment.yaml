@@ -127,7 +127,7 @@ spec:
               echo "[sidecar] Starting backup-to-minio"
               export MC_CONFIG_DIR=/mc-config
               mkdir -p ${MC_CONFIG_DIR}
-              mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && \
+              mc alias set minio http://192.168.98.150:9000 $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && \
               mc alias list && \
               while true; do
                 echo "[sidecar] Performing hourly backup..." && \
@@ -135,7 +135,6 @@ spec:
                 mc cp /tmp/jenkins.tar.gz minio/jenkins-data/jenkins-$(date +%Y%m%d%H%M%S).tar.gz && \
                 sleep 3600;
               done
-
       volumes:
         - name: jenkins-home
           hostPath:

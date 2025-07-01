@@ -38,7 +38,7 @@ spec:
               echo "[init] Restoring Jenkins data..." && \
               export MC_CONFIG_DIR=/mc-config
               mkdir -p ${MC_CONFIG_DIR}
-              mc alias set minio http://192.168.98.150:9000 $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && \
+              mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && \
               LATEST_FILE=$(mc ls minio/jenkins-data/ | grep -oE 'jenkins-[0-9]{14}\.tar\.gz' | sort | tail -n1) && \
               if [ -n "$LATEST_FILE" ]; then \
                 echo "[init] Found $LATEST_FILE, downloading..." && \

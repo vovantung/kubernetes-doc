@@ -143,8 +143,11 @@ spec:
         #       done
       volumes:
         - name: jenkins-home
-          hostPath:
-            path: /mnt/data/jenkins
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: jenkins-nfs-pvc
+        # - name: jenkins-home
+        #   hostPath:
+        #     path: /mnt/data/jenkins
+        #     type: DirectoryOrCreate
         - name: mc-config #Thêm volume mc-config dùng emptyDir (tạm thời, ghi được)
           emptyDir: {}    

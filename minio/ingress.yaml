@@ -1,32 +1,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minio-ingress
-  namespace: minio
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/cluster-issuer: letsencrypt-http01
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-spec:
-  tls:
-    - hosts:
-        - minio.txuapp.com
-      secretName: minio-tls
-  rules:
-    - host: minio.txuapp.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: minio-external
-                port:
-                  number: 9000
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
   name: cs-minio-ingress
   namespace: minio
   annotations:
@@ -50,3 +24,31 @@ spec:
                 name: cs-minio-external
                 port:
                   number: 9001
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-ingress
+  namespace: minio
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-http01
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - minio.txuapp.com
+      secretName: minio-tls
+  rules:
+    - host: minio.txuapp.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minio-external
+                port:
+                  number: 9000

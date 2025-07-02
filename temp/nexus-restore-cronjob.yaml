@@ -21,7 +21,7 @@ spec:
           serviceAccountName: nexus-sa 
           containers:
             - name: restore-from-minio
-              image: vothinhuydt/jenkins-agent-kubectl:txu
+              image: vothinhuydt/nexus-cronjob:txu
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
@@ -45,7 +45,7 @@ spec:
               - -c
               - |
                 echo "Scale Jenkins về 0"
-                kubectl scale deployment jenkins --replicas=0 -n jenkins
+                kubectl scale deployment nexus --replicas=0 -n nexus
                 echo "Chờ pod shutdown..."
                 while kubectl get pods -n nexus -l app=nexus | grep -q Running; do sleep 5; done
                 echo "[init] Restoring Nexus data..." && \

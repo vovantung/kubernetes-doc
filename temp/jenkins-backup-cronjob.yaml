@@ -1,13 +1,13 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: nexus-backup
-  namespace: nexus
+  name: jenkins-backup
+  namespace: jenkins
 spec:
   suspend: true                       # khong chay theo lich
   schedule: "0 * * * *"               # chay moi gio
-  successfulJobsHistoryLimit: 1       # chi giu mot job hoan than gan nhat
-  failedJobsHistoryLimit: 1           # chi giu mot job that bai gan nhat
+  successfulJobsHistoryLimit: 1       # chi giu mot jo hoan thanh gan nhat
+  failedJobsHistoryLimit: 1           # giu lai mot job that bai gan nhat
   jobTemplate:
     spec:
       ttlSecondsAfterFinished: 300    # tu dong xoa pod sau 300 giay
@@ -35,8 +35,8 @@ spec:
                 - name: MC_CONFIG_DIR #MC_CONFIG_DIR được cấu hình trong env:, để cả trong quá trình chạy mc lẫn khi bạn kubectl exec vào container, thì lệnh mc đều biết đọc đúng config.
                   value: /mc-config
               volumeMounts:
-                - name: nexus-data
-                  mountPath: /nexus-data
+                - name: jenkins-home
+                  mountPath: /var/jenkins_home
                 - name: mc-config
                   mountPath: /mc-config        
               command:
@@ -45,15 +45,15 @@ spec:
               - |
                 export MC_CONFIG_DIR=/mc-config
                 mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
-                echo "[Backup] Archiving Nexus data..."
-                tar czf /tmp/nexus-backup.tar.gz -C /nexus-data . --ignore-failed-read
+                echo "[Backup] Archiving Jenkins data..."
+                tar czf /tmp/jenkins-backup.tar.gz -C /var/jenkins_home . --ignore-failed-read
                 echo "[Backup] Uploading to MinIO..."
-                mc cp /tmp/nexus-backup.tar.gz minio/nexus-data/nexus-$(date +%Y%m%d%H%M%S).tar.gz
+                mc cp /tmp/jenkins-backup.tar.gz minio/jenkins-data/jenkins-$(date +%Y%m%d%H%M%S).tar.gz
           restartPolicy: OnFailure
           volumes:
-            - name: nexus-data
+            - name: jenkins-home
               nfs:
                 server: 192.168.98.150
-                path: /mnt/data/nfs/nexus
+                path: /mnt/data/nfs/jenkins
             - name: mc-config
               emptyDir: {}

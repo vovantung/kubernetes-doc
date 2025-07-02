@@ -32,6 +32,7 @@ metadata:
   name: minio-ingress
   namespace: minio
   annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "1g"
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-http01
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"

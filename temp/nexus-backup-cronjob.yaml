@@ -6,8 +6,11 @@ metadata:
 spec:
   suspend: false
   schedule: "0 * * * *" # chạy mỗi giờ
+  successfulJobsHistoryLimit: 1       # chỉ giữ 1 job hoàn thành gần nhất
+  failedJobsHistoryLimit: 1           # giữ lại 1 job thất bại gần nhất
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 300
       template:
         spec:
           dnsConfig:

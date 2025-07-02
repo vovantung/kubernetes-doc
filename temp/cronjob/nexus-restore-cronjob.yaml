@@ -1,8 +1,8 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: jenkins-backup
-  namespace: jenkins
+  name: nexus-restore
+  namespace: nexus
 spec:
   suspend: true                       # khong chay theo lich
   schedule: "0 * * * *"               # chay moi gio
@@ -18,9 +18,13 @@ spec:
               - name: ndots
                 value: "1"
           dnsPolicy: ClusterFirst
+          serviceAccountName: nexus-sa 
           containers:
-            - name: backup-to-minio
-              image: vothinhuydt/nexus-cronjob:txu
+            - name: restore-from-minio
+              securityContext:
+                runAsUser: 200
+                runAsGroup: 200
+              image: vothinhuydt/cronjob:txu
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
@@ -35,26 +39,41 @@ spec:
                 - name: MC_CONFIG_DIR #MC_CONFIG_DIR được cấu hình trong env:, để cả trong quá trình chạy mc lẫn khi bạn kubectl exec vào container, thì lệnh mc đều biết đọc đúng config.
                   value: /mc-config
               volumeMounts:
-                - name: jenkins-home
-                  mountPath: /var/jenkins_home
+                - name: nexus-data
+                  mountPath: /nexus-data
                 - name: mc-config
                   mountPath: /mc-config        
               command:
               - sh
               - -c
               - |
+                echo "Shutting nexus..."
+                kubectl scale deployment nexus --replicas=0 -n nexus
+                echo "Wating pod shutdown..."
+                while kubectl get pods -n nexus -l app=nexus | grep -q Running; do sleep 5; done
+
+                echo "[init] Restoring Nexus data..." && \
                 export MC_CONFIG_DIR=/mc-config
-                mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
-                echo "[Backup] Archiving Jenkins data..."
-                tar czf /tmp/jenkins-backup.tar.gz -C /var/jenkins_home . --ignore-failed-read
-                echo "[Backup] Uploading to MinIO..."
-                mc cp /tmp/jenkins-backup.tar.gz minio/jenkins-data/jenkins-$(date +%Y%m%d%H%M%S).tar.gz
-                echo "Done"
+                mkdir -p ${MC_CONFIG_DIR}
+                mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && \
+                LATEST_FILE=$(mc ls minio/nexus-data/ | grep -oE 'nexus-[0-9]{14}\.tar\.gz' | sort | tail -n1) && \
+                if [ -n "$LATEST_FILE" ]; then \
+                  echo "[init] Found $LATEST_FILE, downloading..." && \
+                  mc cp "minio/nexus-data/$LATEST_FILE" /tmp/nexus.tar.gz && \
+                  rm -rf /nexus-data/* && \
+                  tar -xzf /tmp/nexus.tar.gz -C /nexus-data; \
+                else \
+                  echo "[init] No backup archive found."; \
+                fi
+                echo "[Restore] Done."
+                
+                echo "Restarting nexus..."
+                kubectl scale deployment nexus --replicas=1 -n nexus
           restartPolicy: OnFailure
           volumes:
-            - name: jenkins-home
+            - name: nexus-data
               nfs:
                 server: 192.168.98.150
-                path: /mnt/data/nfs/jenkins
+                path: /mnt/data/nfs/nexus
             - name: mc-config
               emptyDir: {}

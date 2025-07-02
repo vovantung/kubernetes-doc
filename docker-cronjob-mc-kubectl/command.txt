@@ -1,0 +1,2 @@
+docker build -t vothinhuydt/cronjob:txu .
+docker push vothinhuydt/cronjob:txu

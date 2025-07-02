@@ -1,25 +1,16 @@
-FROM jenkins/inbound-agent:latest
+FROM bitnami/minideb:latest
 
-USER root
+RUN install_packages curl bash tar ca-certificates wget unzip
 
-# Tạo thư mục nếu chưa có
-RUN mkdir -p /usr/local/bin
+# Cài đặt kubectl v1.30.1 trực tiếp (có thể thay bằng version bạn muốn)
+RUN curl -LO https://dl.k8s.io/release/v1.30.1/bin/linux/amd64/kubectl && \
+    chmod +x kubectl && \
+    mv kubectl /usr/local/bin/kubectl
 
-# Cài kubectl bản mới nhất
-RUN curl -LO "https://dl.k8s.io/release/$(curl -sL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
-    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
-    rm kubectl
+# Cài đặt MinIO Client (mc)
+RUN curl -Lo /usr/local/bin/mc https://dl.min.io/client/mc/release/linux-amd64/mc && \
+    chmod +x /usr/local/bin/mc
 
-# Cài curl, tar, bash nếu thiếu
-RUN apt-get update && \
-    apt-get install -y curl tar bash && \
-    rm -rf /var/lib/apt/lists/*
-
-# Cài mc
-RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc && \
-    chmod +x mc && \
-    mv mc /usr/local/bin/mc
-
-USER jenkins
+WORKDIR /app
 
 ENTRYPOINT ["sh"]

@@ -44,7 +44,10 @@ spec:
               - sh
               - -c
               - |
-                /usr/local/bin/kubectl scale deployment jenkins -n jenkins --replicas=0
+                echo "Scale Jenkins về 0"
+                kubectl scale deployment jenkins --replicas=0 -n jenkins
+                echo "Chờ pod shutdown..."
+                while kubectl get pods -n nexus -l app=nexus | grep -q Running; do sleep 5; done
                 echo "[init] Restoring Nexus data..." && \
                 export MC_CONFIG_DIR=/mc-config
                 mkdir -p ${MC_CONFIG_DIR}
@@ -59,7 +62,8 @@ spec:
                   echo "[init] No backup archive found."; \
                 fi
                 echo "[Restore] Done."
-                /usr/local/bin/kubectl scale deployment jenkins -n jenkins --replicas=1
+                echo "Scale Jenkins lại"
+                kubectl scale deployment jenkins --replicas=1 -n jenkins
           restartPolicy: OnFailure
           volumes:
             - name: nexus-data

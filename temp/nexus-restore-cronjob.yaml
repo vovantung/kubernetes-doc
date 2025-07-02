@@ -18,6 +18,7 @@ spec:
               - name: ndots
                 value: "1"
           dnsPolicy: ClusterFirst
+          serviceAccountName: nexus-sa 
           containers:
             - name: restore-from-minio
               image: vothinhuydt/jenkins-backup:txu

@@ -1,0 +1,56 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nexus-backup
+  namespace: nexus
+spec:
+  suspend: false
+  schedule: "0 * * * *" # chạy mỗi giờ
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          dnsConfig:
+            options:
+              - name: ndots
+                value: "1"
+          dnsPolicy: ClusterFirst
+          containers:
+            - name: backup-to-minio
+              image: vothinhuydt/jenkins-backup:txu
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: minio-creds
+                      key: MINIO_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: minio-creds
+                      key: MINIO_SECRET_ACCESS_KEY
+                - name: MC_CONFIG_DIR #MC_CONFIG_DIR được cấu hình trong env:, để cả trong quá trình chạy mc lẫn khi bạn kubectl exec vào container, thì lệnh mc đều biết đọc đúng config.
+                  value: /mc-config
+              volumeMounts:
+                - name: nexus-data
+                  mountPath: /nexus-data
+                - name: mc-config
+                  mountPath: /mc-config        
+              command:
+              - sh
+              - -c
+              - |
+                export MC_CONFIG_DIR=/mc-config
+                mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY
+                echo "[Backup] Archiving Nexus data..."
+                tar czf /tmp/nexus-backup.tar.gz -C /nexus-data . --ignore-failed-read
+                echo "[Backup] Uploading to MinIO..."
+                mc cp /tmp/nexus-backup.tar.gz minio/nexus-data/nexus-$(date +%Y%m%d%H%M%S).tar.gz
+            restartPolicy: OnFailure
+            volumes:
+            - name: nexus-data
+              nfs:
+                server: 192.168.98.150
+                path: /mnt/data/nfs/nexus
+            - name: mc-config
+              emptyDir: {}

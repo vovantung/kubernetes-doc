@@ -48,7 +48,7 @@ spec:
               - -c
               - |
                 echo "Shutting jenkins..."
-                kubectl scale deployment jenkins --replicas=0 -n nexus
+                kubectl scale deployment jenkins --replicas=0 -n jenkins
                 echo "Wating pod shutdown..."
                 while kubectl get pods -n jenkins -l app=jenkins | grep -q Running; do sleep 5; done
 
@@ -66,7 +66,7 @@ spec:
                   echo "[init] No backup archive found."; \
                 fi
                 echo "[Restore] Done."
-                
+
                 echo "Restarting nexus..."
                 kubectl scale deployment nexus --replicas=1 -n nexus
           restartPolicy: OnFailure

@@ -20,7 +20,7 @@ spec:
           dnsPolicy: ClusterFirst
           containers:
             - name: backup-to-minio
-              image: vothinhuydt/jenkins-backup:txu
+              image: vothinhuydt/nexus-cronjob:txu
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
@@ -49,6 +49,7 @@ spec:
                 tar czf /tmp/nexus-backup.tar.gz -C /nexus-data . --ignore-failed-read
                 echo "[Backup] Uploading to MinIO..."
                 mc cp /tmp/nexus-backup.tar.gz minio/nexus-data/nexus-$(date +%Y%m%d%H%M%S).tar.gz
+                echo "Done"
           restartPolicy: OnFailure
           volumes:
             - name: nexus-data

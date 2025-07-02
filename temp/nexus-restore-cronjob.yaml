@@ -21,7 +21,7 @@ spec:
           serviceAccountName: nexus-sa 
           containers:
             - name: restore-from-minio
-              image: vothinhuydt/jenkins-backup:txu
+              image: vothinhuydt/jenkins-agent-kubectl:txu
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:

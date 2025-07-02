@@ -21,6 +21,9 @@ spec:
           serviceAccountName: nexus-sa 
           containers:
             - name: restore-from-minio
+              securityContext:
+                runAsUser: 200
+                runAsGroup: 200
               image: vothinhuydt/nexus-cronjob:txu
               env:
                 - name: AWS_ACCESS_KEY_ID

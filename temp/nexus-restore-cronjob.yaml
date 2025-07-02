@@ -66,7 +66,7 @@ spec:
                 fi
                 echo "[Restore] Done."
                 echo "Scale Jenkins lại"
-                kubectl scale deployment jenkins --replicas=1 -n jenkins
+                kubectl scale deployment nexus --replicas=1 -n nexus
           restartPolicy: OnFailure
           volumes:
             - name: nexus-data

@@ -1,0 +1,67 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: jenkins-restore
+  namespace: jenkins
+spec:
+  suspend: true                       # khong chay theo lich
+  schedule: "0 * * * *"               # chay moi gio
+  successfulJobsHistoryLimit: 1       # chi giu mot jo hoan thanh gan nhat
+  failedJobsHistoryLimit: 1           # giu lai mot job that bai gan nhat
+  jobTemplate:
+    spec:
+      ttlSecondsAfterFinished: 300    # tu dong xoa pod sau 300 giay
+      template:
+        spec:
+          dnsConfig:
+            options:
+              - name: ndots
+                value: "1"
+          dnsPolicy: ClusterFirst
+          containers:
+            - name: restore-from-minio
+              image: vothinhuydt/jenkins-backup:txu
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: minio-creds
+                      key: MINIO_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: minio-creds
+                      key: MINIO_SECRET_ACCESS_KEY
+                - name: MC_CONFIG_DIR #MC_CONFIG_DIR được cấu hình trong env:, để cả trong quá trình chạy mc lẫn khi bạn kubectl exec vào container, thì lệnh mc đều biết đọc đúng config.
+                  value: /mc-config
+              volumeMounts:
+                - name: jenkins-home
+                  mountPath: /var/jenkins_home
+                - name: mc-config
+                  mountPath: /mc-config        
+              command:
+              - sh
+              - -c
+              - |
+                echo "[init] Restoring Jenkins data..." && \
+                export MC_CONFIG_DIR=/mc-config
+                mkdir -p ${MC_CONFIG_DIR}
+                mc alias set minio https://minio.txuapp.com $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY && \
+                LATEST_FILE=$(mc ls minio/jenkins-data/ | grep -oE 'jenkins-[0-9]{14}\.tar\.gz' | sort | tail -n1) && \
+                if [ -n "$LATEST_FILE" ]; then \
+                  echo "[init] Found $LATEST_FILE, downloading..." && \
+                  mc cp "minio/jenkins-data/$LATEST_FILE" /tmp/jenkins.tar.gz && \
+                  rm -rf /var/jenkins_home/* && \
+                  tar xzf /tmp/jenkins.tar.gz -C /var/jenkins_home; \
+                else \
+                  echo "[init] No backup archive found."; \
+                fi
+                echo "[Restore] Done."
+          restartPolicy: OnFailure
+          volumes:
+            - name: jenkins-home
+              nfs:
+                server: 192.168.98.150
+                path: /mnt/data/nfs/jenkins
+            - name: mc-config
+              emptyDir: {}

@@ -46,8 +46,8 @@ spec:
                 tar czf /tmp/nexus-backup.tar.gz -C /nexus-data . --ignore-failed-read
                 echo "[Backup] Uploading to MinIO..."
                 mc cp /tmp/nexus-backup.tar.gz minio/nexus-data/nexus-$(date +%Y%m%d%H%M%S).tar.gz
-            restartPolicy: OnFailure
-            volumes:
+          restartPolicy: OnFailure
+          volumes:
             - name: nexus-data
               nfs:
                 server: 192.168.98.150

@@ -1,0 +1,18 @@
+nfs:
+  server: 192.168.98.150           # Địa chỉ IP máy NFS server
+  path: /mnt/data/nfs              # Thư mục chia sẻ từ NFS server
+
+storageClass:
+  name: nfs-client
+  defaultClass: false
+
+# Cực kỳ quan trọng:
+# Mount /mnt/data/nfs trên host (NFS server) vào container tại đúng /persistentvolumes
+nfsMountOptions:
+  - vers=4.1
+
+resources: {}
+
+# Nếu cài vào namespace `nfs-storage`
+rbac:
+  create: true

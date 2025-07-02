@@ -1,8 +1,17 @@
-FROM alpine:latest
+FROM jenkins/inbound-agent:latest
 
-RUN apk add --no-cache curl tar bash && \
-    curl -O https://dl.min.io/client/mc/release/linux-amd64/mc && \
+USER root
+
+# Cài kubectl bản mới nhất
+RUN curl -LO "https://dl.k8s.io/release/$(curl -sL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    rm kubectl
+
+# Cài MinIO client (mc)
+RUN curl -O https://dl.min.io/client/mc/release/linux-amd64/mc && \
     chmod +x mc && \
     mv mc /usr/local/bin/
+
+USER jenkins
 
 ENTRYPOINT [ "sh" ]

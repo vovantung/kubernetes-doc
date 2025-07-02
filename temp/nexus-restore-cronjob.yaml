@@ -43,6 +43,7 @@ spec:
               - sh
               - -c
               - |
+                kubectl scale deployment jenkins -n jenkins --replicas=0
                 echo "[init] Restoring Nexus data..." && \
                 export MC_CONFIG_DIR=/mc-config
                 mkdir -p ${MC_CONFIG_DIR}
@@ -57,6 +58,7 @@ spec:
                   echo "[init] No backup archive found."; \
                 fi
                 echo "[Restore] Done."
+                kubectl scale deployment jenkins -n jenkins --replicas=1
           restartPolicy: OnFailure
           volumes:
             - name: nexus-data

@@ -18,9 +18,13 @@ spec:
               - name: ndots
                 value: "1"
           dnsPolicy: ClusterFirst
+          serviceAccountName: jenkins-sa 
           containers:
             - name: restore-from-minio
-              image: vothinhuydt/jenkins-backup:txu
+              securityContext:
+                runAsUser: 1000
+                runAsGroup: 1000
+              image: vothinhuydt/nexus-cronjob:txu
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
@@ -43,6 +47,11 @@ spec:
               - sh
               - -c
               - |
+                echo "Shutting jenkins..."
+                kubectl scale deployment jenkins --replicas=0 -n nexus
+                echo "Wating pod shutdown..."
+                while kubectl get pods -n jenkins -l app=jenkins | grep -q Running; do sleep 5; done
+
                 echo "[init] Restoring Jenkins data..." && \
                 export MC_CONFIG_DIR=/mc-config
                 mkdir -p ${MC_CONFIG_DIR}
@@ -57,6 +66,9 @@ spec:
                   echo "[init] No backup archive found."; \
                 fi
                 echo "[Restore] Done."
+                
+                echo "Restarting nexus..."
+                kubectl scale deployment nexus --replicas=1 -n nexus
           restartPolicy: OnFailure
           volumes:
             - name: jenkins-home

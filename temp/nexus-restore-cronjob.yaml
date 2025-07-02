@@ -52,7 +52,7 @@ spec:
                 if [ -n "$LATEST_FILE" ]; then \
                   echo "[init] Found $LATEST_FILE, downloading..." && \
                   mc cp "minio/nexus-data/$LATEST_FILE" /tmp/nexus.tar.gz && \
-                  # rm -rf /nexus-data/* && \
+                  rm -rf /nexus-data/* && \
                   tar -xzf /tmp/nexus.tar.gz -C /nexus-data; \
                 else \
                   echo "[init] No backup archive found."; \

@@ -67,8 +67,8 @@ spec:
                 fi
                 echo "[Restore] Done."
 
-                echo "Restarting nexus..."
-                kubectl scale deployment nexus --replicas=1 -n nexus
+                echo "Restarting jenkins..."
+                kubectl scale deployment jenkins --replicas=1 -n jenkins
           restartPolicy: OnFailure
           volumes:
             - name: jenkins-home

@@ -51,8 +51,8 @@ spec:
                 if [ -n "$LATEST_FILE" ]; then \
                   echo "[init] Found $LATEST_FILE, downloading..." && \
                   mc cp "minio/jenkins-data/$LATEST_FILE" /tmp/jenkins.tar.gz && \
-                  rm -rf /var/jenkins_home/* && \
-                  tar xzf /tmp/jenkins.tar.gz -C /var/jenkins_home; \
+                  # rm -rf /var/jenkins_home/* && \
+                  tar -xzf /tmp/jenkins.tar.gz -C /var/jenkins_home; \
                 else \
                   echo "[init] No backup archive found."; \
                 fi

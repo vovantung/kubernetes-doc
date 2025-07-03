@@ -32,7 +32,7 @@ loki:
     boltdb_shipper:
       shared_store: s3
     aws:
-      s3: https://minio.txuapp.com/loki-data
+      s3: https://minio.txuapp.com/loki-chunks
       s3forcepathstyle: true
       insecure: false
 

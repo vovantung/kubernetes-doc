@@ -38,10 +38,26 @@ loki:
   extraSecretForConfig:
     name: minio-creds-loki
 
-affinity: {}
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node-role
+              operator: In
+              values:
+                - worker
 
 backend:
-  affinity: {}
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - worker
   persistence:
     enabled: true
     storageClass: nfs-client
@@ -55,7 +71,15 @@ backend:
       cpu: 200m
 
 write:
-  affinity: {}
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - worker
   persistence:
     enabled: true
     storageClass: nfs-client
@@ -69,7 +93,15 @@ write:
       cpu: 200m
 
 read:
-  affinity: {}
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role
+                operator: In
+                values:
+                  - worker
   persistence:
     enabled: true
     storageClass: nfs-client

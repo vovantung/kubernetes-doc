@@ -10,9 +10,9 @@ spec:
   failedJobsHistoryLimit: 1           # giu lai mot job that bai gan nhat
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 60    # tu dong xoa pod sau 1 phut
       template:
         spec:
-          ttlSecondsAfterFinished: 60    # tu dong xoa pod sau 1 phut
           serviceAccountName: refresh-ecr-sa
           containers:
             - name: refresh-ecr

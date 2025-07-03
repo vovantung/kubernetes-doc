@@ -1,10 +1,9 @@
 nfs:
   server: 192.168.98.150
-  path: /mnt/data/nfs
+  path: /mnt/data/nfs/k8s-volumes
 
 storageClass:
   name: nfs-client
   defaultClass: false
+  accessModes: [ReadWriteOnce]
   reclaimPolicy: Retain
-  accessModes: ["ReadWriteOnce"]
-  volumeBindingMode: Immediate

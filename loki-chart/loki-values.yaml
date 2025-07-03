@@ -3,6 +3,7 @@ deploymentMode: SimpleScalable
 loki:
   enabled: true
   auth_enabled: false
+
   podDnsConfig:
     options:
       - name: ndots
@@ -13,10 +14,6 @@ loki:
 
   storage:
     type: s3
-    bucketNames:
-      chunks: loki-chunks
-      ruler: loki-ruler
-      admin: loki-admin
     s3:
       endpoint: minio.txuapp.com
       s3forcepathstyle: true
@@ -32,11 +29,14 @@ loki:
           prefix: index_
           period: 24h
 
-  limits_config:
-    allow_structured_metadata: false
+extraSecretForConfig:
+  name: minio-creds-loki
 
-  extraSecretForConfig:
-    name: minio-creds-loki
+serviceMonitor:
+  enabled: true
+
+# Disable anti-affinity rules to allow scheduling on any node
+affinity: {}
 
 backend:
   affinity: {}
@@ -46,25 +46,11 @@ backend:
     size: 10Gi
   resources:
     requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
       memory: 512Mi
       cpu: 200m
-    limits:
-      memory: 1Gi
-      cpu: 500m
-
-read:
-  affinity: {}
-  persistence:
-    enabled: true
-    storageClass: nfs-client
-    size: 10Gi
-  resources:
-    requests:
-      memory: 512Mi
-      cpu: 200m
-    limits:
-      memory: 1Gi
-      cpu: 500m
 
 write:
   affinity: {}
@@ -74,10 +60,25 @@ write:
     size: 10Gi
   resources:
     requests:
+      memory: 256Mi
+      cpu: 100m
+    limits:
       memory: 512Mi
       cpu: 200m
+
+read:
+  affinity: {}
+  persistence:
+    enabled: true
+    storageClass: nfs-client
+    size: 10Gi
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 100m
     limits:
-      memory: 1Gi
-      cpu: 500m
-serviceMonitor:
-  enabled: true
+      memory: 512Mi
+      cpu: 200m
+
+chunksCache:
+  enabled: false  # tránh lỗi thiếu RAM

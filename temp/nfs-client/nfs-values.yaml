@@ -1,6 +1,6 @@
 nfs:
   server: 192.168.98.150
-  path: /mnt/data/nfs/k8s-volumes
+  path: /mnt/data/nfs/nfsclient
 
 storageClass:
   name: nfs-client

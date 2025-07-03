@@ -20,7 +20,7 @@ spec:
                   install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
                   export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
                   export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-                  export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+                  export AWS_REGION=$AWS_REGION
                   aws ecr get-login-password | kubectl create secret docker-registry ecr-registry-secret \
                     --docker-username=AWS \
                     --docker-password="$(cat -)" \
@@ -38,9 +38,9 @@ spec:
                     secretKeyRef:
                       name: aws-creds-backend
                       key: AWS_SECRET_ACCESS_KEY
-                - name: AWS_DEFAULT_REGION
+                - name: AWS_REGION
                   valueFrom:
                     secretKeyRef:
                       name: aws-creds-backend
-                      key: AWS_DEFAULT_REGION
+                      key: AWS_REGION
           restartPolicy: OnFailure

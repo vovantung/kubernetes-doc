@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: refresh-ecr-secret
+  name: ecr-secret
   namespace: backend
 spec:
   suspend: true                       # khong chay theo lich
@@ -15,7 +15,7 @@ spec:
         spec:
           serviceAccountName: refresh-ecr-sa
           containers:
-            - name: refresh-ecr
+            - name: ecr-secret
               image: amazonlinux:2
               command: ["/bin/sh", "-c"]
               args:

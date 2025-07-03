@@ -39,25 +39,45 @@ loki:
     name: minio-creds-loki
 
 backend:
+  affinity: {}
   persistence:
     enabled: true
     storageClass: nfs-client
     size: 10Gi
-  affinity: {}
-
-write:
-  persistence:
-    enabled: true
-    storageClass: nfs-client
-    size: 10Gi
-  affinity: {}
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 200m
+    limits:
+      memory: 1Gi
+      cpu: 500m
 
 read:
+  affinity: {}
   persistence:
     enabled: true
     storageClass: nfs-client
     size: 10Gi
-  affinity: {}
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 200m
+    limits:
+      memory: 1Gi
+      cpu: 500m
 
+write:
+  affinity: {}
+  persistence:
+    enabled: true
+    storageClass: nfs-client
+    size: 10Gi
+  resources:
+    requests:
+      memory: 512Mi
+      cpu: 200m
+    limits:
+      memory: 1Gi
+      cpu: 500m
 serviceMonitor:
   enabled: true

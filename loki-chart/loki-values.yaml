@@ -13,7 +13,10 @@ loki:
     type: s3
     s3:
       endpoint: minio.txuapp.com
-      bucketnames: loki-data
+      bucketNames:
+        chunks: loki-chunks
+        ruler: loki-ruler
+        admin: loki-admin
       s3forcepathstyle: true
       insecure: false
   schemaConfig:

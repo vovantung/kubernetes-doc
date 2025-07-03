@@ -9,6 +9,7 @@ spec:
     spec:
       template:
         spec:
+          serviceAccountName: refresh-ecr-sa
           containers:
             - name: refresh-ecr
               image: amazonlinux:2

@@ -2,23 +2,21 @@ deploymentMode: SimpleScalable
 
 loki:
   enabled: true
-
+  auth_enabled: false
   podDnsConfig:
     options:
       - name: ndots
         value: "1"
 
-  auth_enabled: false
-
   commonConfig:
     replication_factor: 1
 
   storage:
+    type: s3
     bucketNames:
       chunks: loki-chunks
       ruler: loki-ruler
       admin: loki-admin
-    type: s3
     s3:
       endpoint: minio.txuapp.com
       s3forcepathstyle: true
@@ -34,32 +32,32 @@ loki:
           prefix: index_
           period: 24h
 
-  #  KHÔNG dùng phần này ở schemaConfig nếu đã có `storage.s3` đúng phía trên
-  # aws:
-  #   s3: https://minio.txuapp.com/loki-chunks
-  #   s3forcepathstyle: true
-  #   insecure: false
+  limits_config:
+    allow_structured_metadata: false
 
-extraSecretForConfig:
-  name: minio-creds-loki
+  extraSecretForConfig:
+    name: minio-creds-loki
 
 backend:
   persistence:
     enabled: true
     storageClass: nfs-client
     size: 10Gi
+  affinity: {}
 
 write:
   persistence:
     enabled: true
     storageClass: nfs-client
     size: 10Gi
+  affinity: {}
 
 read:
   persistence:
     enabled: true
     storageClass: nfs-client
     size: 10Gi
+  affinity: {}
 
 serviceMonitor:
   enabled: true

@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: refresh-ecr-secret
+  namespace: backend
+spec:
+  schedule: "0 */6 * * *"  # Mỗi 6 giờ
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: refresh-ecr
+              image: amazonlinux:2
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  yum install -y -q awscli curl tar gzip > /dev/null
+                  curl -LO "https://dl.k8s.io/release/$(curl -Ls https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                  install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+                  export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                  export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                  export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
+                  aws ecr get-login-password | kubectl create secret docker-registry ecr-registry-secret \
+                    --docker-username=AWS \
+                    --docker-password="$(cat -)" \
+                    --docker-server=123456789012.dkr.ecr.ap-southeast-1.amazonaws.com \
+                    --namespace=backend \
+                    --dry-run=client -o yaml | kubectl apply -f -
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: aws-creds-backend
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: aws-creds-backend
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: AWS_DEFAULT_REGION
+                  valueFrom:
+                    secretKeyRef:
+                      name: aws-creds-backend
+                      key: AWS_DEFAULT_REGION
+          restartPolicy: OnFailure

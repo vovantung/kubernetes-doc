@@ -1,40 +1,42 @@
-deploymentMode: SingleBinary
+deploymentMode: SimpleScalable
 
 loki:
   auth_enabled: false
-
   commonConfig:
     replication_factor: 1
-
+  storage:
+    type: s3
+    s3:
+      endpoint: minio.txuapp.com
+      bucketnames: loki-data
+      s3forcepathstyle: true
+      insecure: false
   schemaConfig:
     configs:
-      - from: "2024-01-01"
+      - from: 2022-01-01
         store: boltdb-shipper
         object_store: s3
-        schema: v12
+        schema: v11
         index:
           prefix: index_
           period: 24h
+  storage_config:
+    boltdb_shipper:
+      shared_store: s3
+    aws:
+      s3: https://minio.txuapp.com/loki-data
+      s3forcepathstyle: true
+      insecure: false
 
-  storage:
-    type: s3
-    bucketNames:
-      chunks: loki-chunks
-      ruler: loki-ruler
-      admin: loki-admin
-    s3:
-      endpoint: minio.minio.svc.cluster.local:9000
-      accessKeyId: JCKNMDS7fLrk8V6ggaKe
-      secretAccessKey: dvhxhf8ogYpJGQq8s3L5VzeN1h3qvJUs1WjUrcy2
-      s3ForcePathStyle: true
-      insecure: true
+extraSecretForConfig:
+  name: minio-creds-loki
 
-  compactor:
-    working_directory: /var/loki/compactor
-    shared_store: s3
-
-singleBinary:
-  replicas: 1
+persistence:
+  enabled: true
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteOnce
+  size: 5Gi
 
 serviceMonitor:
   enabled: true

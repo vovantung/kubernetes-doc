@@ -1,6 +1,11 @@
 deploymentMode: SimpleScalable
 
 loki:
+  enabled: true
+  podDnsConfig:
+    options:
+      - name: ndots
+        value: "1"
   auth_enabled: false
   commonConfig:
     replication_factor: 1

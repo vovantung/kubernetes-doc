@@ -14,13 +14,13 @@ loki:
     replication_factor: 1
 
   storage:
+    bucketNames:
+      chunks: loki-chunks
+      ruler: loki-ruler
+      admin: loki-admin
     type: s3
     s3:
       endpoint: minio.txuapp.com
-      bucketNames:
-        chunks: loki-chunks
-        ruler: loki-ruler
-        admin: loki-admin
       s3forcepathstyle: true
       insecure: false
 

@@ -21,7 +21,7 @@ prometheus:
     storageSpec:
       volumeClaimTemplate:
         spec:
-          storageClassName: local-path
+          storageClassName: nfs-client
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:
@@ -46,7 +46,7 @@ grafana:
   adminUser: admin
   adminPassword: Phan@123
   persistence:
-    storageClassName: local-path
+    storageClassName: nfs-client
     enabled: true
     size: 10Gi
     accessModes:
@@ -84,7 +84,7 @@ alertmanager:
     storage:
       volumeClaimTemplate:
         spec:
-          storageClassName: local-path
+          storageClassName: nfs-client
           accessModes: ["ReadWriteOnce"]
           resources:
             requests:

@@ -1,12 +1,10 @@
 deploymentMode: SimpleScalable
 
-global:
+loki:
   dnsConfig:
     options:
       - name: ndots
         value: "1"
-
-loki:
   enabled: true
   auth_enabled: false
 
@@ -41,11 +39,10 @@ loki:
     name: minio-creds-loki
 
 backend:
-  podTemplate:
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
   replicas: 1
   affinity: {}
   persistence:
@@ -61,11 +58,10 @@ backend:
       cpu: 200m
 
 write:
-  podTemplate:
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
   replicas: 1
   affinity: {}
   persistence:
@@ -81,11 +77,10 @@ write:
       cpu: 200m
 
 read:
-  podTemplate:
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
   replicas: 1
   affinity: {}
   persistence:
@@ -101,40 +96,34 @@ read:
       cpu: 200m
 
 gateway:
-  podTemplate:
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
 
 distributor:
-  podTemplate:
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
 
 ingester:
-  podTemplate:
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
 
 querier:
-  podTemplate:
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
 
 queryFrontend:
-  podTemplate:
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
-
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
 
 chunksCache:
   enabled: false

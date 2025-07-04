@@ -1,35 +1,38 @@
 config:
   clients:
-    - url: http://loki.monitoring.svc.cluster.local.:3100/loki/api/v1/push
-  positions:
-    filename: /run/promtail/positions.yaml
-  scrape_configs:
-    - job_name: containerlogs
-      pipeline_stages:
-        - docker: {}
-      static_configs:
-        - targets:
-            - localhost
-          labels:
-            job: containerlogs
-            __path__: /var/log/pods/*/*/*.log
+    - url: http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push
 
-    - job_name: hrm-backend-logs
+  positions:
+    filename: /tmp/positions.yaml
+
+  scrape_configs:
+    - job_name: backend-logs
       static_configs:
         - targets:
             - localhost
           labels:
-            job: hrm-backend
-            app: hrm
-            __path__: /mnt/data/backend/*.log
+            job: backend
+            host: backend-host
+            __path__: /mnt/backend-logs/*.log
 
 extraVolumes:
   - name: backend-logs
-    hostPath:
-      path: /mnt/data/backend
-      type: DirectoryOrCreate
+    persistentVolumeClaim:
+      claimName: promtail-backend-logs-pvc
 
 extraVolumeMounts:
   - name: backend-logs
-    mountPath: /mnt/data/backend
+    mountPath: /mnt/backend-logs
     readOnly: true
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: true
+
+# ✅ Thêm cấu hình ndots:1
+podDnsConfig:
+  options:
+    - name: ndots
+      value: "1"

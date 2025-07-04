@@ -40,7 +40,7 @@ backend:
       options:
         - name: ndots
           value: "1"
-  replicas: 2
+  replicas: 1
   affinity: {}
   persistence:
     enabled: true
@@ -60,7 +60,7 @@ write:
       options:
         - name: ndots
           value: "1"
-  replicas: 2
+  replicas: 1
   affinity: {}
   persistence:
     enabled: true
@@ -80,7 +80,7 @@ read:
       options:
         - name: ndots
           value: "1"
-  replicas: 2
+  replicas: 1
   affinity: {}
   persistence:
     enabled: true

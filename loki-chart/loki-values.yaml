@@ -8,18 +8,12 @@ loki:
 
   storage:
     type: s3
-    bucketNames:
-      chunks: loki-chunks
-      ruler: loki-ruler
-      admin: loki-admin
+    bucketNames: loki-data    #  Dùng 1 bucket duy nhất
     s3:
-      endpoint: https://minio.txuapp.com
-      bucketnames:
-        chunks: loki-chunks
-        ruler: loki-ruler
-        admin: loki-admin
-      s3forcepathstyle: true
-      insecure: true
+      endpoint: http://minio.txuapp.com  #  Dùng http nếu bạn đang truy cập nội bộ (không có TLS)
+      bucketnames: loki-data             #  Dùng chung 1 bucket cho tất cả
+      s3forcepathstyle: true             #  Bắt buộc để không chia domain phụ
+      insecure: true                     #  Cho phép HTTP nếu MinIO không dùng TLS
 
   schemaConfig:
     configs:

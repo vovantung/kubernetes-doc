@@ -3,19 +3,6 @@ deploymentMode: SimpleScalable
 loki:
   enabled: true
   auth_enabled: false
-  # Inject biến môi trường từ Secret vào container Loki
-  env:
-    - name: AWS_ACCESS_KEY_ID
-      valueFrom:
-        secretKeyRef:
-          name: loki-s3-secret
-          key: access_key
-    - name: AWS_SECRET_ACCESS_KEY
-      valueFrom:
-        secretKeyRef:
-          name: loki-s3-secret
-          key: secret_key
-
   commonConfig:
     replication_factor: 1
 
@@ -27,8 +14,10 @@ loki:
       admin: loki-admin
     s3:
       endpoint: https://minio.txuapp.com
-      access_key_id: 1WgQOTobDw5N1SH6nCDt
-      secret_access_key: 077An00VanXOmHe1UsQvcdGSGK1WYLW8ad9FSfyN
+      bucketnames:
+        chunks: loki-chunks
+        ruler: loki-ruler
+        admin: loki-admin
       s3forcepathstyle: true
       insecure: true
 

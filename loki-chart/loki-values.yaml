@@ -35,11 +35,6 @@ loki:
     name: minio-creds-loki
 
 backend:
-  podDNSConfig:
-    options:
-      - name: ndots
-        value: "1"
-
   replicas: 2
   persistence:
     enabled: true
@@ -54,10 +49,6 @@ backend:
       cpu: 200m
 
 write:
-  podDNSConfig:
-    options:
-      - name: ndots
-        value: "1"
   replicas: 2
   persistence:
     enabled: true
@@ -72,11 +63,6 @@ write:
       cpu: 200m
 
 read:
-  podDNSConfig:
-    options:
-      - name: ndots
-        value: "1"
-
   replicas: 2
   persistence:
     enabled: true

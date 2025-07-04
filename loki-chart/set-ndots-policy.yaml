@@ -1,0 +1,20 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: set-ndots
+spec:
+  rules:
+    - name: set-ndots-to-1
+      match:
+        resources:
+          kinds:
+            - Pod
+          namespaces:
+            - monitoring
+      mutate:
+        patchStrategicMerge:
+          spec:
+            dnsConfig:
+              options:
+                - name: ndots
+                  value: "1"

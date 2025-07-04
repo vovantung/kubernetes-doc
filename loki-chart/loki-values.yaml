@@ -1,6 +1,11 @@
 deploymentMode: SimpleScalable
 
 loki:
+  commonConfig:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
   enabled: true
   auth_enabled: false
 
@@ -14,7 +19,7 @@ loki:
       ruler: loki-ruler
       admin: loki-admin
     s3:
-      endpoint: minio.txuapp.com
+      endpoint: minio.txuapp.com.
       s3forcepathstyle: true
       insecure: false
 

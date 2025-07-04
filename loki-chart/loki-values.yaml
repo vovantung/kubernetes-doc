@@ -18,7 +18,7 @@ loki:
       ruler: loki-ruler
       admin: loki-admin
     s3:
-      endpoint: minio.txuapp.com.
+      endpoint: https://minio.txuapp.com.
       s3forcepathstyle: true
       insecure: false
 
@@ -112,7 +112,6 @@ ingester:
     options:
       - name: ndots
         value: "1"
-
 querier:
   dnsConfig:
     options:

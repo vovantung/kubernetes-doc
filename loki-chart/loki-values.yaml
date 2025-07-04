@@ -11,8 +11,12 @@ loki:
       s3: https://minio.txuapp.com/loki-data
       s3forcepathstyle: true
       insecure: false
-      
-  storage: {}
+
+  storage:
+    bucketNames:
+      chunks: dummy
+      ruler: dummy
+      admin: dummy
 
   # storage:
   #   type: s3

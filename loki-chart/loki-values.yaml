@@ -3,6 +3,8 @@ deploymentMode: SimpleScalable
 loki:
   enabled: true
   auth_enabled: false
+  envFromSecrets:
+    - minio-creds-loki
 
   commonConfig:
     replication_factor: 1

@@ -8,12 +8,11 @@ loki:
 
   storage:
     type: s3
-    bucketNames: loki-data    #  Dùng 1 bucket duy nhất
     s3:
-      endpoint: http://minio.txuapp.com  #  Dùng http nếu bạn đang truy cập nội bộ (không có TLS)
-      bucketnames: loki-data             #  Dùng chung 1 bucket cho tất cả
-      s3forcepathstyle: true             #  Bắt buộc để không chia domain phụ
-      insecure: true                     #  Cho phép HTTP nếu MinIO không dùng TLS
+      endpoint: minio.txuapp.com
+      bucketnames: loki-data
+      s3forcepathstyle: true
+      insecure: true
 
   schemaConfig:
     configs:

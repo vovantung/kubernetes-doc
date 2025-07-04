@@ -5,6 +5,7 @@ loki:
     options:
       - name: ndots
         value: "1"
+
   enabled: true
   auth_enabled: false
 
@@ -43,6 +44,7 @@ backend:
     options:
       - name: ndots
         value: "1"
+
   replicas: 1
   affinity: {}
   persistence:
@@ -62,6 +64,7 @@ write:
     options:
       - name: ndots
         value: "1"
+
   replicas: 1
   affinity: {}
   persistence:
@@ -81,6 +84,7 @@ read:
     options:
       - name: ndots
         value: "1"
+
   replicas: 1
   affinity: {}
   persistence:
@@ -94,6 +98,10 @@ read:
     limits:
       memory: 512Mi
       cpu: 200m
+
+gateway:
+  enabled: true
+  replicas: 1
 
 
 chunksCache:

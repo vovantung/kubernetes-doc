@@ -17,16 +17,6 @@ loki:
           key: secret_key
 
   config:
-    common:
-      replication_factor: 1
-
-    server:
-      http_listen_port: 3100
-      grpc_listen_port: 9095
-
-    memberlist:
-      join_members: []  # Vô hiệu hóa cluster join bị lỗi IP 125.x.x.x
-
     storage_config:
       s3:
         endpoint: https://minio.txuapp.com
@@ -34,28 +24,6 @@ loki:
         secret_access_key: ${AWS_SECRET_ACCESS_KEY}
         s3forcepathstyle: true
         insecure: true  # Nếu MinIO không dùng TLS nội bộ, giữ true
-
-    schema_config:
-      configs:
-        - from: "2022-01-01"
-          store: boltdb-shipper
-          object_store: s3
-          schema: v11
-          index:
-            prefix: index_
-            period: 24h
-
-    ruler:
-      storage:
-        type: s3
-        s3:
-          bucketnames: loki-ruler
-      rule_path: /tmp/loki/rules
-      alertmanager_url: http://alertmanager:9093
-
-    limits_config:
-      allow_structured_metadata: false
-
 
   commonConfig:
     replication_factor: 1
@@ -68,8 +36,8 @@ loki:
       admin: loki-admin
     s3:
       endpoint: https://minio.txuapp.com
-      access_key_id: "${AWS_ACCESS_KEY_ID}"
-      secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
+      access_key_id: ${AWS_ACCESS_KEY_ID
+      secret_access_key: ${AWS_SECRET_ACCESS_KEY}
       s3forcepathstyle: true
       insecure: true
 

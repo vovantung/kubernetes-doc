@@ -6,13 +6,19 @@ loki:
   commonConfig:
     replication_factor: 1
 
-  storage:
-    type: s3
-    s3:
-      endpoint: minio.txuapp.com
-      bucketnames: loki-data
+  storage_config:
+    aws:
+      s3: https://minio.txuapp.com/loki-data
       s3forcepathstyle: true
-      insecure: true
+      insecure: false
+
+  # storage:
+  #   type: s3
+  #   s3:
+  #     endpoint: minio.txuapp.com
+  #     bucketnames: loki-data
+  #     s3forcepathstyle: true
+  #     insecure: true
 
   schemaConfig:
     configs:

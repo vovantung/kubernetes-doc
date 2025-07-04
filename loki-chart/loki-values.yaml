@@ -1,11 +1,6 @@
 deploymentMode: SimpleScalable
 
 loki:
-  dnsConfig:
-    options:
-      - name: ndots
-        value: "1"
-
   enabled: true
   auth_enabled: false
 
@@ -40,10 +35,11 @@ loki:
     name: minio-creds-loki
 
 backend:
-  dnsConfig:
-    options:
-      - name: ndots
-        value: "1"
+ extraPodSpec:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
   replicas: 1
   affinity: {}
@@ -60,10 +56,11 @@ backend:
       cpu: 200m
 
 write:
-  dnsConfig:
-    options:
-      - name: ndots
-        value: "1"
+  extraPodSpec:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
   replicas: 1
   affinity: {}
@@ -80,10 +77,11 @@ write:
       cpu: 200m
 
 read:
-  dnsConfig:
-    options:
-      - name: ndots
-        value: "1"
+  extraPodSpec:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
   replicas: 1
   affinity: {}

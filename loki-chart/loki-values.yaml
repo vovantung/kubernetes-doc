@@ -16,15 +16,6 @@ loki:
           name: loki-s3-secret
           key: secret_key
 
-  config:
-    storage_config:
-      s3:
-        endpoint: https://minio.txuapp.com
-        access_key_id: ${AWS_ACCESS_KEY_ID}
-        secret_access_key: ${AWS_SECRET_ACCESS_KEY}
-        s3forcepathstyle: true
-        insecure: true  # Nếu MinIO không dùng TLS nội bộ, giữ true
-
   commonConfig:
     replication_factor: 1
 

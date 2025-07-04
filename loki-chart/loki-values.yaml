@@ -41,8 +41,7 @@ backend:
         - name: ndots
           value: "1"
 
-  replicas: 1
-  affinity: {}
+  replicas: 2
   persistence:
     enabled: true
     storageClass: nfs-client
@@ -61,9 +60,7 @@ write:
       options:
         - name: ndots
           value: "1"
-
-  replicas: 1
-  affinity: {}
+  replicas: 2
   persistence:
     enabled: true
     storageClass: nfs-client
@@ -83,8 +80,7 @@ read:
         - name: ndots
           value: "1"
 
-  replicas: 1
-  affinity: {}
+  replicas: 2
   persistence:
     enabled: true
     storageClass: nfs-client
@@ -96,11 +92,6 @@ read:
     limits:
       memory: 512Mi
       cpu: 200m
-
-gateway:
-  enabled: true
-  replicas: 1
-
 
 chunksCache:
   enabled: false

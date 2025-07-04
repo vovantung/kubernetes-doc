@@ -3,7 +3,7 @@ config:
     - url: http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push
 
   positions:
-    filename: /tmp/positions.yaml
+    filename: /run/promtail/positions.yaml
 
   scrape_configs:
     - job_name: backend-logs
@@ -19,11 +19,16 @@ extraVolumes:
   - name: backend-logs
     persistentVolumeClaim:
       claimName: promtail-backend-logs-pvc
+  - name: positions
+    persistentVolumeClaim:
+      claimName: promtail-positions-pvc
 
 extraVolumeMounts:
   - name: backend-logs
     mountPath: /mnt/backend-logs
     readOnly: true
+  - name: positions
+    mountPath: /run/promtail
 
 rbac:
   create: true
@@ -31,7 +36,7 @@ rbac:
 serviceAccount:
   create: true
 
-# ✅ Thêm cấu hình ndots:1
+# Thêm cấu hình ndots:1
 podDnsConfig:
   options:
     - name: ndots

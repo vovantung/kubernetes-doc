@@ -5,16 +5,20 @@ config:
   positions:
     filename: /run/promtail/positions.yaml
 
-  scrape_configs:
-    - job_name: backend-hrm
-      static_configs:
-        - targets:
-            - localhost
-          labels:
-            job: backend-hrm
-            app: hrm
-            namespace: backend
-            __path__: /mnt/backend-logs/*.log
+  # ⚠️ Quan trọng: Bạn đang dùng deployment, cần khai báo trong extraScrapeConfigs
+  # chứ không phải scrape_configs ở đây
+  # → Phần scrape_configs cũ đã được xoá khỏi đây
+
+extraScrapeConfigs:
+  - job_name: backend-hrm
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: backend-hrm
+          app: hrm
+          namespace: backend
+          __path__: /mnt/backend-logs/*.log
 
 extraVolumes:
   - name: backend-logs
@@ -44,6 +48,7 @@ podDnsConfig:
 
 daemonset:
   enabled: false
+
 
 deployment:
   enabled: true

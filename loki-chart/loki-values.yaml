@@ -3,6 +3,7 @@ deploymentMode: SimpleScalable
 loki:
   enabled: true
   auth_enabled: false
+
   envFromSecrets:
     - minio-creds-loki
 
@@ -16,7 +17,7 @@ loki:
       ruler: loki-ruler
       admin: loki-admin
     s3:
-      endpoint: https://minio.txuapp.com.
+      endpoint: https://minio.txuapp.com
       s3forcepathstyle: true
       insecure: false
 
@@ -33,8 +34,8 @@ loki:
   limits_config:
     allow_structured_metadata: false
 
-  extraSecretForConfig:
-    name: minio-creds-loki
+  # extraSecretForConfig:
+  #   name: minio-creds-loki
 
 backend:
   replicas: 2

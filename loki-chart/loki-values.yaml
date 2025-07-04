@@ -3,10 +3,6 @@ deploymentMode: SimpleScalable
 loki:
   enabled: true
   auth_enabled: false
-  podDnsConfig:
-    options:
-      - name: ndots
-        value: "1"
 
   commonConfig:
     replication_factor: 1
@@ -38,14 +34,12 @@ loki:
   extraSecretForConfig:
     name: minio-creds-loki
 
-affinity: {}
-
 backend:
-  podDnsConfig:
-    enabled: true
-    options:
-      - name: ndots
-        value: "1"
+  podTemplate:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
   replicas: 2
   affinity: {}
   persistence:
@@ -61,11 +55,11 @@ backend:
       cpu: 200m
 
 write:
-  podDnsConfig:
-    enabled: true
-    options:
-      - name: ndots
-        value: "1"
+  podTemplate:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
   replicas: 2
   affinity: {}
   persistence:
@@ -81,11 +75,11 @@ write:
       cpu: 200m
 
 read:
-  podDnsConfig:
-    enabled: true
-    options:
-      - name: ndots
-        value: "1"
+  podTemplate:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
   replicas: 2
   affinity: {}
   persistence:
@@ -101,39 +95,39 @@ read:
       cpu: 200m
 
 gateway:
-  podDnsConfig:
-    enabled: true
-    options:
-      - name: ndots
-        value: "1"
+  podTemplate:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
 distributor:
-  podDnsConfig:
-    enabled: true
-    options:
-      - name: ndots
-        value: "1"
+  podTemplate:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
 ingester:
-  podDnsConfig:
-    enabled: true
-    options:
-      - name: ndots
-        value: "1"
+  podTemplate:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
 querier:
-  podDnsConfig:
-    enabled: true
-    options:
-      - name: ndots
-        value: "1"
+  podTemplate:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
 queryFrontend:
-  podDnsConfig:
-    enabled: true
-    options:
-      - name: ndots
-        value: "1"
+  podTemplate:
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
 
 chunksCache:

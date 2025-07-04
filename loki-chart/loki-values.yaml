@@ -3,7 +3,6 @@ deploymentMode: SimpleScalable
 loki:
   enabled: true
   auth_enabled: false
-
   # Inject biến môi trường từ Secret vào container Loki
   extraEnv:
     - name: AWS_ACCESS_KEY_ID
@@ -56,6 +55,39 @@ loki:
 
     limits_config:
       allow_structured_metadata: false
+
+
+  commonConfig:
+    replication_factor: 1
+
+  storage:
+    type: s3
+    bucketNames:
+      chunks: loki-chunks
+      ruler: loki-ruler
+      admin: loki-admin
+    s3:
+      endpoint: https://minio.txuapp.com
+      access_key_id: "${AWS_ACCESS_KEY_ID}"
+      secret_access_key: "${AWS_SECRET_ACCESS_KEY}"
+      s3forcepathstyle: true
+      insecure: true
+
+  schemaConfig:
+    configs:
+      - from: 2022-01-01
+        store: boltdb-shipper
+        object_store: s3
+        schema: v11
+        index:
+          prefix: index_
+          period: 24h
+
+  limits_config:
+    allow_structured_metadata: false
+
+  # extraSecretForConfig:
+  #   name: minio-creds-loki
 
 backend:
   replicas: 2

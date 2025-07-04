@@ -35,7 +35,7 @@ loki:
     name: minio-creds-loki
 
 backend:
- extraPodSpec:
+  extraPodSpec:
     dnsConfig:
       options:
         - name: ndots

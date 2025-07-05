@@ -14,9 +14,9 @@ loki:
 
   storage:
     bucketNames:
-      chunks: dummy
-      ruler: dummy
-      admin: dummy
+      chunks: loki-chunks
+      ruler: loki-ruler
+      admin: loki-admin
 
   # storage:
   #   type: s3

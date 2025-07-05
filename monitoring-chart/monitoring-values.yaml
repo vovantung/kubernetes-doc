@@ -42,7 +42,7 @@ prometheus:
 
 grafana:
   enabled: true
-    dnsConfig:
+  dnsConfig:
     options:
       - name: ndots
         value: "1"

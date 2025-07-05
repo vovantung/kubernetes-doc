@@ -5,10 +5,6 @@ config:
   positions:
     filename: /run/promtail/positions.yaml
 
-  # ⚠️ Quan trọng: Bạn đang dùng deployment, cần khai báo trong extraScrapeConfigs
-  # chứ không phải scrape_configs ở đây
-  # → Phần scrape_configs cũ đã được xoá khỏi đây
-
 extraScrapeConfigs:
   - job_name: backend-hrm
     static_configs:
@@ -24,16 +20,11 @@ extraVolumes:
   - name: backend-logs
     persistentVolumeClaim:
       claimName: promtail-backend-logs-pvc
-  - name: positions
-    persistentVolumeClaim:
-      claimName: promtail-positions-pvc
 
 extraVolumeMounts:
   - name: backend-logs
     mountPath: /mnt/backend-logs
     readOnly: true
-  - name: positions
-    mountPath: /run/promtail
 
 rbac:
   create: true

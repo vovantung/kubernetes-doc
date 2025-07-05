@@ -43,4 +43,4 @@ daemonset:
 
 deployment:
   enabled: true
-  replicas: 1
+  replicas: 2

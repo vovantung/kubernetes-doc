@@ -43,7 +43,7 @@ backend:
   extraEnvFrom:
     - secretRef:
         name: loki-s3-secret
-  replicas: 1
+  replicas: 2
   persistence:
     enabled: true
     storageClass: nfs-client
@@ -60,7 +60,7 @@ write:
   extraEnvFrom:
     - secretRef:
         name: loki-s3-secret
-  replicas: 1
+  replicas: 2
   persistence:
     enabled: true
     storageClass: nfs-client
@@ -77,7 +77,7 @@ read:
   extraEnvFrom:
     - secretRef:
         name: loki-s3-secret
-  replicas: 1
+  replicas: 2
   persistence:
     enabled: true
     storageClass: nfs-client

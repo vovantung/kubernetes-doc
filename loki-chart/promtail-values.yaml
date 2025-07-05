@@ -19,7 +19,7 @@ extraScrapeConfigs:
 extraVolumes:
   - name: backend-logs
     persistentVolumeClaim:
-      claimName: promtail-backend-logs-pvc
+      claimName: promtail-logs-pvc
 
 extraVolumeMounts:
   - name: backend-logs

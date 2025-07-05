@@ -15,7 +15,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: promtail-backend-logs-pvc
-  namespace: monitoring
+  namespace: logging
 spec:
   accessModes:
     - ReadOnlyMany

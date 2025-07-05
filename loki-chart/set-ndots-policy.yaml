@@ -10,7 +10,7 @@ spec:
           kinds:
             - Pod
           namespaces:
-            - monitoring
+            - logging
       mutate:
         patchStrategicMerge:
           spec:

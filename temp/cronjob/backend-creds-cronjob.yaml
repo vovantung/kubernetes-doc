@@ -52,5 +52,5 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: aws-creds-backend
-                      key: AWS_REGION
+                      key: AWS_DEFAULT_REGION
           restartPolicy: OnFailure

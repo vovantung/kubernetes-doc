@@ -1,6 +1,6 @@
 config:
   clients:
-    - url: http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push
+    - url: http://loki-gateway.logging.svc.cluster.local/loki/api/v1/push
 
   positions:
     filename: /run/promtail/positions.yaml

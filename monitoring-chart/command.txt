@@ -2,5 +2,5 @@ helm install prometheus-stack prometheus-community/kube-prometheus-stack -n moni
 
 helm uninstall prometheus-stack -n monitoring
 
-helm upgrade prometheus-stack prometheus-community/kube-prometheus-stack -n monitoring -f monitoring-values.yaml
+helm upgrade --install prometheus-stack prometheus-community/kube-prometheus-stack -n monitoring -f monitoring-values.yaml
 

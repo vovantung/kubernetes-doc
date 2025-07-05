@@ -3,10 +3,6 @@ global:
     create: true
 
 prometheus:
-  # dnsConfig:
-  #   options:
-  #     - name: ndots
-  #       value: "1"
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
@@ -46,10 +42,10 @@ prometheus:
 
 grafana:
   enabled: true
-  # dnsConfig:
-  #   options:
-  #     - name: ndots
-  #       value: "1"
+    dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
   defaultDashboardsEnabled: true
   adminUser: admin
   adminPassword: Phan@123
@@ -81,10 +77,6 @@ grafana:
       - grafana.txuapp.com
 
 alertmanager:
-  # dnsConfig:
-  #   options:
-  #     - name: ndots
-  #       value: "1"
   alertmanagerSpec:
     resources:
       requests:

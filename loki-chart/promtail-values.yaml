@@ -33,14 +33,14 @@ config:
           - source_labels: ['__path__']
             target_label: filename
           - source_labels: ['__path__']
-            regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
-            replacement: '${namespace}'
+            regex: '.*/hrm-logs/([^/]+)/([^/]+)/.*\.log'
+            replacement: '$1'
             target_label: 'namespace'
           - source_labels: ['__path__']
-            regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
-            replacement: '${app}'
-            target_label: 'app'    
-
+            regex: '.*/hrm-logs/([^/]+)/([^/]+)/.*\.log'
+            replacement: '$2'
+            target_label: 'app'
+  
 extraVolumes:
   - name: hrm-logs
     persistentVolumeClaim:

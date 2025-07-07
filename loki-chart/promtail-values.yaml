@@ -32,11 +32,15 @@ config:
         relabel_configs:
           - source_labels: ['__path__']
             target_label: filename
-          - source_labels: ['filename']
+
+          # Trích xuất namespace từ __path__
+          - source_labels: ['__path__']
             regex: '/mnt/hrm-logs/([^/]+)/([^/]+)/.*\.log'
             replacement: '${1}'
             target_label: namespace
-          - source_labels: ['filename']
+
+          # Trích xuất app từ __path__
+          - source_labels: ['__path__']
             regex: '/mnt/hrm-logs/([^/]+)/([^/]+)/.*\.log'
             replacement: '${2}'
             target_label: app

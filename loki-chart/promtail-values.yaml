@@ -19,14 +19,15 @@ config:
 #       - labels:
 #           namespace:
 #           app
+
   snippets:
     extraScrapeConfigs: |
-      - job_name: hrm-nfs
+      - job_name: hrm-nfs-logs
         static_configs:
           - targets:
               - localhost
             labels:
-            job: hrm-nfs
+              job: hrm-nfs
               __path__: /mnt/hrm-logs/**/*.log
         relabel_configs:
           - source_labels: ['__path__']
@@ -38,7 +39,7 @@ config:
           - source_labels: ['__path__']
             regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
             replacement: '${app}'
-            target_label: 'app'
+            target_label: 'app'    
 
 extraVolumes:
   - name: hrm-logs

@@ -32,12 +32,12 @@ config:
           - source_labels: ['__path__']
             target_label: filename
           - source_labels: ['__path__']
-            regex: '.*/([^/]+)/([^/]+)/.*\.log'
-            replacement: '$1'
+            regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+            replacement: '${namespace}'
             target_label: 'namespace'
           - source_labels: ['__path__']
-            regex: '.*/([^/]+)/([^/]+)/.*\.log'
-            replacement: '$2'
+            regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+            replacement: '${app}'
             target_label: 'app'
 
 extraVolumes:

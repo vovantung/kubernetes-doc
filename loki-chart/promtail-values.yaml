@@ -26,19 +26,17 @@ config:
           - targets:
               - localhost
             labels:
-              job: hrm-nfs
-              app: hrm
-              namespace: backend
+            job: hrm-nfs
               __path__: /mnt/hrm-logs/**/*.log
         relabel_configs:
           - source_labels: ['__path__']
             target_label: filename
           - source_labels: ['__path__']
-            regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+            regex: '.*/([^/]+)/([^/]+)/.*\.log'
             replacement: '$1'
             target_label: 'namespace'
           - source_labels: ['__path__']
-            regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+            regex: '.*/([^/]+)/([^/]+)/.*\.log'
             replacement: '$2'
             target_label: 'app'
 

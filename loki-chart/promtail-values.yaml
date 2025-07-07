@@ -14,17 +14,16 @@ extraScrapeConfigs:
           job: backend-hrm
           app: hrm
           namespace: backend
-          __path__: /mnt/backend-logs/*.log
+          __path__: /mnt/hrm-logs/*.log
 
 extraVolumes:
-  - name: backend-logs
+  - name: hrm-logs
     persistentVolumeClaim:
       claimName: promtail-logs-pvc
 
 extraVolumeMounts:
-  - name: backend-logs
-    mountPath: /mnt/backend-logs
-    readOnly: true
+  - name: hrm-logs
+    mountPath: /mnt/hrm-logs
 
 rbac:
   create: true
@@ -32,13 +31,13 @@ rbac:
 serviceAccount:
   create: true
 
-podDnsConfig:
-  options:
-    - name: ndots
-      value: "1"
+# podDnsConfig:
+#   options:
+#     - name: ndots
+#       value: "1"
 
 daemonset:
-  enabled: true
+  enabled: false
 
 
 deployment:

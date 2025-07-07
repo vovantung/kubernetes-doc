@@ -5,16 +5,20 @@ config:
   positions:
     filename: /run/promtail/positions.yaml
 
-extraScrapeConfigs:
-  - job_name: backend-hrm
+extraScrapeConfigs: |
+  - job_name: hrm-nfs-logs
     static_configs:
       - targets:
           - localhost
         labels:
-          job: backend-hrm
-          app: hrm
-          namespace: backend
-          __path__: /mnt/hrm-logs/*.log
+          job: hrm-nfs
+          __path__: /mnt/hrm-logs/**/*.log
+    pipeline_stages:
+      - regex:
+          expression: '/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+      - labels:
+          namespace:
+          app
 
 extraVolumes:
   - name: hrm-logs

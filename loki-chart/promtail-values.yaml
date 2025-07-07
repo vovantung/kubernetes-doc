@@ -29,17 +29,17 @@ config:
             labels:
               job: hrm-nfs
               __path__: /mnt/hrm-logs/*/*/*.log
-              
-        pipeline_stages:
-          - match:
-              selector: '{job="hrm-nfs"}'
-              stages:
-                - regex:
-                    expression: '/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*'
-                - labels:
-                    namespace:
-                    app: 
-      
+
+        relabel_configs:
+          - source_labels: ['filename']
+            regex: '/mnt/hrm-logs/([^/]+)/([^/]+)/.*'
+            target_label: namespace
+            replacement: '$1'
+          - source_labels: ['filename']
+            regex: '/mnt/hrm-logs/([^/]+)/([^/]+)/.*'
+            target_label: app
+            replacement: '$2'
+        
 extraVolumes:
   - name: hrm-logs
     persistentVolumeClaim:

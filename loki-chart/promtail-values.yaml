@@ -30,21 +30,22 @@ config:
               job: hrm-nfs
               __path__: /mnt/hrm-logs/*/*/*.log
         relabel_configs:
+          # Gán filename chính xác từ file được đọc (chính xác!)
           - source_labels: ['__path__']
             target_label: filename
 
-          # Trích xuất namespace từ __path__
-          - source_labels: ['__path__']
+          # Trích xuất namespace từ filename
+          - source_labels: ['filename']
             regex: '/mnt/hrm-logs/([^/]+)/([^/]+)/.*\.log'
             replacement: '${1}'
             target_label: namespace
 
-          # Trích xuất app từ __path__
-          - source_labels: ['__path__']
+          # Trích xuất app từ filename
+          - source_labels: ['filename']
             regex: '/mnt/hrm-logs/([^/]+)/([^/]+)/.*\.log'
             replacement: '${2}'
             target_label: app
-  
+      
 extraVolumes:
   - name: hrm-logs
     persistentVolumeClaim:

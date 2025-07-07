@@ -31,14 +31,15 @@ config:
 
       pipeline_stages:
         - replace:
+            source: filename
             expression: .*
             replace: '{{ .File }}'
-            source: filename
         - regex:
+            source: filename
             expression: '/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*'
         - labels:
             namespace:
-            app:
+            app
 
 
 extraVolumes:

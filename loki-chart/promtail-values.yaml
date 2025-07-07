@@ -13,10 +13,10 @@ config:
               - localhost
             labels:
               job: backend-job
-              __path__: /mnt/backend-logs/*/*/*.log
+              __path__: /mnt/backend_logs/*/*/*.log
         pipeline_stages:
           - regex:
-              expression: "/mnt/backend-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*"
+              expression: "/mnt/backend_logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*"
               source: filename
           - labels:
               namespace:
@@ -29,7 +29,7 @@ extraVolumes:
 
 extraVolumeMounts:
   - name: backend-logs-mount
-    mountPath: /mnt/backend-logs
+    mountPath: /mnt/backend_logs
 
 rbac:
   create: true

@@ -9,7 +9,7 @@ spec:
     - ReadOnlyMany
   nfs:
     server: 192.168.98.150
-    path: /mnt/data/nfs/backend/hrm/logs
+    path: /mnt/data/nfs/backend_logs
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

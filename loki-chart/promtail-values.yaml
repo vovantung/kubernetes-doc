@@ -39,9 +39,8 @@ config:
             expression: '/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*'
         - labels:
             namespace:
-            app
-
-
+            app:
+      
 extraVolumes:
   - name: hrm-logs
     persistentVolumeClaim:

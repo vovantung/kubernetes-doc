@@ -5,21 +5,41 @@ config:
   positions:
     filename: /run/promtail/positions.yaml
 
-extraScrapeConfigs: |
-  - job_name: hrm-nfs-logs
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: hrm-nfs
-          __path__: /mnt/hrm-logs/**/*.log
-    pipeline_stages:
-      - regex:
-          expression: '(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
-      - labels:
-          namespace:
-          app
-          
+# extraScrapeConfigs: |
+#   - job_name: hrm-nfs-logs
+#     static_configs:
+#       - targets:
+#           - localhost
+#         labels:
+#           job: hrm-nfs
+#           __path__: /mnt/hrm-logs/**/*.log
+#     pipeline_stages:
+#       - regex:
+#           expression: '(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+#       - labels:
+#           namespace:
+#           app
+  snippets:
+    extraScrapeConfigs: |
+      - job_name: hrm-nfs-logs
+        static_configs:
+          - targets:
+              - localhost
+            labels:
+              job: hrm-nfs
+              __path__: /mnt/hrm-logs/**/*.log
+        relabel_configs:
+          - source_labels: ['__path__']
+            target_label: filename
+          - source_labels: ['__path__']
+            regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+            replacement: '$1'
+            target_label: 'namespace'
+          - source_labels: ['__path__']
+            regex: '.*/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+            replacement: '$2'
+            target_label: 'app'
+
 extraVolumes:
   - name: hrm-logs
     persistentVolumeClaim:

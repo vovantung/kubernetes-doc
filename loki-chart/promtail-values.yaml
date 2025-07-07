@@ -5,46 +5,31 @@ config:
   positions:
     filename: /run/promtail/positions.yaml
 
-# extraScrapeConfigs: |
-#   - job_name: hrm-nfs-logs
-#     static_configs:
-#       - targets:
-#           - localhost
-#         labels:
-#           job: hrm-nfs
-#           __path__: /mnt/hrm-logs/**/*.log
-#     pipeline_stages:
-#       - regex:
-#           expression: '(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
-#       - labels:
-#           namespace:
-#           app
-
   snippets:
     extraScrapeConfigs: |
-      - job_name: hrm-nfs-logs
+      - job_name: backend-job-logs
         static_configs:
           - targets:
               - localhost
             labels:
-              job: hrm-nfs
-              __path__: /mnt/hrm-logs/*/*/*.log
+              job: backend-job
+              __path__: /mnt/backend-logs/*/*/*.log
         pipeline_stages:
           - regex:
-              expression: "/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*"
+              expression: "/mnt/backend-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*"
               source: filename
           - labels:
               namespace:
               app:
   
 extraVolumes:
-  - name: hrm-logs
+  - name: backend-logs-mount
     persistentVolumeClaim:
       claimName: promtail-logs-pvc
 
 extraVolumeMounts:
-  - name: hrm-logs
-    mountPath: /mnt/hrm-logs
+  - name: backend-logs-mount
+    mountPath: /mnt/backend-logs
 
 rbac:
   create: true
@@ -59,7 +44,6 @@ serviceAccount:
 
 daemonset:
   enabled: false
-
 
 deployment:
   enabled: true

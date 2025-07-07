@@ -20,26 +20,27 @@ config:
 #           namespace:
 #           app
 
-  snippets:
-    extraScrapeConfigs: |
-      - job_name: hrm-nfs-logs
-        static_configs:
-          - targets:
-              - localhost
-            labels:
-              job: hrm-nfs
-              __path__: /mnt/hrm-logs/*/*/*.log
+  scrape_configs:
+    - job_name: hrm-nfs-logs
+      static_configs:
+        - targets:
+            - localhost
+          labels:
+            job: hrm-nfs
+            __path__: /mnt/hrm-logs/*/*/*.log
 
-        pipeline_stages:
-          - replace:
-              expression: .*
-              replace: '{{ .File }}'
-              source: filename
-          - regex:
-              expression: '/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*'
-          - labels:
-              namespace:
-              app:
+      pipeline_stages:
+        - replace:
+            expression: .*
+            replace: '{{ .File }}'
+            source: filename
+        - regex:
+            expression: '/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*'
+        - labels:
+            namespace:
+            app:
+
+
 extraVolumes:
   - name: hrm-logs
     persistentVolumeClaim:

@@ -31,8 +31,6 @@ config:
               __path__: /mnt/hrm-logs/*/*/*.log
 
         pipeline_stages:
-          - static_labels:
-              filename: ''
           - replace:
               expression: .*
               replace: '{{ .File }}'
@@ -42,7 +40,6 @@ config:
           - labels:
               namespace:
               app:
-        
 extraVolumes:
   - name: hrm-logs
     persistentVolumeClaim:

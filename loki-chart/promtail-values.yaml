@@ -15,11 +15,11 @@ extraScrapeConfigs: |
           __path__: /mnt/hrm-logs/**/*.log
     pipeline_stages:
       - regex:
-          expression: '/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
+          expression: '(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*\.log'
       - labels:
           namespace:
           app
-
+          
 extraVolumes:
   - name: hrm-logs
     persistentVolumeClaim:

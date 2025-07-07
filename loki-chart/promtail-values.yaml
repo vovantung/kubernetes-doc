@@ -21,12 +21,14 @@ config:
 #           app
   snippets:
     extraScrapeConfigs: |
-      - job_name: hrm-nfs-logs
+      - job_name: hrm-nfs
         static_configs:
           - targets:
               - localhost
             labels:
               job: hrm-nfs
+              app: hrm
+              namespace: backend
               __path__: /mnt/hrm-logs/**/*.log
         relabel_configs:
           - source_labels: ['__path__']

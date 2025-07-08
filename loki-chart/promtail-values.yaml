@@ -16,12 +16,11 @@ config:
               __path__: /mnt/backend-logs/*/*/*.log
         pipeline_stages:
           - regex:
-              expression: "/mnt/backend_logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/(?P<stream>[^/]+).*"
+              expression: "/mnt/backend-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*"
               source: filename
           - labels:
               namespace:
               app:
-              stream:
   
 extraVolumes:
   - name: backend-logs-mount

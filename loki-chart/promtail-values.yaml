@@ -12,8 +12,8 @@ config:
           - targets:
               - localhost
             labels:
-              job: backend-job
               __path__: /mnt/backend_logs/*/*/*.log
+              job: backend-job
               node_name: node-a
         pipeline_stages:
           - regex:

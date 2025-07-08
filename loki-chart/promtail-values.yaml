@@ -12,18 +12,16 @@ config:
           - targets:
               - localhost
             labels:
-              __path__: /mnt/backend_logs/*/*/*.log
               job: backend-job
-              node_name: node-a
+              __path__: /mnt/backend_logs/*/*/*.log
         pipeline_stages:
           - regex:
-              expression: "/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/(?P<pod>[^_]+)_(?P<stream>[^.]+)\\.log"
+              expression: "/mnt/backend_logs/(?P<namespace>[^/]+)/((?P<pod>[^_]+)_(?P<stream>[^.]+)\\.log"
               source: filename
           - labels:
               namespace:
               app:
-              pod:
-              stream
+              stream:
           - replace:
               expression: ".*"
               replace: "${namespace}/${app}"

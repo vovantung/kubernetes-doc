@@ -22,12 +22,6 @@ config:
               namespace:
               app:
               stream:
-          - replace:
-              expression: ".*"
-              replace: "${namespace}/${app}"
-              source: filename
-          - labels:
-              job
   
 extraVolumes:
   - name: backend-logs-mount

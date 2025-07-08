@@ -13,15 +13,14 @@ config:
               - localhost
             labels:
               job: backend-job
-              __path__: /mnt/backend_logs/*/*/*.log
+              __path__: /mnt/backend-logs/*/*/*.log
         pipeline_stages:
           - regex:
-              expression: "/mnt/backend_logs/(?P<namespace>[^/]+)/((?P<pod>[^_]+)_(?P<stream>[^.]+)\\.log"
+              expression: "/mnt/backend_logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/(?P<stream>[^.]+)\\.log"
               source: filename
           - labels:
               namespace:
               app:
-              stream:
           - replace:
               expression: ".*"
               replace: "${namespace}/${app}"
@@ -50,7 +49,7 @@ serviceAccount:
 #       value: "1"
 
 daemonset:
-  enabled: true
+  enabled: false
 
 deployment:
   enabled: true

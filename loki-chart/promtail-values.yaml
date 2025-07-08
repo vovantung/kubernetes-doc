@@ -43,7 +43,7 @@ serviceAccount:
 #       value: "1"
 
 daemonset:
-  enabled: false
+  enabled: true
 
 deployment:
   enabled: true

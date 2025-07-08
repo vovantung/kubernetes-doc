@@ -1,8 +1,8 @@
-helm install loki grafana/loki -n monitoring --create-namespace -f loki-values.yaml
-helm upgrade --install loki grafana/loki --namespace monitoring --create-namespace -f loki-values.yaml
+helm install loki grafana/loki -n logging --create-namespace -f loki-values.yaml
+helm upgrade --install loki grafana/loki --namespace logging --create-namespace -f loki-values.yaml
 helm uninstall loki -n monitoring
 
 
-helm upgrade  --install promtail grafana/promtail   --namespace monitoring   -f promtail-values.yaml
+helm upgrade  --install promtail grafana/promtail   --namespace logging   -f promtail-values.yaml
 
 

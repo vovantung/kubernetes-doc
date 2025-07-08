@@ -8,7 +8,7 @@ loki:
 
   storage_config:
     aws:
-      s3: https://minio.txuapp.com/loki-data
+      s3: https://minio.txuapp.com
       s3forcepathstyle: true
       insecure: false
 

@@ -16,11 +16,22 @@ config:
               __path__: /mnt/backend_logs/*/*/*.log
         pipeline_stages:
           - regex:
-              expression: "/mnt/backend_logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/.*"
+              expression: "/mnt/hrm-logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/(?P<pod>[^/]+)_(?P<stream>[^.]+)\\.log"
               source: filename
           - labels:
               namespace:
               app:
+              pod:
+              stream:
+          - replace:
+              expression: ".*"
+              replace: "${namespace}/${app}"
+              source: namespace
+          - labels:
+              job:
+          - hostname:
+              source: fqdn
+              label: node_name
   
 extraVolumes:
   - name: backend-logs-mount

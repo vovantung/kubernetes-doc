@@ -16,11 +16,12 @@ config:
               __path__: /mnt/backend-logs/*/*/*.log
         pipeline_stages:
           - regex:
-              expression: "/mnt/backend_logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/(?P<stream>[^.]+)\\.log"
+              expression: "/mnt/backend_logs/(?P<namespace>[^/]+)/(?P<app>[^/]+)/(?P<stream>[^/]+).*"
               source: filename
           - labels:
               namespace:
               app:
+              stream:
           - replace:
               expression: ".*"
               replace: "${namespace}/${app}"

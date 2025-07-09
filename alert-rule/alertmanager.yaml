@@ -15,5 +15,5 @@ route:
 receivers:
   - name: 'gmail-notify'
     email_configs:
-      - to: 'vothinhuydt@gmail.com'
+      - to: 'phanthitrucly77777@gmail.com'
         send_resolved: true

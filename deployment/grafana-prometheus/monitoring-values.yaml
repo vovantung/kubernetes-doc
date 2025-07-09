@@ -78,8 +78,8 @@ grafana:
 
 alertmanager:
   alertmanagerSpec:
-    configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager
-    
+    configSecret: alertmanager-gmail-config
+
   alertmanagerSpec:
     resources:
       requests:

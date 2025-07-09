@@ -79,6 +79,7 @@ grafana:
 alertmanager:
   alertmanagerSpec:
     configSecret: alertmanager-config
+
   alertmanagerSpec:
     resources:
       requests:

@@ -20,6 +20,9 @@ spec:
           dnsPolicy: ClusterFirst
           containers:
             - name: backup-to-minio
+              securityContext:
+                runAsUser: 200
+                runAsGroup: 200
               image: vothinhuydt/cronjob:txu
               env:
                 - name: AWS_ACCESS_KEY_ID

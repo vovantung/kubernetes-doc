@@ -10,7 +10,7 @@ spec:
   failedJobsHistoryLimit: 1           # chi giu mot job that bai gan nhat
   jobTemplate:
     spec:
-      ttlSecondsAfterFinished: 300    # tu dong xoa pod sau 300 giay
+      ttlSecondsAfterFinished: 60    # tu dong xoa pod sau 60 giay
       template:
         spec:
           dnsConfig:

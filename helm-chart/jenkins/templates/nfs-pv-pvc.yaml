@@ -1,4 +1,16 @@
 apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-nfs-pvc
+  namespace: jenkins
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: jenkins-nfs-pv
@@ -11,3 +23,4 @@ spec:
     server: 192.168.98.150
     path: /mnt/data/nfs/jenkins
   persistentVolumeReclaimPolicy: Retain
+

@@ -1,0 +1,15 @@
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'vothinhuydt@gmail.com'
+  smtp_auth_username: 'vothinhuydt@gmail.com'
+  smtp_auth_password: 'grjlsgcaybtvzapr'  # Mật khẩu ứng dụng Gmail (App Password)
+  smtp_require_tls: true
+
+route:
+  receiver: gmail-alert
+
+receivers:
+  - name: gmail-alert
+    email_configs:
+      - to: 'vothinhuydt@gmail.com'
+        send_resolved: true

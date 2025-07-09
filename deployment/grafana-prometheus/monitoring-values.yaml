@@ -77,6 +77,26 @@ grafana:
       - grafana.txuapp.com
 
 alertmanager:
+  config:
+    global:
+      smtp_smarthost: 'smtp.gmail.com:587'
+      smtp_from: 'vothinhuydt@gmail.com'
+      smtp_auth_username: 'vothinhuydt@gmail.com'
+      smtp_auth_password: 'grjlsgcaybtvzapr'  # 👈 App password Gmail
+      smtp_require_tls: true
+
+    route:
+      group_by: ['alertname']
+      group_wait: 30s
+      group_interval: 2m
+      repeat_interval: 1h
+      receiver: 'gmail-notify'
+
+    receivers:
+      - name: 'gmail-notify'
+        email_configs:
+          - to: 'vothinhuydt@gmail.com'
+            send_resolved: true
   alertmanagerSpec:
     resources:
       requests:
@@ -126,3 +146,4 @@ kube-state-metrics:
       memory: 256Mi
 
 additionalServiceMonitors: []
+

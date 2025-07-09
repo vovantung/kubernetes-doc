@@ -77,9 +77,7 @@ grafana:
       - grafana.txuapp.com
 
 alertmanager:
-  alertmanagerSpec:
-    configSecret: alertmanager-config
-
+  configMap: alertmanager-config
   alertmanagerSpec:
     resources:
       requests:

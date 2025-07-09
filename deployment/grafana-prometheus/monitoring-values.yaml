@@ -79,8 +79,6 @@ grafana:
 alertmanager:
   alertmanagerSpec:
     configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager
-
-  alertmanagerSpec:
     resources:
       requests:
         cpu: 200m

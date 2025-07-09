@@ -22,7 +22,7 @@ spec:
         #     description: "Pod {{ $labels.pod }} is using more than 90% CPU request"
         - alert: HRMReplicaNearMax
           expr: |
-            kube_horizontalpodautoscaler_status_current_replicas{namespace="backend", name="hrm"} >= 4
+            kube_horizontalpodautoscaler_status_current_replicas{namespace="backend", name="hrm"} >= 3
           for: 2m
           labels:
             severity: warning

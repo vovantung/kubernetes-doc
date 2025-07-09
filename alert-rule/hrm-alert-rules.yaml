@@ -1,32 +1,23 @@
+
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: hrm-alert-rules
-  namespace: monitoring   # Namespace của Prometheus
+  name: hrm-replica-alert
+  namespace: monitoring
+  labels:
+    release: prometheus-stack  # phải khớp với tên release helm
 spec:
   groups:
     - name: hrm.rules
       rules:
-        # - alert: HRMHighCPU
-        #   expr: |
-        #     avg by(pod) (
-        #       rate(container_cpu_usage_seconds_total{namespace="backend", pod=~"hrm.*"}[2m])
-        #       /
-        #       on(pod) kube_pod_container_resource_requests_cpu_cores{namespace="backend", pod=~"hrm.*"}
-        #     ) * 100 > 90
-        #   for: 1m
-        #   labels:
-        #     severity: warning
-        #   annotations:
-        #     summary: "HRM Pod CPU usage > 90%"
-        #     description: "Pod {{ $labels.pod }} is using more than 90% CPU request"
-        - alert: HRMReplicaNearMax
+        - alert: HrmHighReplicaCount
           expr: |
-            kube_horizontalpodautoscaler_status_current_replicas{namespace="backend", name="hrm"} >= 3
+            kube_deployment_status_replicas{deployment="hrm", namespace="backend"} > 3
           for: 2m
           labels:
             severity: warning
           annotations:
-            summary: "HRM app has scaled to 4 or more replicas"
-            description: "HRM HPA has scaled up to {{ $value }} pods (max is 5)"
+            summary: "HRM deployment has scaled up (> 3 replicas)"
+            description: "The HRM deployment in namespace 'backend' has more than 3 replicas."
+
 

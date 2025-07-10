@@ -5,6 +5,7 @@ metadata:
   name: hrm-replica-alert
   namespace: backend
   labels:
+    role: hrm-rules
     release: prometheus-stack  # phải khớp với tên release helm
 spec:
   groups:
@@ -19,5 +20,3 @@ spec:
           annotations:
             summary: "HRM deployment has scaled up (> 3 replicas)"
             description: "The HRM deployment in namespace 'backend' has more than 3 replicas."
-
-

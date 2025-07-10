@@ -4,6 +4,10 @@ global:
 
 prometheus:
   prometheusSpec:
+    ruleSelectorNilUsesHelmValues: false
+    ruleSelector:
+      matchLabels:
+        role: hrm-rules    
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector:

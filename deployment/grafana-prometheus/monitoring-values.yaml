@@ -1,9 +1,13 @@
 global:
   rbac:
-    create: true
-
+    create: true 
+    
 prometheus:
   prometheusSpec:
+    ruleNamespaceSelector:
+      matchNames:
+        - monitoring
+        - backend
     ruleSelectorNilUsesHelmValues: false
     ruleSelector:
       matchLabels:

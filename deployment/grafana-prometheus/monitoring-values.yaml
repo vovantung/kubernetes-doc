@@ -1,8 +1,39 @@
 global:
   rbac:
-    create: true 
-  alertmanager:
+    create: true
+
+alertmanager:
+  alertmanagerSpec:
+    configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager-mail-config
+    useExistingSecret: true
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1Gi
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: nfs-client
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+  ingress:
     enabled: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      cert-manager.io/cluster-issuer: letsencrypt-http01
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    tls:
+      - hosts:
+          - alertmanager.txuapp.com
+        secretName: alertmanager-tls
+    hosts:
+      - alertmanager.txuapp.com
 
 prometheus:
   prometheusSpec:
@@ -81,38 +112,6 @@ grafana:
         secretName: grafana-tls
     hosts:
       - grafana.txuapp.com
-alertmanager:
-  alertmanagerSpec:
-    configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager-mail-config
-    useExistingSecret: true
-    resources:
-      requests:
-        cpu: 200m
-        memory: 512Mi
-      limits:
-        cpu: 500m
-        memory: 1Gi
-    storage:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: nfs-client
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 5Gi
-  ingress:
-    enabled: true
-    ingressClassName: nginx
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /
-      cert-manager.io/cluster-issuer: letsencrypt-http01
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    tls:
-      - hosts:
-          - alertmanager.txuapp.com
-        secretName: alertmanager-tls
-    hosts:
-      - alertmanager.txuapp.com
 
 prometheus-node-exporter:
   resources:

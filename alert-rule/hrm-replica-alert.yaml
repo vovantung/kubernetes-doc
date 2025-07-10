@@ -13,7 +13,7 @@ spec:
       rules:
         - alert: HrmHighReplicaCount
           expr: |
-            kube_deployment_status_replicas{deployment="hrm", namespace="backend"} > 3
+            kube_deployment_status_replicas{deployment="hrm", namespace="backend"} > 2
           for: 2m
           labels:
             severity: warning

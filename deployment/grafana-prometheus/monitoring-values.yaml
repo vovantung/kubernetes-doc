@@ -1,7 +1,6 @@
 global:
   rbac:
     create: true 
-
 prometheus:
   prometheusSpec:
     ruleNamespaceSelector:
@@ -11,8 +10,7 @@ prometheus:
     ruleSelectorNilUsesHelmValues: false
     ruleSelector:
       matchLabels:
-        # Sử dụng role này với map với định nghĩa PrometheusRule alert
-        role: hrm-rules
+        role: hrm-rules    
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector:
@@ -137,7 +135,7 @@ additionalServiceMonitors: []
 kubeStateMetrics:
   enabled: true
 
-# Desable cac anh bao mac dinh, chi giu kubeStateMetrics de theo doi
+# Desable cac anh bao mac dinh 
 # defaultRules:
 #   create: false
 # kubeApiServer:

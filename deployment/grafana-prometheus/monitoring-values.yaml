@@ -4,7 +4,7 @@ global:
 
 alertmanager:
   alertmanagerSpec:
-    configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager-mail-config
+    configSecret: smtp-mail-config
     useExistingSecret: true
     resources:
       requests:

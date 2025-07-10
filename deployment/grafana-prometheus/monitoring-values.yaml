@@ -1,6 +1,9 @@
 global:
   rbac:
     create: true 
+  alertmanager:
+    enabled: true
+
 prometheus:
   prometheusSpec:
     ruleNamespaceSelector:
@@ -81,6 +84,7 @@ grafana:
 alertmanager:
   alertmanagerSpec:
     configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager-mail-config
+    useExistingSecret: true
     resources:
       requests:
         cpu: 200m

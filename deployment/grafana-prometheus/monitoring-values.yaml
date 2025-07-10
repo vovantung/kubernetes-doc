@@ -78,10 +78,9 @@ grafana:
         secretName: grafana-tls
     hosts:
       - grafana.txuapp.com
-
 alertmanager:
   alertmanagerSpec:
-    configSecret: smtp-mail-config-secret
+    configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager  
     resources:
       requests:
         cpu: 200m

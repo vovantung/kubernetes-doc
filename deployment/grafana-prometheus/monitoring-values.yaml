@@ -134,25 +134,25 @@ kube-state-metrics:
 
 additionalServiceMonitors: []
 
-# Desable cac anh bao mac dinh, chi giu kubeStateMetrics de theo doi
-defaultRules:
-  create: false
-
-kubeApiServer:
-  enabled: false
-kubelet:
-  enabled: false
-kubeControllerManager:
-  enabled: false
-kubeScheduler:
-  enabled: false
-coreDns:
-  enabled: false
-kubeProxy:
-  enabled: false
 kubeStateMetrics:
   enabled: true
-kubeEtcd:
-  enabled: false
-nodeExporter:
-  enabled: false
+
+# Desable cac anh bao mac dinh, chi giu kubeStateMetrics de theo doi
+# defaultRules:
+#   create: false
+# kubeApiServer:
+#   enabled: false
+# kubelet:
+#   enabled: false
+# kubeControllerManager:
+#   enabled: false
+# kubeScheduler:
+#   enabled: false
+# coreDns:
+#   enabled: false
+# kubeProxy:
+#   enabled: false
+# kubeEtcd:
+#   enabled: false
+# nodeExporter:
+#   enabled: false

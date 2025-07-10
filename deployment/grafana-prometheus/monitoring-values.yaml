@@ -11,7 +11,6 @@ prometheus:
     ruleSelectorNilUsesHelmValues: false
     ruleSelector:
       matchLabels:
-        # Sử dụng role này với map với định nghĩa PrometheusRule alert
         role: hrm-rules
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
@@ -83,7 +82,6 @@ grafana:
 
 alertmanager:
   alertmanagerSpec:
-    # Gan cau hinh gui mail cho alert
     configSecret: smtp-mail-config-secret
     resources:
       requests:

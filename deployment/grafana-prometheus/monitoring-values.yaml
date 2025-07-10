@@ -81,8 +81,7 @@ grafana:
 
 alertmanager:
   alertmanagerSpec:
-    # Gan cau hinh gui mail cho alert
-    configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager-gmail-config
+    configSecret: smtp-mail-config-secret
     resources:
       requests:
         cpu: 200m

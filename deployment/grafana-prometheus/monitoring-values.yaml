@@ -80,7 +80,7 @@ grafana:
       - grafana.txuapp.com
 alertmanager:
   alertmanagerSpec:
-    configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager  
+    configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager-mail-config
     resources:
       requests:
         cpu: 200m

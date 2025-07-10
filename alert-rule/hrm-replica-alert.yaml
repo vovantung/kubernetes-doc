@@ -3,20 +3,20 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: hrm-replica-alert
-  namespace: monitoring
+  namespace: backend
   labels:
     role: hrm-rules
-    release: prometheus-stack  # phải khớp với tên release helm
+    release: prometheus-stack  # Phải khớp với release helm
 spec:
   groups:
     - name: hrm.rules
       rules:
         - alert: HrmHighReplicaCount
           expr: |
-            kube_deployment_status_replicas{deployment="hrm", namespace="backend"} > 2
-          for: 2m
+            kube_deployment_status_replicas{deployment="hrm", namespace="backend"} >= 4
+          for: 1m
           labels:
             severity: warning
           annotations:
-            summary: "HRM deployment has scaled up (> 2 replicas)"
-            description: "The HRM deployment in namespace 'backend' has more than 2 replicas."
+            summary: "HRM deployment has scaled up (>= 04 replicas)"
+            description: "Triển khai HRM trong không gian 'backend' đã vượt hơn 03 bản sao"

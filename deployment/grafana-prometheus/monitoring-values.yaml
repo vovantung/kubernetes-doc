@@ -133,7 +133,7 @@ kube-state-metrics:
 
 additionalServiceMonitors: []
 
-# Desable cac anh bao mac dinh 
+# Desable cac anh bao mac dinh, chi giu kubeStateMetrics de theo doi
 defaultRules:
   create: false
 

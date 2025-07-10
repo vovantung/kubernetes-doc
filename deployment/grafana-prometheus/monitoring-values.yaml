@@ -74,6 +74,7 @@ grafana:
 
 alertmanager:
   alertmanagerSpec:
+    # Gan cau hinh gui mail cho alert
     configSecret: alertmanager-prometheus-stack-kube-prom-alertmanager-gmail-config
     resources:
       requests:
@@ -124,6 +125,7 @@ kube-state-metrics:
 
 additionalServiceMonitors: []
 
+# Desable cac anh bao mac dinh 
 defaultRules:
   create: false
 

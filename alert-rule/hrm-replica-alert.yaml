@@ -5,7 +5,7 @@ metadata:
   name: hrm-replica-alert
   namespace: backend
   labels:
-    role: hrm-rules
+    role: hrm-rules             # Sử dụng role này để map với cấu hình trong prometheus
     release: prometheus-stack  # Phải khớp với release helm
 spec:
   groups:

@@ -11,7 +11,8 @@ prometheus:
     ruleSelectorNilUsesHelmValues: false
     ruleSelector:
       matchLabels:
-        role: hrm-rules    
+        # Sử dụng role này với map với định nghĩa PrometheusRule alert
+        role: hrm-rules
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
     serviceMonitorNamespaceSelector:

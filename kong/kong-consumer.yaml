@@ -1,4 +1,3 @@
-# kong-consumer.yaml
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
@@ -6,4 +5,4 @@ metadata:
   namespace: default
 username: user1
 credentials:
-  - user1-key-auth
+  - user1-jwt

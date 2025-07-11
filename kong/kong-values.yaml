@@ -42,6 +42,7 @@ postgresql:
       storageClass: nfs-client
       size: 1Gi
 
+
 # ingressController:
 #   watchNamespaceSelector:
 #     matchLabels:

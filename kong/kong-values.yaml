@@ -6,7 +6,7 @@ ingressController:
     - name: CONTROLLER_WATCH_NAMESPACE
       value: backend
     - name: CONTROLLER_KONG_ADMIN_URL
-      value: http://localhost:8001
+      value: "http://localhost:8001"
     - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
       value: "true"
     - name: KONG_DATABASE

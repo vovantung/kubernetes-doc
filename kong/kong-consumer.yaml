@@ -5,13 +5,3 @@ metadata:
   namespace: kong
 username: hrm-client
 # credentials: [ Secret đang có label konghq.com/credential=jwt ]
-
-
-# apiVersion: configuration.konghq.com/v1
-# kind: KongConsumer
-# metadata:
-#   name: hrm-client
-#   namespace: backend
-#   annotations:
-#     konghq.com/plugins: "" # <-- cần thiết khi dùng plugin liên quan auth
-# username: hrm-client

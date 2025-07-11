@@ -4,7 +4,3 @@ metadata:
   name: jwt-auth
   namespace: backend
 plugin: jwt
-config:
-  key_claim_name: iss
-  claims_to_verify:
-    - exp

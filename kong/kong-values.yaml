@@ -1,14 +1,8 @@
-env:
-  database: "postgres"
-  kong_admin_url: "http://kong-kong-admin.kong.svc.cluster.local:8001"
-
-postgresql:
+ingressController:
   enabled: true
-  auth:
-    postgresPassword: "tung123456"
-  primary:
-    persistence:
-      storageClass: "nfs-client"
+  installCRDs: true
+  env:
+    kong_admin_url: http://localhost:8001
 
 admin:
   enabled: true
@@ -23,10 +17,13 @@ manager:
 proxy:
   type: ClusterIP
 
-ingressController:
+env:
+  database: postgres
+
+postgresql:
   enabled: true
-  installCRDs: false
-  env:
-    KONG_DATABASE: "postgres"
-  args:
-    - "--publish-service=kong/kong-kong-proxy"
+  auth:
+    postgresPassword: tung123456
+  primary:
+    persistence:
+      storageClass: nfs-client

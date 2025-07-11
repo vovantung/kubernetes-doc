@@ -8,7 +8,9 @@ ingressController:
     - name: CONTROLLER_KONG_ADMIN_URL
       value: http://localhost:8001
     - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
-      value: "true"  # phải đặt trong dấu ngoặc kép
+      value: "true"
+    - name: KONG_DATABASE
+      value: postgres
   enabled: true
   installCRDs: true
 
@@ -24,9 +26,6 @@ manager:
 
 proxy:
   type: ClusterIP
-
-env:
-  database: postgres
 
 postgresql:
   enabled: true

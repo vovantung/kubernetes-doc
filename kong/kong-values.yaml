@@ -1,10 +1,13 @@
+# kong-values.yaml - Updated and validated
+
 ingressController:
   enabled: true
   ingressClass: kong
-  installCRDs: true
+  installCRDs: false  # Do NOT install CRDs via Helm, since you installed manually
   env:
     CONTROLLER_KONG_ADMIN_URL: "http://localhost:8001"
     CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY: "true"
+    CONTROLLER_DATABASE: "postgres"
     CONTROLLER_PUBLISH_SERVICE: "kong/kong-kong-proxy"
 
 admin:
@@ -14,16 +17,16 @@ admin:
     enabled: true
     servicePort: 8001
   ingress:
-    enabled: false
+    enabled: false  # You are managing ingress manually
 
 manager:
   enabled: true
   type: ClusterIP
-  ingress:
-    enabled: false
   http:
     enabled: true
     servicePort: 8002
+  ingress:
+    enabled: false  # You already defined your own ingress resource
 
 proxy:
   type: ClusterIP
@@ -36,7 +39,6 @@ postgresql:
     persistence:
       storageClass: nfs-client
       size: 1Gi
-
 
 
 # ingressController:

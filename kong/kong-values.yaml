@@ -1,4 +1,3 @@
-
 ingressController:
   enabled: true
   ingressClass: kong
@@ -42,6 +41,7 @@ postgresql:
     persistence:
       storageClass: nfs-client
       size: 1Gi
+
 
 # ingressController:
 #   watchNamespaceSelector:

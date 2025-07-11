@@ -1,0 +1,19 @@
+# file: user1-consumer.yaml
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: user1
+  namespace: default
+username: user1
+credentials:
+- user1-key-auth
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongCredential
+metadata:
+  name: user1-key-auth
+  namespace: default
+consumerRef: user1
+type: key-auth
+config:
+  key: my-api-key

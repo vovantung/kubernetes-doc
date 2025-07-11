@@ -5,14 +5,10 @@ ingressController:
   env:
     - name: CONTROLLER_WATCH_NAMESPACE
       value: backend
-    - name: CONTROLLER_KONG_ADMIN_URL
-      value: "http://localhost:8001"
-    - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
-      value: "true"
-    - name: KONG_DATABASE
-      value: postgres
   enabled: true
   installCRDs: true
+  env:
+    kong_admin_url: http://localhost:8001
 
 admin:
   enabled: true
@@ -26,6 +22,9 @@ manager:
 
 proxy:
   type: ClusterIP
+
+env:
+  database: postgres
 
 postgresql:
   enabled: true

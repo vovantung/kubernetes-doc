@@ -1,4 +1,7 @@
 ingressController:
+  watchNamespaceSelector:
+    matchLabels:
+      kong-watch: "enabled"
   env:
     - name: CONTROLLER_WATCH_NAMESPACE
       value: backend

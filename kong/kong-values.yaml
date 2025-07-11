@@ -3,12 +3,9 @@ ingressController:
   ingressClass: kong
   installCRDs: true
   env:
-    - name: CONTROLLER_KONG_ADMIN_URL
-      value: "http://localhost:8001"
-    - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
-      value: "true"
-    - name: CONTROLLER_PUBLISH_SERVICE
-      value: kong/kong-kong-proxy
+    CONTROLLER_KONG_ADMIN_URL: "http://localhost:8001"
+    CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY: "true"
+    CONTROLLER_PUBLISH_SERVICE: "kong/kong-kong-proxy"
 
 admin:
   enabled: true
@@ -39,7 +36,6 @@ postgresql:
     persistence:
       storageClass: nfs-client
       size: 1Gi
-
 
 
 

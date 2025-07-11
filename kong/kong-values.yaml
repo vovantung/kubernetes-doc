@@ -1,39 +1,85 @@
 ingressController:
-  watchNamespaceSelector:
-    matchLabels:
-      kong-watch: "enabled"
-  env:
-    - name: CONTROLLER_WATCH_NAMESPACE
-      value: backend
-    - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
-      value: "true"
-    - name: CONTROLLER_UPDATE_STRATEGY
-      value: "off"
   enabled: true
+  ingressClass: kong
   installCRDs: true
   env:
-    kong_admin_url: http://localhost:8001
-    database: postgres
+    - name: CONTROLLER_KONG_ADMIN_URL
+      value: http://localhost:8001
+    - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
+      value: "true"
+    - name: CONTROLLER_DATABASE
+      value: "postgres"
+    - name: CONTROLLER_PUBLISH_SERVICE
+      value: kong/kong-kong-proxy
 
 admin:
   enabled: true
+  type: ClusterIP
   http:
     enabled: true
-  type: ClusterIP
+    servicePort: 8001
+  ingress:
+    enabled: false  # bạn đang dùng ingress riêng nếu cần thêm thì bật true và cấu hình host
 
 manager:
   enabled: true
   type: ClusterIP
+  ingress:
+    enabled: false  # bạn đã tự định nghĩa Ingress, nên để false
+  http:
+    enabled: true
+    servicePort: 8002
 
 proxy:
   type: ClusterIP
-  
 
 postgresql:
   enabled: true
   auth:
-    postgresPassword: tung123456
+    postgresPassword: Phan@123
   primary:
     persistence:
       storageClass: nfs-client
+      size: 1Gi
+
+
+
+# ingressController:
+#   watchNamespaceSelector:
+#     matchLabels:
+#       kong-watch: "enabled"
+#   env:
+#     - name: CONTROLLER_WATCH_NAMESPACE
+#       value: backend
+#     - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
+#       value: "true"
+#     - name: CONTROLLER_UPDATE_STRATEGY
+#       value: "off"
+#   enabled: true
+#   installCRDs: true
+#   env:
+#     kong_admin_url: http://localhost:8001
+#     database: postgres
+
+# admin:
+#   enabled: true
+#   http:
+#     enabled: true
+#   type: ClusterIP
+
+# manager:
+#   enabled: true
+#   type: ClusterIP
+
+# proxy:
+#   type: ClusterIP
+  
+
+# postgresql:
+#   enabled: true
+#   auth:
+#     postgresPassword: tung123456
+#   primary:
+#     persistence:
+#       storageClass: nfs-client
 

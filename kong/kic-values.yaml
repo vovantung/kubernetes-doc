@@ -1,5 +1,0 @@
-ingressController:
-  installCRDs: false
-
-env:
-  kong_admin_url: "http://kong-kong-admin.kong.svc.cluster.local:8001"

@@ -7,6 +7,8 @@ ingressController:
       value: backend
     - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
       value: "true"
+    - name: CONTROLLER_UPDATE_STRATEGY
+      value: "off"
   enabled: true
   installCRDs: true
   env:

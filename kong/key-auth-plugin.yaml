@@ -1,7 +1,0 @@
-# file: key-auth-plugin.yaml
-apiVersion: configuration.konghq.com/v1
-kind: KongPlugin
-metadata:
-  name: key-auth
-  namespace: default
-plugin: key-auth

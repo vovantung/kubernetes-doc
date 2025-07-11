@@ -2,6 +2,8 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
-  name: hrm-client
-  namespace: kong
-username: hrm-client
+  name: user1
+  namespace: default
+username: user1
+credentials:
+  - user1-key-auth

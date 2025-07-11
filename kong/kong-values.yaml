@@ -5,14 +5,10 @@ ingressController:
   ingressClass: kong
   installCRDs: false  # Do NOT install CRDs via Helm, since you installed manually
   env:
-    - name: CONTROLLER_KONG_ADMIN_URL
-      value: "http://localhost:8001"
-    - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
-      value: "true"
-    - name: CONTROLLER_DATABASE
-      value: "postgres"
-    - name: CONTROLLER_PUBLISH_SERVICE
-      value: kong/kong-kong-proxy
+    kong_admin_tls_skip_verify: "true"
+    kong_admin_url: "http://localhost:8001"
+    database: "postgres"
+    publish_service: kong/kong-kong-proxy
 
 admin:
   enabled: true

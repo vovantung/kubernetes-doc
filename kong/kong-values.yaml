@@ -34,3 +34,4 @@ postgresql:
   primary:
     persistence:
       storageClass: nfs-client
+

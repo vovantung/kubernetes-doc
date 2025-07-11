@@ -7,8 +7,6 @@ ingressController:
       value: "http://localhost:8001"
     - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
       value: "true"
-    - name: CONTROLLER_DATABASE
-      value: "postgres"
     - name: CONTROLLER_PUBLISH_SERVICE
       value: kong/kong-kong-proxy
 
@@ -19,13 +17,13 @@ admin:
     enabled: true
     servicePort: 8001
   ingress:
-    enabled: false  # bạn đang dùng ingress riêng nếu cần thêm thì bật true và cấu hình host
+    enabled: false
 
 manager:
   enabled: true
   type: ClusterIP
   ingress:
-    enabled: false  # bạn đã tự định nghĩa Ingress, nên để false
+    enabled: false
   http:
     enabled: true
     servicePort: 8002
@@ -41,6 +39,7 @@ postgresql:
     persistence:
       storageClass: nfs-client
       size: 1Gi
+
 
 
 

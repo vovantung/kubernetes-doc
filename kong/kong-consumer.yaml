@@ -1,6 +1,19 @@
+
+# kong-consumer.yaml
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
   name: hrm-client
   namespace: backend
 username: hrm-client
+credentials:
+  - hrm-client-jwt
+
+# apiVersion: configuration.konghq.com/v1
+# kind: KongConsumer
+# metadata:
+#   name: hrm-client
+#   namespace: backend
+#   annotations:
+#     konghq.com/plugins: "" # <-- cần thiết khi dùng plugin liên quan auth
+# username: hrm-client

@@ -4,7 +4,7 @@ ingressController:
   installCRDs: true
   env:
     - name: CONTROLLER_KONG_ADMIN_URL
-      value: http://localhost:8001
+      value: "http://localhost:8001"
     - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
       value: "true"
     - name: CONTROLLER_DATABASE

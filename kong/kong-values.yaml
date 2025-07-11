@@ -1,4 +1,7 @@
 ingressController:
+  env:
+    - name: CONTROLLER_WATCH_NAMESPACE
+      value: backend
   enabled: true
   installCRDs: true
   env:

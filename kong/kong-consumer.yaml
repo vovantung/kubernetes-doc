@@ -1,13 +1,10 @@
-
-# kong-consumer.yaml
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
   name: hrm-client
-  namespace: backend
+  namespace: kong
 username: hrm-client
-credentials:
-  - hrm-client-jwt
+
 
 # apiVersion: configuration.konghq.com/v1
 # kind: KongConsumer

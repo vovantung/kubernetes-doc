@@ -2,8 +2,12 @@ apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: jwt-auth
-  namespace: backend
+  namespace: kong
+plugin: jwt
 config:
+  uri_param_names:
+    - jwt
   claims_to_verify:
     - exp
-plugin: jwt
+  key_claim_name: kid
+  secret_is_base64: false

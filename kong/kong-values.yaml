@@ -5,10 +5,12 @@ ingressController:
   env:
     - name: CONTROLLER_WATCH_NAMESPACE
       value: backend
+    - name: CONTROLLER_KONG_ADMIN_URL
+      value: http://localhost:8001
+    - name: CONTROLLER_UPDATE_STRATEGY
+      value: off
   enabled: true
   installCRDs: true
-  env:
-    kong_admin_url: http://localhost:8001
 
 admin:
   enabled: true

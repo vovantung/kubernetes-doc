@@ -1,7 +1,6 @@
-# key-auth-plugin.yaml
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: key-auth
+  name: jwt-auth
   namespace: default
-plugin: key-auth
+plugin: jwt

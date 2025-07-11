@@ -7,10 +7,8 @@ ingressController:
       value: backend
     - name: CONTROLLER_KONG_ADMIN_URL
       value: http://localhost:8001
-    - name: CONTROLLER_UPDATE_STRATEGY
-      value: off
     - name: CONTROLLER_KONG_ADMIN_TLS_SKIP_VERIFY
-      value: "true"
+      value: "true"  # phải đặt trong dấu ngoặc kép
   enabled: true
   installCRDs: true
 

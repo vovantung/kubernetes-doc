@@ -1,11 +1,21 @@
 deployment:
   kong:
     enabled: true
+    dnsPolicy: ClusterFirst
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
   dblessMigration:
     enabled: false
   dbmode: "postgres"
 
 postgresql:
+  primary:
+    podDnsConfig:
+      options:
+        - name: ndots
+          value: "1"
   enabled: true
   auth:
     username: kong
@@ -54,7 +64,7 @@ gateway:
 
 plugins:
   configMaps:
-    enabled: true
+    enabled: false
 
 # --------
 

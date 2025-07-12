@@ -1,11 +1,19 @@
-# kong-jwt-plugin.yaml
+
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: jwt-auth
-  namespace: kong
-config:
-  key_claim_name: iss
-  secret_is_base64: false
 plugin: jwt
-consumerRef: hrm-client
+
+
+# # kong-jwt-plugin.yaml
+# apiVersion: configuration.konghq.com/v1
+# kind: KongPlugin
+# metadata:
+#   name: jwt-auth
+#   namespace: kong
+# config:
+#   key_claim_name: iss
+#   secret_is_base64: false
+# plugin: jwt
+# consumerRef: hrm-client

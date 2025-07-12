@@ -1,97 +1,11 @@
-# deployment:
-#   kong:
-#     enabled: true
-#     dnsPolicy: ClusterFirst
-#     dnsConfig:
-#       options:
-#         - name: ndots
-#           value: "1"
-#   dblessMigration:
-#     enabled: false
-#   dbmode: "postgres"
-
-# postgresql:
-#   enabled: true
-#   auth:
-#     postgresPassword: tung123456
-#     username: kong
-#     password: kong
-#     database: kong
-#   primary:
-#     persistence:
-#       storageClass: nfs-client
-#     podDnsConfig:
-#       options:
-#         - name: ndots
-#           value: "1"
-
-# env:
-#   database: "postgres"
-#   pg_host: kong-postgresql
-#   pg_user: kong
-#   pg_password: kong
-#   pg_database: kong
-
-# ingressController:
-#   enabled: true
-#   installCRDs: false
-
-# proxy:
-#   enabled: true
-#   type: ClusterIP
-#   http:
-#     enabled: true
-#     servicePort: 8000
-#   tls:
-#     enabled: false
-
-# admin:
-#   enabled: true
-#   type: ClusterIP
-#   http:
-#     enabled: true
-#     servicePort: 8001
-#   tls:
-#     enabled: false
-
-# rbac:
-#   create: true
-
-# gateway:
-#   enabled: true
-#   controller:
-#     ingressClass: kong
-#     ingressClassName: kong
-
-
-deployment:
-  kong:
-    enabled: true
-  ingressController:
-    enabled: true
-
 ingressController:
-  ingressClass: kong
-  installCRDs: false
-  env:
-    KONG_ADMIN_URL: "http://kong-kong-admin.kong.svc.cluster.local:8001"
-    KONG_ADMIN_TLS_SKIP_VERIFY: "true"
-    CONTROLLER_DATABASE: "postgres"
-    CONTROLLER_PUBLISH_SERVICE: "kong/kong-kong-proxy"
+  enabled: false
 
 admin:
   enabled: true
-  type: ClusterIP
   http:
     enabled: true
     servicePort: 8001
-
-manager:
-  enabled: true
-  type: ClusterIP
-  http:
-    enabled: true
-    servicePort: 8002
 
 proxy:
   type: ClusterIP
@@ -107,6 +21,51 @@ postgresql:
     persistence:
       storageClass: nfs-client
       size: 1Gi
+
+
+# deployment:
+#   kong:
+#     enabled: true
+#   ingressController:
+#     enabled: true
+
+# ingressController:
+#   ingressClass: kong
+#   installCRDs: false
+#   env:
+#     KONG_ADMIN_URL: "http://kong-kong-admin.kong.svc.cluster.local:8001"
+#     KONG_ADMIN_TLS_SKIP_VERIFY: "true"
+#     CONTROLLER_DATABASE: "postgres"
+#     CONTROLLER_PUBLISH_SERVICE: "kong/kong-kong-proxy"
+
+# admin:
+#   enabled: true
+#   type: ClusterIP
+#   http:
+#     enabled: true
+#     servicePort: 8001
+
+# manager:
+#   enabled: true
+#   type: ClusterIP
+#   http:
+#     enabled: true
+#     servicePort: 8002
+
+# proxy:
+#   type: ClusterIP
+
+# env:
+#   database: "postgres"
+
+# postgresql:
+#   enabled: true
+#   auth:
+#     postgresPassword: Phan@123
+#   primary:
+#     persistence:
+#       storageClass: nfs-client
+#       size: 1Gi
 
 
 # ---------

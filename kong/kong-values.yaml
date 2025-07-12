@@ -10,20 +10,30 @@ deployment:
     enabled: false
   dbmode: "postgres"
 
+
 postgresql:
   enabled: true
   auth:
     postgresPassword: tung123456
-    username: kong
-    password: kong
-    database: kong
   primary:
     persistence:
       storageClass: nfs-client
-    podDnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+
+
+# postgresql:
+#   enabled: true
+#   auth:
+#     postgresPassword: tung123456
+#     username: kong
+#     password: kong
+#     database: kong
+#   primary:
+#     persistence:
+#       storageClass: nfs-client
+#     podDnsConfig:
+#       options:
+#         - name: ndots
+#           value: "1"
 
 env:
   database: "postgres"

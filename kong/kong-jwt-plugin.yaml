@@ -4,6 +4,11 @@ kind: KongPlugin
 metadata:
   name: jwt-auth
   namespace: backend
+config:
+  claims_to_verify:
+    - exp
+  key_claim_name: iss
+  secret_is_base64: false
 plugin: jwt
 
 

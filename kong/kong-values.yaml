@@ -40,8 +40,7 @@ proxy:
     enabled: true
     servicePort: 8000
   tls:
-    enabled: true
-    servicePort: 8443
+    enabled: false
 
 admin:
   enabled: true
@@ -50,8 +49,7 @@ admin:
     enabled: true
     servicePort: 8001
   tls:
-    enabled: true
-    servicePort: 8444
+    enabled: false
 
 rbac:
   create: true
@@ -62,9 +60,6 @@ gateway:
     ingressClass: kong
     ingressClassName: kong
 
-plugins:
-  configMaps:
-    enabled: false
 
 # --------
 

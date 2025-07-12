@@ -31,7 +31,7 @@ env:
 
 ingressController:
   enabled: true
-  installCRDs: true
+  installCRDs: false
 
 proxy:
   enabled: true

@@ -1,42 +1,103 @@
+deployment:
+  kong:
+    enabled: true
+  dblessMigration:
+    enabled: false
+  dbmode: "postgres"
+
+postgresql:
+  enabled: true
+  auth:
+    username: kong
+    password: kong
+    database: kong
+
+env:
+  database: "postgres"
+  pg_host: kong-postgresql
+  pg_user: kong
+  pg_password: kong
+  pg_database: kong
+
 ingressController:
   enabled: true
-  ingressClass: kong
-  installCRDs: false
-  env:
-    KONG_ADMIN_URL: "http://localhost:8001"
-    KONG_ADMIN_TLS_SKIP_VERIFY: "true"
-    CONTROLLER_DATABASE: "postgres"
-    CONTROLLER_PUBLISH_SERVICE: "kong/kong-kong-proxy"
+  installCRDs: true
+
+proxy:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+    servicePort: 8000
+  tls:
+    enabled: true
+    servicePort: 8443
+
 admin:
   enabled: true
   type: ClusterIP
   http:
     enabled: true
     servicePort: 8001
-  ingress:
-    enabled: false
-
-manager:
-  enabled: true
-  type: ClusterIP
-  http:
+  tls:
     enabled: true
-    servicePort: 8002
-  ingress:
-    enabled: false
+    servicePort: 8444
 
-proxy:
-  type: ClusterIP
+rbac:
+  create: true
 
-postgresql:
+gateway:
   enabled: true
-  auth:
-    postgresPassword: Phan@123
-  primary:
-    persistence:
-      storageClass: nfs-client
-      size: 1Gi
+  controller:
+    ingressClass: kong
+    ingressClassName: kong
 
+plugins:
+  configMaps:
+    enabled: true
+
+# --------
+
+# ingressController:
+#   enabled: true
+#   ingressClass: kong
+#   installCRDs: false
+#   env:
+#     KONG_ADMIN_URL: "http://localhost:8001"
+#     KONG_ADMIN_TLS_SKIP_VERIFY: "true"
+#     CONTROLLER_DATABASE: "postgres"
+#     CONTROLLER_PUBLISH_SERVICE: "kong/kong-kong-proxy"
+# admin:
+#   enabled: true
+#   type: ClusterIP
+#   http:
+#     enabled: true
+#     servicePort: 8001
+#   ingress:
+#     enabled: false
+
+# manager:
+#   enabled: true
+#   type: ClusterIP
+#   http:
+#     enabled: true
+#     servicePort: 8002
+#   ingress:
+#     enabled: false
+
+# proxy:
+#   type: ClusterIP
+
+# postgresql:
+#   enabled: true
+#   auth:
+#     postgresPassword: Phan@123
+#   primary:
+#     persistence:
+#       storageClass: nfs-client
+#       size: 1Gi
+
+# ---------
 
 # ingressController:
 #   watchNamespaceSelector:

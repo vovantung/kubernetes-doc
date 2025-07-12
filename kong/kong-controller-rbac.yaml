@@ -30,6 +30,12 @@ rules:
       - kongcustomentities
       - tcpingresses
       - udpingresses
+      - konglicenses
+      - kongupstreampolicies
+      - ingressclassparameterses
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["discovery.k8s.io"]
+    resources: ["endpointslices"]
     verbs: ["get", "list", "watch"]
   - apiGroups: ["apiextensions.k8s.io"]
     resources: ["customresourcedefinitions"]

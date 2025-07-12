@@ -64,15 +64,13 @@
 #     ingressClassName: kong
 
 
-# == ENABLE KONG PROXY ==
 deployment:
   kong:
     enabled: true
   ingressController:
-    enabled: true  # ⚠️ Controller tách riêng pod
+    enabled: true
 
 ingressController:
-  enabled: true
   ingressClass: kong
   installCRDs: false
   env:
@@ -81,31 +79,23 @@ ingressController:
     CONTROLLER_DATABASE: "postgres"
     CONTROLLER_PUBLISH_SERVICE: "kong/kong-kong-proxy"
 
-# == ADMIN API ==
 admin:
   enabled: true
   type: ClusterIP
   http:
     enabled: true
     servicePort: 8001
-  ingress:
-    enabled: false
 
-# == MANAGER UI ==
 manager:
   enabled: true
   type: ClusterIP
   http:
     enabled: true
     servicePort: 8002
-  ingress:
-    enabled: false
 
-# == PROXY ==
 proxy:
   type: ClusterIP
 
-# == POSTGRES DB MODE ==
 env:
   database: "postgres"
 
@@ -117,6 +107,7 @@ postgresql:
     persistence:
       storageClass: nfs-client
       size: 1Gi
+
 
 # ---------
 

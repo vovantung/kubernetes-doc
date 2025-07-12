@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kong-ingress-controller
+  namespace: kong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kong-ingress-controller
+  template:
+    metadata:
+      labels:
+        app: kong-ingress-controller
+    spec:
+      containers:
+        - name: controller
+          image: kong/kubernetes-ingress-controller:3.5
+          args:
+            - --kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local:8001
+            - --ingress-class=kong
+          env:
+            - name: CONTROLLER_PUBLISH_SERVICE
+              value: kong/kong-kong-proxy

@@ -51,12 +51,17 @@ spec:
       labels:
         app: kong-ingress-controller
     spec:
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       serviceAccountName: kong-ingress-controller
       containers:
         - name: controller
           image: kong/kubernetes-ingress-controller:3.5
           args:
-            - --kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local:8001
+            - --kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local.:8001
             - --ingress-class=kong
           env:
             - name: CONTROLLER_PUBLISH_SERVICE

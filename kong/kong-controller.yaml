@@ -27,7 +27,6 @@ spec:
             - "--publish-service=kong/kong-kong-proxy"
             - "--ingress-class=kong"
             - "--log-level=debug"
-            - "--watch-namespace=backend"
           env:
             - name: POD_NAME
               valueFrom:

@@ -27,6 +27,7 @@ spec:
             - "--publish-service=kong/kong-kong-proxy"
             - "--ingress-class=kong"
             - "--log-level=debug"
+            - "--watch-namespace=backend"
           env:
             - name: KONG_WATCH_NAMESPACE
               value: backend

@@ -8,3 +8,8 @@ metadata:
 username: user1
 credentials:
   - txu-jwt-secret
+spec:
+  username: user1
+  credentials:
+    - txu-jwt-secret
+  ingressClassName: kong

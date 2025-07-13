@@ -2,7 +2,7 @@ apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
   name: txu-consumer
-  namespace: backend
+  namespace: kong
 username: user1
 credentials:
   - txu-jwt-secret

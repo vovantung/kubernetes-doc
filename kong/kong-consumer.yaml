@@ -3,6 +3,7 @@ kind: KongConsumer
 metadata:
   name: txu-iss
   namespace: backend
-username: txu-iss
-credentials:
-  - txu-jwt
+spec:
+  username: txu-iss
+  credentials:
+    - txu-jwt

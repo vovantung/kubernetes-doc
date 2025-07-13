@@ -63,8 +63,11 @@ spec:
           args:
             - --kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local.:8001
             - --ingress-class=kong
-            - --watch-namespace=backend
+            - --watch-namespace=
           env:
             - name: CONTROLLER_PUBLISH_SERVICE
               value: kong/kong-kong-proxy
+          command:
+            - /kong-ingress-controller
+            - --log-level=debug
 

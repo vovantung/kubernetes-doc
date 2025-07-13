@@ -1,4 +1,3 @@
-
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
@@ -7,21 +6,3 @@ metadata:
 username: txu-iss
 credentials:
   - txu-jwt
-
-
-
-# apiVersion: configuration.konghq.com/v1
-# kind: KongConsumer
-# metadata:
-#   name: hrm-client
-#   namespace: kong
-# username: hrm-client
-
-# apiVersion: configuration.konghq.com/v1
-# kind: KongConsumer
-# metadata:
-#   name: hrm-client
-#   namespace: backend
-#   annotations:
-#     konghq.com/plugins: "" # <-- cần thiết khi dùng plugin liên quan auth
-# username: hrm-client

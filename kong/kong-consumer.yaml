@@ -1,11 +1,3 @@
-apiVersion: configuration.konghq.com/v1
-kind: KongConsumer
-metadata:
-  name: user1
-  namespace: backend
-username: txu-iss
-credentials:
-  - txu-jwt
 
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer

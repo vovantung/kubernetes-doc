@@ -28,6 +28,8 @@ spec:
             - "--ingress-class=kong"
             - "--log-level=debug"
           env:
+            - name: KONG_WATCH_NAMESPACE
+              value: backend
             - name: POD_NAME
               valueFrom:
                 fieldRef:

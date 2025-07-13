@@ -29,8 +29,6 @@ spec:
             - "--log-level=debug"
             - "--watch-namespace=backend"
           env:
-            - name: KONG_WATCH_NAMESPACE
-              value: backend
             - name: POD_NAME
               valueFrom:
                 fieldRef:

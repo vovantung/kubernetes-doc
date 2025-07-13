@@ -16,12 +16,10 @@ spec:
       containers:
         - name: ingress-controller
           image: kong/kubernetes-ingress-controller:3.5
-          args:
-            - /kong-ingress-controller
-            - --kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local:8001
-            - --ingress-class-name=kong
           env:
             - name: CONTROLLER_LOG_LEVEL
               value: debug
+            - name: KONG_ADMIN_URL
+              value: "http://kong-kong-admin.kong.svc.cluster.local:8001"
             - name: KONG_DATABASE
               value: "postgres"

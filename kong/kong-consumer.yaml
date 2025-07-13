@@ -3,6 +3,6 @@ kind: KongConsumer
 metadata:
   name: txu-consumer
   namespace: backend
-username: txu-iss
+username: vovantung
 credentials:
   - txu-jwt-secret

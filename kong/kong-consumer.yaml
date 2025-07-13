@@ -3,6 +3,8 @@ kind: KongConsumer
 metadata:
   name: txu-consumer
   namespace: backend
+  annotations:
+    konghq.com/ingress.class: kong
 username: user1
 credentials:
   - txu-jwt-secret

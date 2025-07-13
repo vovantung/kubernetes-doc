@@ -26,7 +26,6 @@ spec:
             - "--kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local:8001"
             - "--ingress-class=kong"
             - "--log-level=debug"
-            - "--enable-crds=true"
           env:
             - name: POD_NAME
               valueFrom:

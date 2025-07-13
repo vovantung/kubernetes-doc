@@ -63,7 +63,7 @@ spec:
           args:
             - --kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local:8001
             - --ingress-class=kong
-            - --watch-namespace=
+            - --watch-namespace=*
           env:
             - name: CONTROLLER_PUBLISH_SERVICE
               value: kong/kong-kong-proxy

@@ -5,6 +5,9 @@ metadata:
     konghq.com/ingress-class: kong
   name: txu-csm
   namespace: backend
+
+spec:
+  ingressClass: kong
 username: user1234
 credentials:
   - txu-jwt-secret

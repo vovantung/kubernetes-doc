@@ -3,7 +3,7 @@ kind: KongConsumer
 metadata:
   annotations:
     konghq.com/ingress-class: kong
-  name: txu-consumer
+  name: txu-csm
   namespace: backend
 username: user1234
 credentials:

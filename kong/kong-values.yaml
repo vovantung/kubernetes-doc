@@ -34,7 +34,7 @@ podOptions:
 
 proxy:
   enabled: true
-  type: LoadBalancer   # Hoặc NodePort nếu bạn không có cloud LB ()
+  type: NodePort   # Hoặc NodePort nếu bạn không có cloud LB (LoadBalancer)
   http:
     enabled: true
     servicePort: 80

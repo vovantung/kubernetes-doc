@@ -34,7 +34,7 @@ podOptions:
 
 proxy:
   enabled: true
-  type: NodePort   # Hoặc NodePort nếu bạn không có cloud LB (LoadBalancer)
+  type: LoadBalancer   # Hoặc NodePort nếu bạn không có cloud LB ()
   http:
     enabled: true
     servicePort: 80
@@ -44,7 +44,7 @@ proxy:
 
 admin:
   enabled: true
-  type: ClusterIP
+  type: NodePort #ClusterIP
   http:
     enabled: true
     servicePort: 8001

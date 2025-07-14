@@ -26,7 +26,6 @@ spec:
             - "--kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local:8001"
             - "--publish-service=kong/kong-kong-proxy"
             - "--ingress-class=kong"
-            - "--skip-ingress-class-check=true"
             - "--log-level=debug"
           env:
             - name: POD_NAME

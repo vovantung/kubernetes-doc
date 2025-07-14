@@ -1,6 +1,8 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
+  annotations:
+    konghq.com/ingress-class: kong
   name: txu-consumer
   namespace: backend
 username: user1234

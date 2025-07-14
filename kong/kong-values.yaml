@@ -1,27 +1,104 @@
-ingressController:
-  enabled: false
 
-admin:
-  enabled: true
-  http:
+# kong-db-values.yaml
+deployment:
+  kong:
     enabled: true
-    servicePort: 8001
 
-proxy:
-  type: ClusterIP
+  # Tắt ingress controller vì bạn sẽ cài riêng
+  ingressController:
+    enabled: false
+
+image:
+  repository: kong/kong
+  tag: "3.6"
 
 env:
   database: "postgres"
+  pg_user: kong
+  pg_password: kong
+  pg_database: kong
+  pg_host: kong-postgresql.kong.svc.cluster.local  # Tên dịch vụ PostgreSQL
+  admin_gui_url: http://localhost:8002
+  admin_gui_api_url: http://localhost:8001
+  log_level: debug
+  # bật admin api cho KIC kết nối
+  admin_listen: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
+  # bật proxy
+  proxy_listen: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
+  
+podOptions:
+  dnsConfig:
+    options:
+      - name: ndots
+        value: "1"
+
+proxy:
+  enabled: true
+  type: LoadBalancer  # Hoặc NodePort nếu bạn không có cloud LB
+  http:
+    enabled: true
+    servicePort: 80
+  tls:
+    enabled: false
+    # servicePort: 443
+
+admin:
+  enabled: true
+  type: ClusterIP
+  http:
+    enabled: true
+    servicePort: 8001
+  tls:
+    enabled: false
+    # servicePort: 8444
 
 postgresql:
   enabled: true
   auth:
-    postgresPassword: Phan@123
+    username: kong
+    password: kong
+    database: kong
   primary:
     persistence:
       storageClass: nfs-client
       size: 1Gi
 
+ingressController:
+  enabled: false  # rất quan trọng, bạn sẽ cài riêng KIC
+
+# bật migration init và wait
+migrations:
+  preUpgrade: true
+  postUpgrade: true
+  annotations: {}
+
+---
+
+# ingressController:
+#   enabled: false
+
+# admin:
+#   enabled: true
+#   http:
+#     enabled: true
+#     servicePort: 8001
+
+# proxy:
+#   type: ClusterIP
+
+# env:
+#   database: "postgres"
+
+# postgresql:
+#   enabled: true
+#   auth:
+#     postgresPassword: Phan@123
+#   primary:
+#     persistence:
+#       storageClass: nfs-client
+#       size: 1Gi
+
+--------
 
 # deployment:
 #   kong:

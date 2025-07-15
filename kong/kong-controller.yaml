@@ -51,7 +51,7 @@ metadata:
 rules:
   - apiGroups: [""]
     resources: ["services", "endpoints", "pods", "nodes", "secrets", "events", "configmaps", "services"]
-    verbs: ["get", "list", "watch", "create"]
+    verbs: ["get", "list", "watch", "create", "patch", "update"]
   - apiGroups: ["extensions", "networking.k8s.io"]
     resources: ["ingresses", "ingressclasses"]
     verbs: ["get", "list", "watch"]

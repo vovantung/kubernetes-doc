@@ -18,10 +18,8 @@ env:
   pg_password: kong
   pg_database: kong
   pg_host: kong-postgresql.kong.svc.cluster.local  # Tên dịch vụ PostgreSQL
-  admin_gui_url: http://kong-kong-admin.kong.svc.cluster.local.:8002
-  # admin_gui_api_url: http://localhost:8001
-  admin_gui_api_url: http://kong-kong-admin.kong.svc.cluster.local.:8001
-
+  admin_gui_url: http://localhost:8002
+  admin_gui_api_url: http://localhost:8001
   log_level: debug
   # bật admin api cho KIC kết nối
   admin_listen: "0.0.0.0:8001, 0.0.0.0:8444 ssl"

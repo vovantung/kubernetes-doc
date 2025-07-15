@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: konga
+  namespace: kong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: konga
+  template:
+    metadata:
+      labels:
+        app: konga
+    spec:
+      containers:
+      - name: konga
+        image: pantsel/konga:latest
+        ports:
+        - containerPort: 1337
+        env:
+        - name: NODE_ENV
+          value: "development"
+        # Tuỳ chọn: bạn có thể cấu hình database (Postgres) riêng nếu muốn persist dữ liệu người dùng
+        # Nếu không, nó sẽ chạy với SQLite trong container
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: konga
+  namespace: kong
+spec:
+  selector:
+    app: konga
+  ports:
+  - port: 1337
+    targetPort: 1337
+    protocol: TCP
+  type: NodePort  # Có thể đổi thành ClusterIP nếu bạn có ingress

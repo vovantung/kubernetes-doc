@@ -23,8 +23,8 @@ spec:
         - name: ingress-controller
           image: kong/kubernetes-ingress-controller:3.5
           args:
-            - "--kong-admin-url=http://kong-kong-admin.kong.svc.cluster.local:8001"
-            - "--publish-service=kong/kong-kong-proxy"
+            - "--kong-admin-url=http://kong-admin.kong.svc.cluster.local:8001"
+            - "--publish-service=kong/kong-proxy"
             - "--ingress-class=kong"
             - "--log-level=debug"
           env:

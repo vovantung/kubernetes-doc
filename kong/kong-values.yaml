@@ -1,8 +1,8 @@
 
 # kong-db-values.yaml
-# deployment:
-#   kong:
-#     enabled: true
+deployment:
+  kong:
+    enabled: true
 
   # Tắt ingress controller vì bạn sẽ cài riêng
   ingressController:
@@ -11,6 +11,8 @@
 image:
   repository: kong/kong
   tag: "3.6"
+
+fullnameOverride: kong
 
 env:
   database: "postgres"

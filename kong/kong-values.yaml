@@ -9,7 +9,7 @@ deployment:
     enabled: false
 
 image:
-  repository: kong/kong
+  repository: kong
   tag: "3.6"
 
 env:

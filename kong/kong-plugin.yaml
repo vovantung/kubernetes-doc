@@ -8,3 +8,4 @@ config:
   key_claim_name: iss # KIC dựa vào giá trị iss trong token để chon secret chưa credentials nào thuộc Consumer là thông tin để verify token do cliẻnt gửi đến.
   claims_to_verify:
     - exp
+  run_on_preflight: false

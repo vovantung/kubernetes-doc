@@ -8,7 +8,7 @@ config:
   key_claim_name: iss # KIC dựa vào giá trị iss trong token để chon secret chưa credentials nào thuộc Consumer là thông tin để verify token do cliẻnt gửi đến.
   claims_to_verify:
     - exp
-  # run_on_preflight: false # Kong bỏ qua plugin này với method OPTIONS.
+  run_on_preflight: false # Kong bỏ qua plugin này với method OPTIONS.
   # Hành vi của trình duyệt là trước khi gửi request chính, nó sẽ gửi một request OPTION để thăm dò backend (trong trường hợp này là KIC) xem có chăn CRORS không.
   # Có hai tình huống, nếu KIC chặn method OPTION thì trình duyệt sẽ xem như chặn CRORS nên nó sẽ gửi request chính mà bỏ đi phần header chứa thông tin xác thực (token).
   # Điều đó làm request chính cùng bị từ chối xác thực. Trường hợp thứ hai KIC cho phép method OPTION nhưng có thể cấu hình chặn CRORS thì request chính cũng không được xác thực

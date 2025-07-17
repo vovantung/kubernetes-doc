@@ -26,32 +26,32 @@ spec:
                   number: 80
 
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: nginx-to-kong-devops
-  namespace: default
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    cert-manager.io/cluster-issuer: letsencrypt-http01
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-spec:
-  ingressClassName: nginx
-  tls:
-    - hosts:
-        - devops.txuapp.com
-      secretName: nginx-to-kong-devops-tls
-  rules:
-    - host: devops.txuapp.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: kong-proxy
-                port:
-                  number: 80
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: nginx-to-kong-devops
+#   namespace: default
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /
+#     cert-manager.io/cluster-issuer: letsencrypt-http01
+#     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+# spec:
+#   ingressClassName: nginx
+#   tls:
+#     - hosts:
+#         - devops.txuapp.com
+#       secretName: nginx-to-kong-devops-tls
+#   rules:
+#     - host: devops.txuapp.com
+#       http:
+#         paths:
+#           - path: /
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: kong-proxy
+#                 port:
+#                   number: 80
 
 ---
 # File: kong-proxy-externalname.yaml

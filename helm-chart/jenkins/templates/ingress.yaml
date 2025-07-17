@@ -1,22 +1,31 @@
+{{- if .Values.controller.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: jenkins
-  namespace: jenkins
+  namespace: {{ .Release.Namespace }}
   annotations:
-    konghq.com/strip-path: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-http01
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+
 spec:
-  ingressClassName: kong
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - jenkins.txuapp.com
+      secretName: jenkins-tls
+
   rules:
-    - host: devops.txuapp.com
+    - host: {{ .Values.controller.ingress.hosts | first }}
       http:
         paths:
-          - path: /jenkins
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: jenkins
                 port:
                   number: 8080
-
+{{- end }}
 

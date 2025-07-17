@@ -1,10 +1,10 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
-  name: txu-csm
+  name: kongsumer-backend
   namespace: backend
   annotations:
     kubernetes.io/ingress.class: "kong" # Cần thiết để KIC quản lý, KIC chỉ thực hiện sync Consumer nào được gắn ingress-class của nó (kubernetes.io/ingress.class: "kong").
 username: vovantung
 credentials:
-  - txu-jwt-secret    #Secret chứa credentails để verify token do client gửi đến
+  - kongsumer-secret-backend  #Secret chứa credentails để verify token do client gửi đến

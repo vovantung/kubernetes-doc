@@ -38,8 +38,9 @@ env:
   admin_listen: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
   # bật proxy
   proxy_listen: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
+
   KONG_PLUGINS: bundled, role-checker
-  KONG_LUA_PACKAGE_PATH: "/opt/kong/custom-plugins/?.lua;;"
+  KONG_LUA_PACKAGE_PATH: "/opt/kong/custom-plugins/?.lua;/opt/kong/custom-plugins/?/init.lua;;"
   
 podOptions:
   dnsConfig:

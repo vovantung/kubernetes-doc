@@ -27,20 +27,20 @@ env:
   admin_listen: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
   # bật proxy
   proxy_listen: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
-  plugins: bundled, role-checker
+  # plugins: bundled, role-checker
   
 podOptions:
   dnsConfig:
     options:
       - name: ndots
         value: "1"
-  # volumeMounts:
-  #   - name: kong-plugin-role-checker
-  #     mountPath: /usr/local/kong/plugins/role-checker
-  # volumes:
-  #   - name: kong-plugin-role-checker
-  #     configMap:
-  #       name: kong-plugin-role-checker
+  volumeMounts:
+    - name: kong-plugin-role-checker
+      mountPath: /usr/local/kong/plugins/role-checker
+  volumes:
+    - name: kong-plugin-role-checker
+      configMap:
+        name: kong-plugin-role-checker
 
 proxy:
   enabled: true

@@ -1,18 +1,8 @@
 
-# kong-db-values.yaml
+# kong-values.yaml
 deployment:
   kong:
     enabled: true
-
-    # extraVolumeMounts:
-    #   - name: kong-plugin
-    #     mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
-    #     subPath: role-checker
-
-    # extraVolumes:
-    #   - name: kong-plugin
-    #     configMap:
-    #       name: kong-plugin-role-checker
 
   # Tắt ingress controller vì bạn sẽ cài riêng
   ingressController:
@@ -41,7 +31,6 @@ env:
   # database: "off"
   # plugins: bundled,role-checker
 
-
 podOptions:
   dnsConfig:
     options:
@@ -65,11 +54,10 @@ proxy:
     - name: kong-plugin-role-checker
       configMap:
         name: kong-plugin-role-checker
-
   extraVolumeMounts:
     - name: kong-plugin-role-checker
       mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
-      subPath: role-checker
+      readOnly: true
 
 admin:
   enabled: true

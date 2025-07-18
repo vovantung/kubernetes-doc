@@ -28,7 +28,18 @@ env:
   # bật proxy
   proxy_listen: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
   # plugins: bundled, role-checker
-  plugins: bundled, role-checker
+  database: "off"
+  plugins: bundled,role-checker
+
+extraVolumes:
+  - name: kong-plugin-role-checker
+    configMap:
+      name: kong-plugin-role-checker
+
+extraVolumeMounts:
+  - name: kong-plugin-role-checker
+    mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
+    readOnly: true
 
 podOptions:
   dnsConfig:

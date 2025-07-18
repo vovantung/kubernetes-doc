@@ -50,12 +50,12 @@ proxy:
   env:
     plugins: bundled,role-checker  # Nối plugin custom vào list plugins
 
-  extraVolumeMounts:
+  volumeMounts:
     - name: kong-custom-plugins
       mountPath: /usr/local/share/lua/5.1/kong/plugins
       readOnly: true
 
-  extraVolumes:
+  volumes:
     - name: kong-custom-plugins
       nfs:
         server: 192.168.98.150

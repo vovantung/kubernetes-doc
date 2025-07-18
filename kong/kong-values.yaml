@@ -50,20 +50,16 @@ proxy:
   env:
     plugins: bundled,role-checker  # Nối plugin custom vào list plugins
 
-  extraVolumes:
-    - name: kong-plugin-role-checker
-      configMap:
-        name: kong-plugin-role-checker
-        items:
-          - key: handler.lua
-            path: handler.lua
-          - key: schema.lua
-            path: schema.lua
-
   extraVolumeMounts:
-    - name: kong-plugin-role-checker
-      mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
+    - name: kong-custom-plugins
+      mountPath: /usr/local/share/lua/5.1/kong/plugins
       readOnly: true
+
+  extraVolumes:
+    - name: kong-custom-plugins
+      nfs:
+        server: 192.168.98.150
+        path: /mnt/data/nfs/plugins
 
 admin:
   enabled: true

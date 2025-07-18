@@ -4,15 +4,15 @@ deployment:
   kong:
     enabled: true
 
-    extraVolumeMounts:
-      - name: kong-plugin
-        mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
-        subPath: role-checker
+    # extraVolumeMounts:
+    #   - name: kong-plugin
+    #     mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
+    #     subPath: role-checker
 
-    extraVolumes:
-      - name: kong-plugin
-        configMap:
-          name: kong-plugin-role-checker
+    # extraVolumes:
+    #   - name: kong-plugin
+    #     configMap:
+    #       name: kong-plugin-role-checker
 
   # Tắt ingress controller vì bạn sẽ cài riêng
   ingressController:
@@ -38,10 +38,9 @@ env:
   # bật proxy
   proxy_listen: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
   # plugins: bundled, role-checker
-  database: "off"
-  plugins: bundled,role-checker
-  lua_package_path: "/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;;"
-  KONG_PLUGINS_DIRECTORY: "/usr/local/share/lua/5.1/kong/plugins"
+  # database: "off"
+  # plugins: bundled,role-checker
+
 
 podOptions:
   dnsConfig:
@@ -58,6 +57,19 @@ proxy:
   tls:
     enabled: false
     # servicePort: 443
+
+  env:
+    plugins: bundled,role-checker  # Nối plugin custom vào list plugins
+
+  extraVolumes:
+    - name: kong-plugin-role-checker
+      configMap:
+        name: kong-plugin-role-checker
+
+  extraVolumeMounts:
+    - name: kong-plugin-role-checker
+      mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
+      subPath: role-checker
 
 admin:
   enabled: true

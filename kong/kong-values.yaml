@@ -30,15 +30,6 @@ env:
   # plugins: bundled, role-checker
   plugins: bundled, role-checker
 
-extraVolumeMounts:
-  - name: role-checker-plugin
-    mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
-
-extraVolumes:
-  - name: role-checker-plugin
-    configMap:
-      name: kong-role-checker
-  
 podOptions:
   dnsConfig:
     options:
@@ -61,6 +52,13 @@ proxy:
   tls:
     enabled: false
     # servicePort: 443
+  extraVolumeMounts:
+    - name: role-checker-plugin
+      mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
+  extraVolumes:
+    - name: role-checker-plugin
+      configMap:
+        name: kong-role-checker
 
 admin:
   enabled: true

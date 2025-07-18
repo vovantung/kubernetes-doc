@@ -3,17 +3,6 @@
 deployment:
   kong:
     enabled: true
-    podAnnotations:
-      konghq.com/plugins: "role-checker"
-    extraVolumeMounts:
-      - name: kong-custom-plugins
-        mountPath: /opt/kong/custom-plugins/role_checker
-        subPath: role_checker 
-
-  extraVolumes:
-    - name: kong-custom-plugins
-      configMap:
-        name: kong-role-checker
 
   # Tắt ingress controller vì bạn sẽ cài riêng
   ingressController:
@@ -39,14 +28,21 @@ env:
   # bật proxy
   proxy_listen: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
 
-  KONG_PLUGINS: bundled, role_checker
-  KONG_LUA_PACKAGE_PATH: "/opt/kong/custom-plugins/?.lua;/opt/kong/custom-plugins/?/init.lua;;"
+  plugins: bundled,role-checker
+
   
 podOptions:
   dnsConfig:
     options:
       - name: ndots
         value: "1"
+  volumeMounts:
+    - name: kong-plugin-role-checker
+      mountPath: /usr/local/kong/plugins/role-checker
+  volumes:
+    - name: kong-plugin-role-checker
+      configMap:
+        name: kong-plugin-role-checker
 
 proxy:
   enabled: true

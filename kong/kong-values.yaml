@@ -7,7 +7,9 @@ deployment:
       konghq.com/plugins: "role-checker"
     extraVolumeMounts:
       - name: kong-custom-plugins
-        mountPath: /opt/kong/custom-plugins
+        mountPath: /opt/kong/custom-plugins/role-checker
+        subPath: role-checker  # THÊM DÒNG NÀY
+
   extraVolumes:
     - name: kong-custom-plugins
       configMap:

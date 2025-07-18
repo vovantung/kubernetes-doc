@@ -47,8 +47,8 @@ proxy:
     enabled: false
     # servicePort: 443
 
-  # env:
-  #   plugins: bundled,role-checker  # Nối plugin custom vào list plugins
+  env:
+    plugins: bundled,role-checker  # Nối plugin custom vào list plugins
 
   extraVolumes:
     - name: kong-plugin-role-checker

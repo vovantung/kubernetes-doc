@@ -1,4 +1,3 @@
--- role-checker.lua
 local BasePlugin = require "kong.plugins.base_plugin"
 local kong = kong
 local RoleChecker = BasePlugin:extend()
@@ -26,3 +25,5 @@ function RoleChecker:access(conf)
 end
 
 return RoleChecker
+
+

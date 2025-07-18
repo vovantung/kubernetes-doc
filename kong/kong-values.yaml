@@ -47,17 +47,32 @@ proxy:
     enabled: false
     # servicePort: 443
 
-  env:
-    plugins: bundled,role-checker  # Nối plugin custom vào list plugins
+  # env:
+  #   plugins: bundled,role-checker  # Nối plugin custom vào list plugins
+
+  extraVolumeMounts:
+  - name: custom-plugin
+    mountPath: /usr/local/share/lua/5.1/kong/plugins/rolechecker
+    readOnly: true
 
   extraVolumes:
-    - name: kong-plugin-role-checker
+    - name: custom-plugin
       configMap:
         name: kong-plugin-role-checker
-  extraVolumeMounts:
-    - name: kong-plugin-role-checker
-      mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
-      readOnly: true
+        items:
+          - key: kong/plugins/rolechecker/handler.lua
+            path: handler.lua
+          - key: kong/plugins/rolechecker/schema.lua
+            path: schema.lua
+
+  # extraVolumes:
+  #   - name: kong-plugin-role-checker
+  #     configMap:
+  #       name: kong-plugin-role-checker
+  # extraVolumeMounts:
+  #   - name: kong-plugin-role-checker
+  #     mountPath: /usr/local/share/lua/5.1/kong/plugins/role-checker
+  #     readOnly: true
 
 admin:
   enabled: true

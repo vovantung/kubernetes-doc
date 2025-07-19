@@ -51,8 +51,7 @@ proxy:
 
   extraVolumeMounts:
     - name: custom-plugins
-      mountPath: /opt/kong/customplugins
-
+      mountPath: /customplugins
   extraVolumes:
     - name: custom-plugins
       nfs:

@@ -38,19 +38,18 @@ podOptions:
     options:
       - name: ndots
         value: "1"
+  containers:
+    - name: proxy
+      volumeMounts:
+        - name: custom-plugins
+          mountPath: /opt/kong/customplugins
 
-  # 👇 Thêm volume để mount plugin từ NFS
-  # volumes:
-  #   - name: kong-plugin-volume
-  #     nfs:
-  #       server: 192.168.98.150
-  #       path: /mnt/data/nfs/plugins
-
-  extraVolumes:
-    - name: kong-custom-plugins
+  volumes:
+    - name: custom-plugins
       nfs:
         server: 192.168.98.150
         path: /mnt/data/nfs/plugins
+
 
 proxy:
   enabled: true
@@ -61,19 +60,6 @@ proxy:
   tls:
     enabled: false
     # servicePort: 443
-
-  # 👇 Mount vào container proxy
-  # podAnnotations: {}
-  # containerPort: 8000
-
-  # volumeMounts:
-  #   - name: kong-plugin-volume
-  #     mountPath: /usr/local/share/lua/5.1/kong/plugins
-  #     readOnly: true
-
-  extraVolumeMounts:
-    - name: kong-custom-plugins
-      mountPath: /opt/kong/customplugins
 
 admin:
   enabled: true

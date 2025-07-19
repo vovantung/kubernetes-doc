@@ -3,6 +3,16 @@
 deployment:
   kong:
     enabled: true
+    extraVolumes:
+      - name: custom-plugins
+        nfs:
+          server: 192.168.98.150
+          path: /mnt/data/nfs/plugins
+
+    extraVolumeMounts:
+      - name: custom-plugins
+        mountPath: /opt
+
 
   # Tắt ingress controller vì bạn sẽ cài riêng
   ingressController:
@@ -48,16 +58,6 @@ proxy:
   tls:
     enabled: false
     # servicePort: 443
-
-  extraVolumes:
-    - name: custom-plugins
-      nfs:
-        server: 192.168.98.150
-        path: /mnt/data/nfs/plugins
-
-  extraVolumeMounts:
-    - name: custom-plugins
-      mountPath: /opt
 
 admin:
   enabled: true

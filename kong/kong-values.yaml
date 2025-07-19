@@ -38,18 +38,16 @@ podOptions:
     options:
       - name: ndots
         value: "1"
-  containers:
-    - name: proxy
-      volumeMounts:
-        - name: custom-plugins
-          mountPath: /opt/kong/customplugins
 
-  volumes:
-    - name: custom-plugins
-      nfs:
-        server: 192.168.98.150
-        path: /mnt/data/nfs/plugins
+extraVolumeMounts:
+  - name: custom-plugins
+    mountPath: /opt/kong/customplugins
 
+extraVolumes:
+  - name: custom-plugins
+    nfs:
+      server: 192.168.98.150
+      path: /mnt/data/nfs/plugins
 
 proxy:
   enabled: true

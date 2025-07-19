@@ -34,7 +34,7 @@ env:
   # KONG_PLUGINS: bundled,customplugins
   # KONG_LUA_PACKAGE_PATH: /opt/?.lua;;  # Đảm bảo plugin có thể load
   # database: "postgres"
-  database: "off"
+  # database: "off"
   plugins: "bundled,rolechecker"
 
 podOptions:

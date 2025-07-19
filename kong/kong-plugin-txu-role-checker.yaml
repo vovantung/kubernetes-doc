@@ -1,6 +1,6 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: role-checker   
+  name: txu-role-checker 
   namespace: backend
-plugin: rolechecker
+plugin: txu-role-checker

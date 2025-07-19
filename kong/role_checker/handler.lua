@@ -25,5 +25,3 @@ function RoleChecker:access(conf)
 end
 
 return RoleChecker
-
-

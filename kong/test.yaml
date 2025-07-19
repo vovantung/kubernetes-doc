@@ -3,6 +3,15 @@
 deployment:
   kong:
     enabled: true
+    volumeMounts:
+      - name: kong-custom-plugins
+        mountPath: /usr/local/share/lua/5.1/kong/plugins
+        readOnly: false
+    volumes:
+      - name: kong-custom-plugins
+        nfs:
+          server: 192.168.98.150
+          path: /mnt/data/nfs/plugins
 
   # Tắt ingress controller vì bạn sẽ cài riêng
   ingressController:
@@ -13,6 +22,17 @@ image:
   tag: "3.6"
 
 fullnameOverride: kong
+
+volumeMounts:
+  - name: kong-custom-plugins
+    mountPath: /usr/local/share/lua/5.1/kong/plugins
+    readOnly: false
+
+volumes:
+  - name: kong-custom-plugins
+    nfs:
+      server: 192.168.98.150
+      path: /mnt/data/nfs/plugins
 
 env:
   database: "postgres"
@@ -27,22 +47,15 @@ env:
   admin_listen: "0.0.0.0:8001, 0.0.0.0:8444 ssl"
   # bật proxy
   proxy_listen: "0.0.0.0:8000, 0.0.0.0:8443 ssl"
+  # plugins: bundled, role-checker
   # database: "off"
   # plugins: bundled,role-checker
-  KONG_PLUGINS: "bundled,customplugins"  # 👈 thay "customplugin" bằng tên plugin thực tế của bạn
 
 podOptions:
   dnsConfig:
     options:
       - name: ndots
         value: "1"
-
-  # 👇 Thêm volume để mount plugin từ NFS
-  volumes:
-    - name: kong-plugin-volume
-      nfs:
-        server: 192.168.98.150
-        path: /mnt/data/nfs/plugins
 
 proxy:
   enabled: true
@@ -54,14 +67,19 @@ proxy:
     enabled: false
     # servicePort: 443
 
-  # 👇 Mount vào container proxy
-  podAnnotations: {}
-  containerPort: 8000
+  env:
+    plugins: bundled,role-checker  # Nối plugin custom vào list plugins
 
   volumeMounts:
-    - name: kong-plugin-volume
+    - name: kong-custom-plugins
       mountPath: /usr/local/share/lua/5.1/kong/plugins
-      readOnly: true
+      readOnly: false
+
+  volumes:
+    - name: kong-custom-plugins
+      nfs:
+        server: 192.168.98.150
+        path: /mnt/data/nfs/plugins
 
 admin:
   enabled: true

@@ -1,7 +1,7 @@
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  name: role_checker    # Được dùng để gắn cho Ingress. Ingress được gắn gắn konghq.com/plugins: jwt-auth cùng với Ingress mà KIC quản lý, KIC sẽ thực hiện sync route (Ingress) đó vào trong Kong (admin, proxy)
+  name: role-checker    # Được dùng để gắn cho Ingress. Ingress được gắn gắn konghq.com/plugins: jwt-auth cùng với Ingress mà KIC quản lý, KIC sẽ thực hiện sync route (Ingress) đó vào trong Kong (admin, proxy)
   namespace: backend
 plugin: rolechecker
 config:

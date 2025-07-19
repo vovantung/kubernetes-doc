@@ -49,6 +49,9 @@ proxy:
     enabled: false
     # servicePort: 443
 
+  podAnnotations:
+    nfs-mount: "true"
+
   extraVolumeMounts:
     - name: custom-plugins
       mountPath: /customplugins

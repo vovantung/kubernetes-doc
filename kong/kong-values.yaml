@@ -39,16 +39,6 @@ podOptions:
       - name: ndots
         value: "1"
 
-extraVolumeMounts:
-  - name: custom-plugins
-    mountPath: /opt/kong/customplugins
-
-extraVolumes:
-  - name: custom-plugins
-    nfs:
-      server: 192.168.98.150
-      path: /mnt/data/nfs/plugins
-
 proxy:
   enabled: true
   type: NodePort   # Hoặc NodePort nếu bạn không có cloud LB (LoadBalancer)
@@ -58,6 +48,16 @@ proxy:
   tls:
     enabled: false
     # servicePort: 443
+
+  extraVolumeMounts:
+    - name: custom-plugins
+      mountPath: /opt/kong/customplugins
+
+  extraVolumes:
+    - name: custom-plugins
+      nfs:
+        server: 192.168.98.150
+        path: /mnt/data/nfs/plugins
 
 admin:
   enabled: true

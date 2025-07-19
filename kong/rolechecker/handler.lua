@@ -1,13 +1,11 @@
-local BasePlugin = require "kong.plugins.base_plugin"
 local jwt_decoder = require "kong.plugins.jwt.jwt_parser"
 
-local RoleCheckerHandler = BasePlugin:extend()
+local RoleChecker = {
+  PRIORITY = 1000,
+  VERSION = "1.0",
+}
 
-RoleCheckerHandler.PRIORITY = 1000
-
-function RoleCheckerHandler:access(conf)
-  RoleCheckerHandler.super.access(self)
-
+function RoleChecker:access(conf)
   local token = kong.request.get_header("Authorization")
   if not token then
     return kong.response.exit(401, { message = "Missing Authorization header" })
@@ -30,4 +28,4 @@ function RoleCheckerHandler:access(conf)
   end
 end
 
-return RoleCheckerHandler
+return RoleChecker

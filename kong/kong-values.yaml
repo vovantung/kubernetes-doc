@@ -11,7 +11,7 @@ deployment:
 
 image:
   repository: vothinhuydt/kong
-  tag: "txu"
+  tag: "3.6"
 
 fullnameOverride: kong
 

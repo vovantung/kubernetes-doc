@@ -23,9 +23,23 @@ function RoleChecker:access(conf)
     return kong.response.exit(403, { message = "Missing role in token" })
   end
 
-  if role ~= conf.required_role and role ~= "admin" then
+  -- if role ~= conf.required_role and role ~= "ROLE_admin" then
+  --   return kong.response.exit(403, { message = "Forbidden - insufficient role" })
+  -- end
+
+  local path = kong.request.get_path()
+
+  if role == "ROLE_admin" then
+    -- Admin được đi qua tất cả các path
+    return
+  elseif role == "ROLE_hrm" then
+    if not path:match("^/hrm") then
+      return kong.response.exit(403, { message = "Forbidden - HRM role only allowed on /hrm path" })
+    end
+  else
     return kong.response.exit(403, { message = "Forbidden - insufficient role" })
   end
+
 end
 
 return RoleChecker

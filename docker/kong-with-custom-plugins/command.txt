@@ -1,0 +1,2 @@
+docker build -t vothinhuydt/kong:1.0 .
+docker push vothinhuydt/kong:1.0

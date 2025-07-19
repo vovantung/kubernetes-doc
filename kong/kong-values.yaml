@@ -4,27 +4,14 @@ deployment:
   kong:
     enabled: true
 
-# thêm volume claim
-extraVolumes:
-  - name: custom-plugins
-    nfs:
-      server: 192.168.98.150
-      path: /mnt/data/nfs/plugins
-
-# mount volume vào đúng container proxy
-extraVolumeMounts:
-  proxy:
-    - name: custom-plugins
-      mountPath: /opt
-
 
   # Tắt ingress controller vì bạn sẽ cài riêng
   ingressController:
     enabled: false
 
 image:
-  repository: kong/kong
-  tag: "3.6"
+  repository: vothinhuydt/kong
+  tag: txu
 
 fullnameOverride: kong
 
@@ -44,8 +31,10 @@ env:
   # database: "off"
   # plugins: bundled,role-checker
   # KONG_PLUGINS: "bundled,customplugins"  # 👈 thay "customplugin" bằng tên plugin thực tế của bạn
-  KONG_PLUGINS: bundled,customplugins
-  KONG_LUA_PACKAGE_PATH: /opt/?.lua;;  # Đảm bảo plugin có thể load
+  # KONG_PLUGINS: bundled,customplugins
+  # KONG_LUA_PACKAGE_PATH: /opt/?.lua;;  # Đảm bảo plugin có thể load
+  database: "postgres"
+  plugins: "bundled,rolechecker"
 
 podOptions:
   dnsConfig:

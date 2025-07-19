@@ -31,7 +31,7 @@ env:
   # plugins: bundled,role-checker
   # KONG_PLUGINS: "bundled,customplugins"  # 👈 thay "customplugin" bằng tên plugin thực tế của bạn
   KONG_PLUGINS: bundled,customplugins
-  KONG_LUA_PACKAGE_PATH: /opt/kong/customplugins/?.lua;;  # Đảm bảo plugin có thể load
+  KONG_LUA_PACKAGE_PATH: /opt/?.lua;;  # Đảm bảo plugin có thể load
 
 podOptions:
   dnsConfig:
@@ -49,17 +49,15 @@ proxy:
     enabled: false
     # servicePort: 443
 
-  podAnnotations:
-    nfs-mount: "true"
-
-  extraVolumeMounts:
-    - name: custom-plugins
-      mountPath: /customplugins
   extraVolumes:
     - name: custom-plugins
       nfs:
         server: 192.168.98.150
         path: /mnt/data/nfs/plugins
+
+  extraVolumeMounts:
+    - name: custom-plugins
+      mountPath: /opt
 
 admin:
   enabled: true

@@ -6,12 +6,25 @@ local RoleChecker = {
 }
 
 function RoleChecker:access(conf)
-  local token = kong.request.get_header("Authorization")
+  
+  local req_method = kong.request.get_method()
+  local path = kong.request.get_path()
+
+  -- Bỏ qua preflight CORS requests
+  if req_method == "OPTIONS" then
+    return
+  end
+
+  -- ✅ Bỏ qua các route public như /health
+  -- if req_method == "GET" and path == "/health" then
+  --   return
+  -- end
 
   -- kong.log.notice("[RoleChecker] Access phase started")
   -- kong.log.debug("[RoleChecker] Token after strip: ", token)
   -- kong.log.err("[RoleChecker] JWT decode error: ", err)
 
+  local token = kong.request.get_header("Authorization")
   if not token then
     return kong.response.exit(401, { message = "Missing Authorization header" })
   end
@@ -26,13 +39,6 @@ function RoleChecker:access(conf)
   local role = jwt.claims.role
   if not role then
     return kong.response.exit(403, { message = "Missing role in token" })
-  end
-
-  local path = kong.request.get_path()
-
-    -- Bỏ qua preflight CORS requests
-  if req_method == "OPTIONS" then
-    return
   end
 
   if role == "ROLE_admin" then

@@ -1,7 +1,7 @@
 local typedefs = require "kong.db.schema.typedefs"
 
 return {
-  name = "txu",  -- BẮT BUỘC
+  name = "txu-plugins",  -- BẮT BUỘC
   fields = {
     { consumer = typedefs.no_consumer },  -- nếu muốn plugin áp dụng ở route/service/global chứ không theo consumer
     { config = {

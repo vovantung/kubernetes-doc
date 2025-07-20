@@ -5,6 +5,13 @@ local RoleChecker = {
   VERSION = "1.0",
 }
 
+-- Hàm dùng chung gắn header
+local function add_cors_headers()
+  kong.response.set_header("Access-Control-Allow-Origin", "*")
+  kong.response.set_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+  kong.response.set_header("Access-Control-Allow-Headers", "Authorization, Content-Type")
+end
+
 function RoleChecker:access(conf)
   
   local req_method = kong.request.get_method()
@@ -12,9 +19,7 @@ function RoleChecker:access(conf)
 
   -- Nếu là OPTIONS và plugin cấu hình không chạy preflight, thì bỏ qua
   if req_method == "OPTIONS" and conf.run_on_preflight == false then
-    kong.response.set_header("Access-Control-Allow-Origin", "*")
-    kong.response.set_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-    kong.response.set_header("Access-Control-Allow-Headers", "Authorization, Content-Type")
+    add_cors_headers()
     return
   end
 
@@ -58,6 +63,11 @@ function RoleChecker:access(conf)
     return kong.response.exit(403, { message = "Dừng lại - không đủ thẩm quyền truy cập!" })
   end
 
+end
+
+-- Phase: HEADER_FILTER (response đang trên đường trả về)
+function RoleChecker:header_filter(conf)
+  add_cors_headers()
 end
 
 return RoleChecker

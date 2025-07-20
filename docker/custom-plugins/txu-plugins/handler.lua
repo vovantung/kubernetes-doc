@@ -66,8 +66,8 @@ function RoleChecker:access(conf)
 end
 
 -- Phase: HEADER_FILTER (response đang trên đường trả về)
-function RoleChecker:header_filter(conf)
-  add_cors_headers()
-end
+-- function RoleChecker:header_filter(conf)
+--   add_cors_headers()
+-- end
 
 return RoleChecker

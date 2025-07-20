@@ -18,7 +18,13 @@ function RoleChecker:access(conf)
   local path = kong.request.get_path()
 
   -- Nếu là OPTIONS và plugin cấu hình không chạy preflight, thì bỏ qua
-  if req_method == "OPTIONS" and conf.run_on_preflight == false then
+
+
+
+  if req_method == "OPTIONS" and path == "/get-role" then
+    return kong.response.exit(200, {role = ""})
+
+  elseif req_method == "OPTIONS" and conf.run_on_preflight == false then
     -- add_cors_headers()
     return
   end

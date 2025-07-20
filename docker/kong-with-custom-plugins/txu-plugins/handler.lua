@@ -29,7 +29,11 @@ function RoleChecker:access(conf)
     return kong.response.exit(401, { message = "Missing Authorization header" })
   end
 
-  token = token:gsub("Bearer ", "")
+  token = token:match("Bearer%s+(.+)")
+  if not token then
+    return kong.response.exit(401, { message = "Invalid Authorization format" })
+  end
+
 
   local jwt, err = jwt_decoder:new(token)
   if err then

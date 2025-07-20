@@ -19,7 +19,7 @@ function RoleChecker:access(conf)
 
   -- Nếu là OPTIONS và plugin cấu hình không chạy preflight, thì bỏ qua
   if req_method == "OPTIONS" and conf.run_on_preflight == false then
-    add_cors_headers()
+    -- add_cors_headers()
     return
   end
 

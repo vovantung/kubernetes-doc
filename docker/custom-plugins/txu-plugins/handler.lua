@@ -1,7 +1,7 @@
 local jwt_decoder = require "kong.plugins.jwt.jwt_parser"
 
 local RoleChecker = {
-  PRIORITY = 1000,
+  PRIORITY = 10,
   VERSION = "1.0",
 }
 
@@ -10,15 +10,19 @@ function RoleChecker:access(conf)
   local req_method = kong.request.get_method()
   local path = kong.request.get_path()
 
-  -- Bỏ qua preflight CORS requests
-  if req_method == "OPTIONS" then
+  -- Nếu là OPTIONS và plugin cấu hình không chạy preflight, thì bỏ qua
+  if req_method == "OPTIONS" and conf.run_on_preflight == false then
+    kong.response.set_header("Access-Control-Allow-Origin", "*")
+    kong.response.set_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+    kong.response.set_header("Access-Control-Allow-Headers", "Authorization, Content-Type")
     return
   end
 
-  -- Bỏ qua các route public như /health
+  -- Nếu có path public, có thể mở lại điều kiện này
   -- if req_method == "GET" and path == "/health" then
   --   return
   -- end
+
 
   -- kong.log.notice("[RoleChecker] Access phase started")
   -- kong.log.debug("[RoleChecker] Token after strip: ", token)
@@ -51,7 +55,7 @@ function RoleChecker:access(conf)
   elseif role == "ROLE_hrm" and path:match("^/hrm") then
     return
   else
-    return kong.response.exit(403, { message = "Dung lai - khong du tham quyen truy cap" })
+    return kong.response.exit(403, { message = "Dừng lại - không đủ thẩm quyền truy cập!" })
   end
 
 end

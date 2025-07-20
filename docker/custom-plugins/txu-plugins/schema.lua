@@ -8,6 +8,8 @@ return {
         type = "record",
         fields = {
           { required_role = { type = "string" } },
+          -- Thêm cấu hình run_on_preflight
+          { run_on_preflight = { type = "boolean", default = true } },
         },
         entity_checks = {
           -- có thể thêm các logic kiểm tra ràng buộc nâng cao

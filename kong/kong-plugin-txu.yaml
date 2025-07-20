@@ -4,3 +4,5 @@ metadata:
   name: txu-plugins 
   namespace: backend
 plugin: txu-plugins
+config:
+  run_on_preflight: false  # Bỏ qua plugin nếu request là OPTIONS

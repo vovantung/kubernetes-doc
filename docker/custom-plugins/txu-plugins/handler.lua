@@ -22,7 +22,8 @@ function RoleChecker:access(conf)
 
 
   if req_method == "OPTIONS" and path == "/get-role" then
-    return kong.response.exit(200, {role = ""})
+    add_cors_headers()
+    return
 
   elseif req_method == "OPTIONS" and conf.run_on_preflight == false then
     -- add_cors_headers()

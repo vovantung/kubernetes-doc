@@ -54,6 +54,11 @@ function RoleChecker:access(conf)
     return kong.response.exit(403, { message = "Missing role in token" })
   end
 
+
+  if req_method == "GET" and path == "/get-role" then
+    return kong.response.exit(200, {role = role})
+  end
+
   if role == "ROLE_admin" then
     -- Admin được đi qua tất cả các path
     return

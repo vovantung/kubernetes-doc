@@ -15,7 +15,7 @@ function RoleChecker:access(conf)
     return
   end
 
-  -- ✅ Bỏ qua các route public như /health
+  -- Bỏ qua các route public như /health
   -- if req_method == "GET" and path == "/health" then
   --   return
   -- end
@@ -51,7 +51,7 @@ function RoleChecker:access(conf)
   elseif role == "ROLE_hrm" and path:match("^/hrm") then
     return
   else
-    return kong.response.exit(403, { message = "Dừng lại - không đủ thẩm quyền truy cập!" })
+    return kong.response.exit(403, { message = "Dung lai - khong du tham quyen truy cap" })
   end
 
 end

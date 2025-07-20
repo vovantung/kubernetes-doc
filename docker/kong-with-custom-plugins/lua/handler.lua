@@ -30,15 +30,18 @@ function RoleChecker:access(conf)
 
   local path = kong.request.get_path()
 
+    -- Bỏ qua preflight CORS requests
+  if req_method == "OPTIONS" then
+    return
+  end
+
   if role == "ROLE_admin" then
     -- Admin được đi qua tất cả các path
     return
-  elseif role == "ROLE_hrm" then
-    if not path:match("^/hrm") then
-      return kong.response.exit(403, { message = "Forbidden, insufficient role" })
-    end
+  elseif role == "ROLE_hrm" and path:match("^/hrm") then
+    return
   else
-    return kong.response.exit(403, { message = "Forbidden - insufficient role" })
+    return kong.response.exit(403, { message = "Dừng lại - không đủ thẩm quyền truy cập!" })
   end
 
 end

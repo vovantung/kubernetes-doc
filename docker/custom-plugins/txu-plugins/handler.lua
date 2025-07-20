@@ -25,7 +25,8 @@ function RoleChecker:access(conf)
     -- Đây là route không xử lý plugins jwt nên không được cors mặc định của kong gắn header cho response, do đó ta cần gắn header thủ công để trình duyệt chấp nhận response, và tiếp tục gửi request thật
     add_cors_headers()
     -- kong.response.exit(...) để tránh việc kong gọi đến service, vi đây là route không chứa service nên sẽ gây lỗi
-    return 
+    return kong.response.exit(200, {role = ""})
+
   elseif req_method == "OPTIONS" and conf.run_on_preflight == false then
     -- add_cors_headers()
     return

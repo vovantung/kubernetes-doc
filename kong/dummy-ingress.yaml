@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dummy-ingress
+  namespace: backend
+  annotations:
+    konghq.com/strip-path: "true"
+    konghq.com/plugins: txu-plugins    # Gắn plugin vào route
+spec:
+  ingressClassName: kong            # KIC sẽ quản lý Ingress được gắn ingress-class của mình, nếu được gắn thêm plugins của KIC thì KIC sẽ sync route này vào Kong (admin, proxy)
+  rules:
+    - host: backend.txuapp.com
+      http:
+        paths:
+          - path: /get-role
+            pathType: Prefix
+            backend:
+              service:
+                name: dummy-service
+                port:
+                  number: 8080

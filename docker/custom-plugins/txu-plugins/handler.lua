@@ -22,8 +22,10 @@ function RoleChecker:access(conf)
 
 
   if req_method == "OPTIONS" and path == "/get-role" then
+    -- Set header cho response vì thoát sớm sẽ gây cors mặc định của kong sẽ không làm việc được với request này và sẽ không gán header giúp trình duyệt thấy hợp lệ và tiếp tục gửi request thật
     add_cors_headers()
-    return
+    -- kong.response.exit(...) để tránh việc kong gọi đến service, vi đây là route không chứa service nên sẽ gây lỗi
+    return kong.response.exit(200, {role = ""})
 
   elseif req_method == "OPTIONS" and conf.run_on_preflight == false then
     -- add_cors_headers()

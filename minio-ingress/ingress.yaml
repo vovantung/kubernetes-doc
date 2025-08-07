@@ -29,7 +29,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: minio-ingress
+  name: storage-ingress
   namespace: minio
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "1g"
@@ -41,7 +41,7 @@ spec:
   tls:
     - hosts:
         - storage.txuapp.com
-      secretName: minio-tls
+      secretName: storage-tls
   rules:
     - host: storage.txuapp.com
       http:
@@ -50,6 +50,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: minio-external
+                name: storage-external
                 port:
                   number: 9000

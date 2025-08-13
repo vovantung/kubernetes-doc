@@ -22,5 +22,5 @@ controller:
   ingress:
     enabled: true
     hosts:
-      - jenkins.txuapp.com
+      - jenkins.txuyen.com
 

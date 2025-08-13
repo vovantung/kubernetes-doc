@@ -15,7 +15,7 @@ spec:
       secretName: nexus-tls
 
   rules:
-    - host: nexus.txuapp.com
+    - host: nexus.txuyen.com
       http:
         paths:
           - path: /

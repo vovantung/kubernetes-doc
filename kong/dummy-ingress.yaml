@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: kong            # KIC sẽ quản lý Ingress được gắn ingress-class của mình, nếu được gắn thêm plugins của KIC thì KIC sẽ sync route này vào Kong (admin, proxy)
   rules:
-    - host: backend.txuapp.com
+    - host: backend.txuyen.com
       http:
         paths:
           - path: /get-role

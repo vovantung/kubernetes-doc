@@ -12,10 +12,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - backend.txuapp.com
+        - backend.txuyen.com
       secretName: nginx-to-kong-backend-tls
   rules:
-    - host: backend.txuapp.com
+    - host: backend.txuyen.com
       http:
         paths:
           - path: /

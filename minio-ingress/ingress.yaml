@@ -11,10 +11,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - cs-minio.txuapp.com
+        - cs-minio.txuyen.com
       secretName: cs-minio-tls
   rules:
-    - host: cs-minio.txuapp.com
+    - host: cs-minio.txuyen.com
       http:
         paths:
           - path: /
@@ -40,10 +40,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - storage.txuapp.com
+        - storage.txuyen.com
       secretName: storage-tls
   rules:
-    - host: storage.txuapp.com
+    - host: storage.txuyen.com
       http:
         paths:
           - path: /

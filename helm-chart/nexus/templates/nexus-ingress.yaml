@@ -11,7 +11,7 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - nexus.txuapp.com
+        - nexus.txuyen.com
       secretName: nexus-tls
 
   rules:

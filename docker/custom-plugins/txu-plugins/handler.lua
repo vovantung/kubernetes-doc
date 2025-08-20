@@ -27,9 +27,9 @@ function RoleChecker:access(conf)
     -- kong.response.exit(...) để tránh việc kong gọi đến service, vi đây là route không chứa service nên sẽ gây lỗi
     return kong.response.exit(200, {role = ""})
 
-  elseif req_method == "OPTIONS" then
-  add_cors_headers()
-  return kong.response.exit(200, {})
+  elseif req_method == "OPTIONS" and conf.run_on_preflight == false then
+    -- add_cors_headers()
+    return
   end
 
   -- Nếu có path public, có thể mở lại điều kiện này

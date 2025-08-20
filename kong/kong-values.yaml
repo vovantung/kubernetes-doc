@@ -9,7 +9,7 @@ deployment:
 
 image:
   repository: vothinhuydt/kong
-  tag: "7.0" # Khớp với custom image docker
+  tag: "8.0" # Khớp với custom image docker
 
 fullnameOverride: kong
 

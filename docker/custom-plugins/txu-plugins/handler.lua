@@ -27,9 +27,9 @@ function RoleChecker:access(conf)
     -- kong.response.exit(...) để tránh việc kong gọi đến service, vi đây là route không chứa service nên sẽ gây lỗi
     return kong.response.exit(200, {role = ""})
 
-  elseif req_method == "OPTIONS" and conf.run_on_preflight == false then
-    -- add_cors_headers()
-    return
+  elseif req_method == "OPTIONS" then
+  add_cors_headers()
+  return kong.response.exit(200, {})
   end
 
   -- Nếu có path public, có thể mở lại điều kiện này
@@ -73,7 +73,7 @@ function RoleChecker:access(conf)
   if role == "admin" then
     -- Admin được đi qua tất cả các path
     return
-  elseif role == "hrm" and path:match("^/hrm") then
+  elseif (role == "hrm" or role == "user") and path:match("^/hrm") then
     return
   else
     return kong.response.exit(403, { message = "Forbidden - Insufficient access authority!" })

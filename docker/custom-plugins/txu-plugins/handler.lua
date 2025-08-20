@@ -73,7 +73,7 @@ function RoleChecker:access(conf)
   if role == "admin" then
     -- Admin được đi qua tất cả các path
     return
-  elseif (role == "hrm" or role == "user") and path:match("^/hrm") then
+  elseif (role == "user") and path:match("^/user") then
     return
   else
     return kong.response.exit(403, { message = "Forbidden - Insufficient access authority!" })

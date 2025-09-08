@@ -67,6 +67,11 @@ function RoleChecker:access(conf)
   if req_method == "GET" and path == "/get-role" then
     -- Đây là route không xử lý plugins jwt nên không được cors mặc định của kong gắn header cho response, do đó ta cần gắn header thủ công để trình duyệt chấp nhận response
     add_cors_headers()
+
+    local ok, exp_err = jwt:verify_expires_at(0)
+    if not ok then
+      return kong.response.exit(401, { message = "Token expired" })
+    end
     return kong.response.exit(200, {role = role})
   end
 
